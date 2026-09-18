@@ -74,7 +74,6 @@ async function upsertTaxonomy(client: SanityClient, game: NormalizedGame): Promi
       name: company.name,
       slug: { _type: "slug", current: company.slug },
       igdbId: company.igdbId,
-      website: company.website,
       description: company.description,
     })),
   ];
