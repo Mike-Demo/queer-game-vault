@@ -91,11 +91,13 @@ function DiscoverPage() {
     },
   });
 
-  const results = searchQuery.data?.results ?? [];
+  const searchResults = searchQuery.data?.results;
+  const results = useMemo(() => searchResults ?? [], [searchResults]);
   const selectableNew = useMemo(
     () => results.filter((result) => !result.libraryStatus).map((result) => result.igdbId),
     [results],
   );
+
 
   function toggle(igdbId: number) {
     setSelected((current) =>
