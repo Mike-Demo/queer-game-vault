@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as GamesSlugRouteImport } from './routes/games.$slug'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
+import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as AuthenticatedImportsRouteImport } from './routes/_authenticated/imports'
 import { Route as AuthenticatedDiscoverRouteImport } from './routes/_authenticated/discover'
 import { Route as Char91__mockupChar93PreviewSplatRouteImport } from './routes/[__mockup].preview.$'
@@ -61,6 +62,11 @@ const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
   path: '/collections/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedImportsRoute = AuthenticatedImportsRouteImport.update({
   id: '/imports',
   path: '/imports',
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/library': typeof LibraryRoute
   '/discover': typeof AuthenticatedDiscoverRoute
   '/imports': typeof AuthenticatedImportsRoute
+  '/review': typeof AuthenticatedReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/library': typeof LibraryRoute
   '/discover': typeof AuthenticatedDiscoverRoute
   '/imports': typeof AuthenticatedImportsRoute
+  '/review': typeof AuthenticatedReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
   '/collections': typeof CollectionsIndexRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/library': typeof LibraryRoute
   '/_authenticated/discover': typeof AuthenticatedDiscoverRoute
   '/_authenticated/imports': typeof AuthenticatedImportsRoute
+  '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/discover'
     | '/imports'
+    | '/review'
     | '/collections/$slug'
     | '/games/$slug'
     | '/collections/'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/discover'
     | '/imports'
+    | '/review'
     | '/collections/$slug'
     | '/games/$slug'
     | '/collections'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/_authenticated/discover'
     | '/_authenticated/imports'
+    | '/_authenticated/review'
     | '/collections/$slug'
     | '/games/$slug'
     | '/collections/'
@@ -239,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/review': {
+      id: '/_authenticated/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof AuthenticatedReviewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/imports': {
       id: '/_authenticated/imports'
       path: '/imports'
@@ -273,11 +292,13 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDiscoverRoute: typeof AuthenticatedDiscoverRoute
   AuthenticatedImportsRoute: typeof AuthenticatedImportsRoute
+  AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDiscoverRoute: AuthenticatedDiscoverRoute,
   AuthenticatedImportsRoute: AuthenticatedImportsRoute,
+  AuthenticatedReviewRoute: AuthenticatedReviewRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
