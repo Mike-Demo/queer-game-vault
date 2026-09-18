@@ -147,13 +147,31 @@ async function uniqueSlug(client: SanityClient, game: NormalizedGame, gameId: st
   return taken ? `${game.slug}-${game.igdbId}` : game.slug;
 }
 
+// Sanity adds `_key` to array items and may reorder object keys, so compare a
+// normalized form to avoid reporting unchanged fields as updated.
+function stableValue(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(stableValue);
+  if (value && typeof value === "object") {
+    const source = value as Record<string, unknown>;
+    return Object.keys(source)
+      .filter((key) => key !== "_key")
+      .sort()
+      .reduce<Record<string, unknown>>((accumulator, key) => {
+        accumulator[key] = stableValue(source[key]);
+        return accumulator;
+      }, {});
+  }
+  return value ?? null;
+}
+
 function diffFields(existing: Record<string, unknown>, next: Record<string, unknown>): string[] {
   return SOURCE_FIELDS.filter((field) => {
-    const before = JSON.stringify(existing[field] ?? null);
-    const after = JSON.stringify(next[field] ?? null);
+    const before = JSON.stringify(stableValue(existing[field] ?? null));
+    const after = JSON.stringify(stableValue(next[field] ?? null));
     return before !== after;
   });
 }
+
 
 async function logImportRecord(
   client: SanityClient,
