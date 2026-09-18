@@ -1,0 +1,56 @@
+import { PortableText, type PortableTextBlock } from "@portabletext/react";
+import { useQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+
+import { AppShell } from "@/components/AppShell";
+import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
+import { NesContainer, NesText } from "@/design-system/nes-229931";
+import { contentPageQueryOptions } from "@/lib/publicData";
+
+export const Route = createFileRoute("/about")({
+  head: () => ({
+    meta: [
+      { title: "About — QueerCade" },
+      {
+        name: "description",
+        content: "How QueerCade combines IGDB game data with editorial curation managed in Sanity.",
+      },
+      { property: "og:title", content: "About — QueerCade" },
+      { property: "og:description", content: "How the arcade is curated, and where the game data comes from." },
+      { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(contentPageQueryOptions("about")),
+  errorComponent: () => (
+    <AppShell>
+      <ErrorState message="This page could not be loaded. Please refresh." />
+    </AppShell>
+  ),
+  component: About,
+});
+
+function About() {
+  const page = useQuery(contentPageQueryOptions("about"));
+
+  return (
+    <AppShell>
+      {page.isPending ? <LoadingState label="Loading page" /> : null}
+      {page.isError ? <ErrorState message="This page could not be loaded." /> : null}
+      {page.data === null ? <EmptyState title="This page has not been published yet" /> : null}
+      {page.data ? (
+        <div className="stack-lg">
+          <NesText variant="primary" className="title-xl">
+            {page.data.title}
+          </NesText>
+          {page.data.summary ? <p>{page.data.summary}</p> : null}
+          <NesContainer rounded>
+            <div className="prose">
+              <PortableText value={(page.data.body ?? []) as PortableTextBlock[]} />
+            </div>
+          </NesContainer>
+        </div>
+      ) : null}
+    </AppShell>
+  );
+}
