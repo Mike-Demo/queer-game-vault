@@ -122,7 +122,7 @@ async function igdbRequest<T>(endpoint: string, body: string): Promise<T> {
 }
 
 export interface IgdbRawCompany {
-  company?: { id?: number; name?: string; website?: string; description?: string };
+  company?: { id?: number; name?: string; description?: string };
   developer?: boolean;
   publisher?: boolean;
 }
@@ -164,7 +164,6 @@ export interface NormalizedCompany {
   igdbId: number;
   name: string;
   slug: string;
-  website?: string;
   description?: string;
   isDeveloper: boolean;
   isPublisher: boolean;
@@ -267,7 +266,6 @@ const GAME_FIELDS = [
   "involved_companies.publisher",
   "involved_companies.company.id",
   "involved_companies.company.name",
-  "involved_companies.company.website",
   "involved_companies.company.description",
   "franchise.name",
   "collection.name",
@@ -287,7 +285,6 @@ function normalize(raw: IgdbRawGame): NormalizedGame {
       igdbId: entry.company!.id!,
       name: entry.company!.name!,
       slug: slugify(entry.company!.name!),
-      website: entry.company!.website,
       description: entry.company!.description,
       isDeveloper: Boolean(entry.developer),
       isPublisher: Boolean(entry.publisher),
