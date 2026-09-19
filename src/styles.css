@@ -191,3 +191,90 @@ a {
     grid-template-columns: 20rem 1fr;
   }
 }
+
+/* Dark appearance. Only design-system colour tokens are used: the library
+   ships two light palettes plus dark component variants, so dark surfaces come
+   from those variants and the page itself flips to the dark/background tokens. */
+[data-theme="dark"] body {
+  background-color: var(--nes-dark);
+  color: var(--nes-bg);
+}
+
+[data-theme="dark"] a {
+  color: var(--nes-primary);
+}
+
+[data-theme="dark"] .app-header a,
+[data-theme="dark"] .app-footer,
+[data-theme="dark"] .title-xl,
+[data-theme="dark"] .title-md {
+  color: var(--nes-bg);
+}
+
+[data-contrast="high"] a {
+  text-decoration: underline;
+}
+
+[data-contrast="high"] .text-xs {
+  font-size: var(--app-font-sm);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.discover-layout {
+  display: grid;
+  gap: var(--app-space-3);
+  grid-template-columns: 1fr;
+}
+
+.library-columns {
+  display: grid;
+  gap: var(--app-space-3);
+  grid-template-columns: 1fr;
+}
+
+.settings-layout {
+  display: grid;
+  gap: var(--app-space-3);
+  grid-template-columns: 1fr;
+}
+
+.auth-layout {
+  max-width: 34rem;
+  margin-inline: auto;
+}
+
+.cover-sm {
+  height: 9rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 48rem) {
+  .discover-layout {
+    grid-template-columns: 18rem 1fr;
+    align-items: start;
+  }
+
+  .library-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .settings-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 72rem) {
+  .library-columns {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

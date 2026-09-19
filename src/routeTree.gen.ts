@@ -20,6 +20,7 @@ import { Route as AuthenticatedImportSearchRouteImport } from './routes/_authent
 import { Route as AuthenticatedImportsRouteImport } from './routes/_authenticated/imports'
 import { Route as AuthenticatedMyLibraryRouteImport } from './routes/_authenticated/my-library'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as GamesSlugRouteImport } from './routes/games.$slug'
@@ -82,6 +83,11 @@ const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
   path: '/review',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
   id: '/collections/',
   path: '/collections/',
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/imports': typeof AuthenticatedImportsRoute
   '/my-library': typeof AuthenticatedMyLibraryRoute
   '/review': typeof AuthenticatedReviewRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
   '/profile/$username': typeof ProfileUsernameRoute
@@ -144,6 +151,7 @@ export interface FileRoutesByTo {
   '/imports': typeof AuthenticatedImportsRoute
   '/my-library': typeof AuthenticatedMyLibraryRoute
   '/review': typeof AuthenticatedReviewRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
   '/profile/$username': typeof ProfileUsernameRoute
@@ -164,6 +172,7 @@ export interface FileRoutesById {
   '/_authenticated/imports': typeof AuthenticatedImportsRoute
   '/_authenticated/my-library': typeof AuthenticatedMyLibraryRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
   '/profile/$username': typeof ProfileUsernameRoute
@@ -184,6 +193,7 @@ export interface FileRouteTypes {
     | '/imports'
     | '/my-library'
     | '/review'
+    | '/settings'
     | '/collections/$slug'
     | '/games/$slug'
     | '/profile/$username'
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/imports'
     | '/my-library'
     | '/review'
+    | '/settings'
     | '/collections/$slug'
     | '/games/$slug'
     | '/profile/$username'
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '/_authenticated/imports'
     | '/_authenticated/my-library'
     | '/_authenticated/review'
+    | '/_authenticated/settings'
     | '/collections/$slug'
     | '/games/$slug'
     | '/profile/$username'
@@ -324,6 +336,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReviewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/collections/': {
       id: '/collections/'
       path: '/collections'
@@ -374,6 +393,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedImportsRoute: typeof AuthenticatedImportsRoute
   AuthenticatedMyLibraryRoute: typeof AuthenticatedMyLibraryRoute
   AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -381,6 +401,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedImportsRoute: AuthenticatedImportsRoute,
   AuthenticatedMyLibraryRoute: AuthenticatedMyLibraryRoute,
   AuthenticatedReviewRoute: AuthenticatedReviewRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
