@@ -196,7 +196,7 @@ function GamePage() {
     metaRows.push({ label: "Popularity (IGDB visits)", value: data.popularity.toFixed(4) });
   }
   const popularitySignals = data.popularityScores.filter(
-    (score): score is { type: string; value: number } => Boolean(score.type) && score.value !== null,
+    (score): score is { type: string; value: number } => Boolean(score.type) && (score.value ?? 0) > 0,
   );
   const contentDescriptors = [
     ...new Set(
