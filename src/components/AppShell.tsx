@@ -104,6 +104,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <NesText className="text-xs">
           {settings?.footerContent ?? "QueerCade — game data from IGDB, curation by humans."}
         </NesText>
+        <SiteFooter />
       </footer>
     </div>
   );
