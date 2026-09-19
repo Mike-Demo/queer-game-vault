@@ -1,5 +1,7 @@
 import path from "path";
 import { defineConfig } from "vite";
+
+import { collectPrerenderPaths } from "./src/lib/prerender/pages";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
