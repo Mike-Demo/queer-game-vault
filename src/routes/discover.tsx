@@ -27,6 +27,16 @@ import {
   discoverSearchQueryOptions,
   type DiscoverFilters,
 } from "@/lib/publicData";
+import type { GameSummary } from "@/lib/sanity/types";
+
+/** Characters whose names contain the search term, when the game's title doesn't. */
+function matchedCharacters(game: GameSummary, term: string): string[] {
+  const query = term.trim().toLowerCase();
+  if (query.length === 0 || game.title.toLowerCase().includes(query)) return [];
+  return game.lgbtqCharacterNames.filter(
+    (name): name is string => Boolean(name) && name!.toLowerCase().includes(query),
+  );
+}
 
 interface DiscoverSearch {
   q?: string;
@@ -231,9 +241,19 @@ function DiscoverPage() {
             ) : null}
             {results.data && results.data.length > 0 ? (
               <div className="card-grid" aria-busy={results.isFetching}>
-                {results.data.map((game) => (
-                  <GameCard key={game._id} game={game} />
-                ))}
+                {results.data.map((game) => {
+                  const characters = matchedCharacters(game, filters.term);
+                  return (
+                    <div key={game._id} className="stack">
+                      <GameCard game={game} />
+                      {characters.length > 0 ? (
+                        <NesText className="text-xs">
+                          Character: {characters.join(", ")}
+                        </NesText>
+                      ) : null}
+                    </div>
+                  );
+                })}
               </div>
             ) : null}
           </div>
