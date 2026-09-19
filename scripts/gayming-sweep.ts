@@ -275,12 +275,64 @@ async function matchCandidates(): Promise<void> {
   console.log(`matched ${done.length}, unmatched ${unmatched.length}`);
 }
 
+
+/** Extra terms that IGDB happens to have as titles but the site uses as topics. */
+const GENERIC_TERMS = new Set([
+  "books", "cozy", "guide", "list", "map", "sports", "sci fi", "fandom", "event", "icon",
+  "glitch", "russia", "black friday", "battle royale", "android", "vinyl", "winter", "detox",
+  "daddy", "patron", "storm", "dawn", "brat", "amazon", "epic", "unity", "capcom", "blizzard",
+  "gust", "ace", "clue", "eco", "karma", "panic", "moto", "roblox", "avatar last airbender",
+  "barbie", "bleach", "akira", "loki", "venom", "black panther", "shrek", "yuri", "domina",
+]);
+
+/** Keeps only matches that look like real, released games with artwork. */
+async function filterMatches(): Promise<void> {
+  const { getGameById } = await import("../src/lib/igdb/igdb.server");
+  const matches = JSON.parse(readFileSync(MATCHES, "utf8")) as Match[];
+  const keptPath = `${OUT}/kept.json`;
+  const kept: Match[] = existsSync(keptPath) ? (JSON.parse(readFileSync(keptPath, "utf8")) as Match[]) : [];
+  const droppedPath = `${OUT}/dropped.json`;
+  const dropped: string[] = existsSync(droppedPath)
+    ? (JSON.parse(readFileSync(droppedPath, "utf8")) as string[])
+    : [];
+  const handled = new Set([...kept.map((item) => item.igdbId)]);
+  const droppedNames = new Set(dropped);
+
+  for (const match of matches) {
+    if (handled.has(match.igdbId)) continue;
+    if (GENERIC_TERMS.has(normalizeTitle(match.name))) {
+      droppedNames.add(`${match.name} (generic term)`);
+      handled.add(match.igdbId);
+      continue;
+    }
+    try {
+      const game = await getGameById(match.igdbId);
+      const solid = Boolean(game.coverUrl) && Boolean(game.firstReleaseDate);
+      if (solid) kept.push(match);
+      else droppedNames.add(`${match.name} (no cover or release date)`);
+    } catch {
+      droppedNames.add(`${match.name} (IGDB lookup failed)`);
+    }
+    handled.add(match.igdbId);
+    if (handled.size % 50 === 0) {
+      writeFileSync(keptPath, JSON.stringify(kept, null, 2));
+      writeFileSync(droppedPath, JSON.stringify([...droppedNames], null, 2));
+      console.log(`${handled.size}/${matches.length} vetted, kept ${kept.length}`);
+    }
+    await new Promise((resolve) => setTimeout(resolve, 150));
+  }
+
+  writeFileSync(keptPath, JSON.stringify(kept, null, 2));
+  writeFileSync(droppedPath, JSON.stringify([...droppedNames], null, 2));
+  console.log(`kept ${kept.length}, dropped ${droppedNames.size}`);
+}
+
 async function importMatches(): Promise<void> {
   const { importOneGame } = await import("../src/lib/import/import.server");
   const { getSanityWriteClient } = await import("../src/lib/sanity/write.server");
   const client = getSanityWriteClient();
 
-  const matches = JSON.parse(readFileSync(MATCHES, "utf8")) as Match[];
+  const matches = JSON.parse(readFileSync(`${OUT}/kept.json`, "utf8")) as Match[];
   // Several candidates can resolve to the same IGDB game; merge their sources.
   const byIgdbId = new Map<number, Match>();
   for (const match of matches) {
@@ -364,5 +416,6 @@ async function importMatches(): Promise<void> {
 const phase = process.argv[2];
 if (phase === "candidates") await collectCandidates();
 else if (phase === "match") await matchCandidates();
+else if (phase === "filter") await filterMatches();
 else if (phase === "import") await importMatches();
-else throw new Error("usage: candidates | match | import");
+else throw new Error("usage: candidates | match | filter | import");
