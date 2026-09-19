@@ -103,7 +103,7 @@ a {
 
 .license-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--app-card-min), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--app-sidebar-width), 1fr));
   gap: var(--app-space-2);
 }
 
