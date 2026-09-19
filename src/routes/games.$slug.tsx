@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
@@ -60,6 +60,9 @@ export const Route = createFileRoute("/games/$slug")({
 function GamePage() {
   const { slug } = Route.useParams();
   const game = useQuery(gameQueryOptions(slug));
+  const collections = useQuery(gameCollectionsQueryOptions(slug));
+  const { data: session } = useSession();
+  const { data: access } = useEditorAccess(Boolean(session));
 
   if (game.isPending) {
     return (
@@ -119,7 +122,10 @@ function GamePage() {
     });
   }
   if (data.totalRating) metaRows.push({ label: "Total rating", value: `${Math.round(data.totalRating)} / 100` });
+  if (data.popularity) metaRows.push({ label: "Popularity", value: String(Math.round(data.popularity)) });
   metaRows.push({ label: "IGDB ID", value: String(data.igdbId) });
+
+  const memberCollections = (collections.data ?? []).filter((collection) => collection.slug);
 
   return (
     <AppShell>
