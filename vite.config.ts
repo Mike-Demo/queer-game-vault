@@ -1,5 +1,6 @@
+import { writeFileSync } from "node:fs";
 import path from "path";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 
 import { collectPrerenderPaths } from "./src/lib/prerender/pages";
 import tsConfigPaths from "vite-tsconfig-paths";
