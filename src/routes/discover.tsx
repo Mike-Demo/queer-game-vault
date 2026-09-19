@@ -51,10 +51,29 @@ export const Route = createFileRoute("/discover")({
         property: "og:description",
         content: "Search and filter every game in the QueerCade arcade.",
       },
+      { property: "og:url", content: "https://queercade.mikedemo.dev/discover" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://queercade.mikedemo.dev/discover" }],
+    scripts: [
+      jsonLdScript(
+        organization(),
+        website(),
+        webPage({
+          type: "SearchResultsPage",
+          path: "/discover",
+          name: "Discover games — QueerCade",
+          description: "Search and filter every game in the QueerCade arcade.",
+        }),
+        breadcrumbs([
+          { name: "Home", path: "/" },
+          { name: "Discover", path: "/discover" },
+        ]),
+      ),
+    ],
   }),
+
   loader: ({ context }) => context.queryClient.ensureQueryData(discoverFacetsQueryOptions),
   errorComponent: () => (
     <AppShell>
