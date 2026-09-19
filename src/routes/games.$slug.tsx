@@ -10,7 +10,7 @@ import {
   NesText,
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
-import { coverUrl, gameCollectionsQueryOptions, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
+import { coverSrcSet, coverUrl, gameCollectionsQueryOptions, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
 import {
   breadcrumbs,
   jsonLdScript,
@@ -368,7 +368,15 @@ function GamePage() {
               {data.screenshots.map((shot) =>
                 shot.url ? (
                   <figure key={shot.url}>
-                    <img className="cover" src={shot.url} alt={shot.caption ?? `${data.title} screenshot`} loading="lazy" />
+                    <img
+                      className="cover"
+                      src={shot.url}
+                      alt={shot.caption ?? `${data.title} screenshot`}
+                      width={640}
+                      height={360}
+                      loading="lazy"
+                      decoding="async"
+                    />
                     {shot.caption ? <figcaption><NesText className="text-xs">{shot.caption}</NesText></figcaption> : null}
                   </figure>
                 ) : null,
