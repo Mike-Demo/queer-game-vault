@@ -10,7 +10,8 @@ export const GAME_SUMMARY_PROJECTION = `{
   _id, title, "slug": slug.current, igdbId, releaseYear, summary, customDescription,
   cover, sourceCoverUrl, editorialStatus, featured,
   "genres": coalesce(genres[]->${TAXONOMY}, []),
-  "platforms": coalesce(platforms[]->${TAXONOMY}, [])
+  "platforms": coalesce(platforms[]->${TAXONOMY}, []),
+  "lgbtqCharacterNames": coalesce(lgbtqCharacters[].name, [])
 }`;
 
 export const GAME_DETAIL_PROJECTION = `{
@@ -119,9 +120,9 @@ export const sitemapCollectionSlugsQuery = `*[_type == "gameCollection" && statu
 export const relatedGamesQuery = `*[${PUBLIC_GAME_FILTER} && _id != $id && count((genres[]->_id)[@ in $genreIds]) > 0]
   | order(coalesce(igdbRating, 0) desc)[0...$limit] ${GAME_SUMMARY_PROJECTION}`;
 
-/** Public discovery search: free text plus optional genre, platform and theme. */
+/** Public discovery search: free text (title or LGBTQ+ character name) plus optional genre, platform and theme. */
 export const searchGamesQuery = `*[${PUBLIC_GAME_FILTER}
-  && ($term == "" || title match $term)
+  && ($term == "" || title match $term || lgbtqCharacters[].name match $term)
   && ($genre == "" || $genre in genres[]->slug.current)
   && ($platform == "" || $platform in platforms[]->slug.current)
   && ($theme == "" || $theme in themes)]
