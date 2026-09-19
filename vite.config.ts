@@ -52,7 +52,7 @@ export default defineConfig(async ({ command, mode }) => {
     plugins: [
       mockupPreviewPlugin(),
       tsConfigPaths({ projects: ["./tsconfig.json"] }),
-      ...(useCloudflare ? [cloudflare({ viteEnvironment: { name: "ssr" } })] : []),
+      ...(useCloudflare ? [cloudflare({ viteEnvironment: { name: "ssr" } }), prerenderServerEntryAlias()] : []),
       tanstackStart({
         pages: prerenderPaths.map((route) => ({ path: route })),
         prerender: { enabled: command === "build", autoStaticPathsDiscovery: false, crawlLinks: false },
