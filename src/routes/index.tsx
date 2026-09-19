@@ -3,6 +3,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
+import { EditorQuickStart } from "@/components/EditorQuickStart";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
 import { NesContainer, NesText } from "@/design-system/nes-229931";
 import {
@@ -60,6 +61,8 @@ function Home() {
             <p>{settings.data?.homepageIntroduction}</p>
           </div>
         </NesContainer>
+
+        <EditorQuickStart />
 
         <section className="stack">
           <h2 className="title-md"><NesText>Featured games</NesText></h2>
