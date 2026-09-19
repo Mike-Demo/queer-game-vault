@@ -8,19 +8,31 @@ import { coverUrl, gameQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/games/$slug")({
   staticData: { sitemap: true },
-  head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug} — QueerCade` },
-      {
-        name: "description",
-        content: "A curated game page: editorial writing alongside metadata sourced from IGDB.",
-      },
-      { property: "og:title", content: `${params.slug} — QueerCade` },
-      { property: "og:description", content: "Editorial writing alongside IGDB metadata." },
-      { property: "og:type", content: "article" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: ({ loaderData, params }) => {
+    const game = loaderData ?? null;
+    const title = game ? `${game.title} — QueerCade` : `${params.slug} — QueerCade`;
+    const description =
+      game?.customDescription?.slice(0, 160) ??
+      game?.summary?.slice(0, 160) ??
+      "A curated game page: editorial writing alongside metadata sourced from IGDB.";
+    const image = game ? coverUrl(game, 640) : null;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "article" },
+        { name: "twitter:card", content: "summary_large_image" },
+        ...(image
+          ? [
+              { property: "og:image", content: image },
+              { name: "twitter:image", content: image },
+            ]
+          : []),
+      ],
+    };
+  },
   loader: ({ context, params }) => context.queryClient.ensureQueryData(gameQueryOptions(params.slug)),
   errorComponent: () => (
     <AppShell>
