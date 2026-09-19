@@ -55,7 +55,11 @@ export const Route = createFileRoute("/games/$slug")({
             ]
           : []),
       ],
-      links: [{ rel: "canonical", href: url }],
+      links: [
+        { rel: "canonical", href: url },
+        // The cover is this page's largest paint: fetch it alongside the HTML.
+        ...(image ? [{ rel: "preload", as: "image", href: image, fetchPriority: "high" }] : []),
+      ],
       scripts: [
         jsonLdScript(
           organization(),
@@ -193,7 +197,18 @@ function GamePage() {
         <div className="detail-layout">
           <Surface rounded>
             {cover ? (
-              <img className="cover" src={cover} alt={`${data.title} cover art`} />
+              <img
+                className="cover"
+                src={cover}
+                srcSet={coverSrcSet(data, [320, 640, 960])}
+                sizes="(min-width: 64rem) 20rem, 100vw"
+                alt={`${data.title} cover art`}
+                width={640}
+                height={851}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+              />
             ) : (
               <div className="cover-placeholder">
                 <NesText>No cover art</NesText>
