@@ -18,7 +18,15 @@ export function EntryCard({ entry, editable }: { entry: GameEntry; editable: boo
     <Surface rounded>
       <div className="stack">
         {entry.coverUrl ? (
-          <img className="cover cover-sm" src={entry.coverUrl} alt={`${entry.title} cover art`} loading="lazy" />
+          <img
+            className="cover cover-sm"
+            src={entry.coverUrl}
+            alt={`${entry.title} cover art`}
+            width={400}
+            height={532}
+            loading="lazy"
+            decoding="async"
+          />
         ) : null}
         <NesText className="text-xs">{entry.title}</NesText>
         <Link to="/games/$slug" params={{ slug: entry.gameSlug }}>
