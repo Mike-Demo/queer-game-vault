@@ -26,6 +26,19 @@ Reference via `var(--name)` in inline styles or CSS.
 | `--nes-surface` |
 | `--nes-hover` |
 | `--nes-disabled` |
+| `--nes-focus-ring` |
+
+## Typography
+
+Reference via `var(--name)` in inline styles or CSS.
+
+| CSS variable |
+|---|
+| `--nes-primary-text` |
+| `--nes-success-text` |
+| `--nes-warning-text` |
+| `--nes-error-text` |
+| `--nes-muted-text` |
 
 ## Shadows
 

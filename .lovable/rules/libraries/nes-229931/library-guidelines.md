@@ -9,7 +9,7 @@
 
 The design system exports these components — import them from `@/design-system/nes-229931` and compose them before building anything from scratch:
 
-`NesAvatar`, `NesBadge`, `NesBalloon`, `NesButton`, `NesCheckbox`, `NesContainer`, `NesDialog`, `NesField`, `NesIcon`, `NesInput`, `NesList`, `NesPixelArt`, `NesPixelIcon`, `NesProgress`, `NesRadio`, `NesRuneIcon`, `NesSelect`, `NesTable`, `NesText`, `NesTextarea`
+`NesAvatar`, `NesBadge`, `NesBalloon`, `NesButton`, `NesCheckbox`, `NesContainer`, `NesDialog`, `NesField`, `NesIcon`, `NesInput`, `NesList`, `NesPixelArt`, `NesPixelIcon`, `NesProgress`, `NesProvider`, `NesRadio`, `NesRuneIcon`, `NesSelect`, `NesTable`, `NesText`, `NesTextarea`
 
 Per-component details (import stanzas, props, variants, examples) live in `.lovable/rules/libraries/nes-229931/components.md` — on disk, not auto-loaded. Read that file or the component source when the name alone isn't enough.
 

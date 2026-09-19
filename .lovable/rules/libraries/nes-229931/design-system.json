@@ -2,7 +2,7 @@
   "meta": {
     "name": "NES",
     "package": "@ws-q44iemhjvr3azhdcenod/2d41e7ac-ac8d-4713-844e-300c9d4181e6",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "framework": "react",
     "css_framework": "plain-css",
     "starter_template": "custom_design_system",
@@ -11,16 +11,16 @@
     ],
     "source_type": "local",
     "source_manifest": {
-      "#enrichment": "d23ed42457b7dd5d71f9b3e7499eb742147c9bceed5b4bdef972442113bc194b",
+      "#enrichment": "a3003d8aca44e0b4a6557b979ae37cb3218e40d5848402de4fc67df02f9ec4a7",
       ".dsignore": "83e96707873f4729640c0115676fde50",
       ".gitignore": "6059213806e442947666752f3db6bfdc",
-      ".lovable/meta.yaml": "b77097485054b58e13a25521910f1e6a",
-      ".lovable/plan.md": "ef4f0f0b42cebdc291b32af5aef9b57d",
+      ".lovable/meta.yaml": "14155149216b60f3bc805221ff09410b",
+      ".lovable/plan/accessibility-pass-with-graceful-fallbacks-2026-09-13.md": "ef4f0f0b42cebdc291b32af5aef9b57d",
       ".lovable/plan/add-rune-pixel-icons-to-the-design-system-2026-09-13.md": "e9ee41a4fa26bfb8dbff4321b5259051",
       ".lovable/plan/nes-css-design-system-library-2026-09-12.md": "0b69537b06815182ad1389b572121228",
       ".lovable/plan/showcase-upgrade-pixel-icon-studio-themes-spec-pages-unified-2026-09-13.md": "aea4c375eb2bd728838cde6429f1906f",
       ".lovable/sources.yaml": "0f74efc1cc2dd497f25db9fe04310981",
-      ".lovable/system.md": "2b8ad0e97cf8f2a03d24b8b880f0d757",
+      ".lovable/system.md": "27c029d732768cdf5441ecdf4a667511",
       "LICENSE-nes-css": "e565b575ac080dbd49eba74669fe2dd3",
       "LICENSE-runeicons": "e134bc2c08e98400d5425e836dc90989",
       "README.md": "df5d2250ed9e9fe13ea08d52b6418463",
@@ -53,7 +53,7 @@
       "src/components/NesText.tsx": "8292bac709c6920f9922e381964a95f0",
       "src/components/pixel-icon.ts": "929e5e653d9a2bd1c9dc6be49af4c395",
       "src/components/runes.ts": "3d85e24234f7efef74a6bf4c4843565b",
-      "src/index.ts": "d5eb2a181ac806a7f21b03acb7f1959d",
+      "src/index.ts": "0f0e9e015e53f56d2de8586f0fc5f596",
       "src/integrations/supabase/auth-attacher.ts": "dad043cda134d909e52de0346c16625e",
       "src/integrations/supabase/auth-middleware.ts": "eabaf8c8ba32205717921ce5f255185e",
       "src/integrations/supabase/client.server.ts": "23f838ab7633e0a97e695f3c500d91aa",
@@ -61,18 +61,20 @@
       "src/integrations/supabase/cron-auth.ts": "6c04781ff98ada5977945fae55d39385",
       "src/integrations/supabase/previewAuthStorage.ts": "bc45a76c9242c4b85d6d4345625c46e9",
       "src/integrations/supabase/types.ts": "1e606dabe931dae9bda8bd2357a6b565",
+      "src/lib/NesProvider.tsx": "d164a0d8aaa7c600c5f8993be9200ba0",
       "src/lib/theme.ts": "bcfe5dcdf5b17fb0af811bf2aac923db",
       "src/lib/utils.ts": "c752c7e5ba2d28c91396b3df374ff38f",
       "src/mockup-preview.d.ts": "38969839f35ce2966e32a9f01a5c09ea",
-      "src/routeTree.gen.ts": "7403cd8fdd18d6cea00c2307c5e17fac",
+      "src/routeTree.gen.ts": "96f59e216e162a27c31e1f769e32d594",
       "src/router.tsx": "8f905e713b0eba7fa8148b7995a708c9",
       "src/routes/[__component].preview.$.tsx": "3a40af1fe37daff2e891175a6e6d4f99",
       "src/routes/[__mockup].preview.$.tsx": "5d9f42470848aa60148f20f9580e240e",
-      "src/routes/__root.tsx": "2d3f0e88c5bd5b3df64e195edc02d30a",
+      "src/routes/__root.tsx": "ebcb760c394d883bfa5d07598cc07b31",
+      "src/routes/accessibility.tsx": "6d639a10a68b90f91a2c3d5a0feff672",
       "src/routes/api/generate-pixel-icon.ts": "bb4539907f043c41ee4dfc0ddf9df32d",
       "src/routes/auth.tsx": "8a8939c96e2dab7259f5b2264cd30fa7",
       "src/routes/colors.tsx": "c952794f17302ba477d06c2aae5b4bac",
-      "src/routes/components.tsx": "559bd2dcd057c806536b2f0804ec8f52",
+      "src/routes/components.tsx": "4c9987def9a86f0add243f37b0238570",
       "src/routes/icons.tsx": "f85d3f1af0ac503e43d74452634d48bc",
       "src/routes/index.tsx": "fb5f295bfd2f46e52e4a81dfe1b317bb",
       "src/routes/lovable.tsx": "d879d864d267984cc8843bb97670de59",
@@ -80,19 +82,19 @@
       "src/routes/specs.index.tsx": "708934009104701de108eb593d1ebb38",
       "src/routes/studio.tsx": "0946dfd91fb758b3cfafb2c76990d639",
       "src/routes/typography.tsx": "a0f3dc72aefc0a22297b186aef0e36f6",
-      "src/showcase/IconGallery.tsx": "ea9fb1a9fc6bba84b8d1cd47d74887ca",
-      "src/showcase/ShowcaseShell.tsx": "375662a027c8083154dba0acf5a107e6",
+      "src/showcase/IconGallery.tsx": "77e5351379224a2c989db8de1915faf3",
+      "src/showcase/ShowcaseShell.tsx": "e380638dc8a9b952a027bce08223ec95",
       "src/showcase/ThemeToggle.tsx": "368d36601291db28eacd81c10ebb516e",
-      "src/showcase/showcase.css": "49cfc5f8659f4997ef4f656d5dc1c937",
+      "src/showcase/showcase.css": "29b03c5a95378b3242809cf80ea8eea9",
       "src/showcase/specs.tsx": "86fd4756e70cf85a92032e16ad4a5e25",
-      "src/showcase/studio/PixelEditor.tsx": "52fe250063c2ed6d490321c3e3f18f1d",
+      "src/showcase/studio/PixelEditor.tsx": "c2d038edd5b69666e83a37300b50ba02",
       "src/showcase/studio/generate.ts": "ab1932bc8f1ce8b2bcfbf2f7414c32ad",
       "src/showcase/studio/grid.ts": "927fd63e64fbb153697a580399571791",
       "src/showcase/studio/palette.ts": "317ce2d5763037a46efaf0eb6447ea80",
       "src/showcase/studio/pixel-icons.service.ts": "92468ad30b9af6dcdb811114c88cba27",
       "src/showcase/studio/useAuthUser.ts": "443dbeb952e395079e7c55a54e107e14",
       "src/styles.css": "b2cf7f6aa0ee5ecbaa7a1f307dbc381f",
-      "src/styles/nes.css": "4941781182f6727c812f98613dee9b6a",
+      "src/styles/nes.css": "406a2059c819911adc115cc1c00481c4",
       "supabase/config.toml": "ce78e0993d8e658d5b75c21d5d290eaa",
       "supabase/migrations/20260913004619_7543b78a-a113-47e8-a6db-a616d8f2536e.sql": "e759c29d7694823f921ca736e6324218",
       "tsconfig.json": "994abf64c2b9f78b568879f80ed0170e",
@@ -166,6 +168,38 @@
       {
         "name": "--nes-disabled",
         "raw": "#d3d3d3",
+        "source": "src/styles/nes.css"
+      },
+      {
+        "name": "--nes-focus-ring",
+        "raw": "#006bb3",
+        "source": "src/styles/nes.css"
+      }
+    ],
+    "typography": [
+      {
+        "name": "--nes-primary-text",
+        "raw": "#006bb3",
+        "source": "src/styles/nes.css"
+      },
+      {
+        "name": "--nes-success-text",
+        "raw": "#3d7a19",
+        "source": "src/styles/nes.css"
+      },
+      {
+        "name": "--nes-warning-text",
+        "raw": "#7a5c00",
+        "source": "src/styles/nes.css"
+      },
+      {
+        "name": "--nes-error-text",
+        "raw": "#a3231f",
+        "source": "src/styles/nes.css"
+      },
+      {
+        "name": "--nes-muted-text",
+        "raw": "#5c6166",
         "source": "src/styles/nes.css"
       }
     ],
@@ -650,6 +684,28 @@
           "name": "monochrome",
           "type": "boolean",
           "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "NesProvider",
+      "file": "src/lib/NesProvider",
+      "import_path": "",
+      "props": [
+        {
+          "name": "defaultTheme",
+          "type": "any",
+          "default": "retro"
+        },
+        {
+          "name": "loadFont",
+          "type": "boolean",
+          "default": "true"
+        },
+        {
+          "name": "children",
+          "type": "any",
+          "required": true
         }
       ]
     }

@@ -189,6 +189,20 @@ import { NesProgress } from "@/design-system/nes-229931"
 |---|---|---|
 | `variant` | default · primary · success · warning · error · pattern | `default` |
 
+### NesProvider
+
+```ts
+import { NesProvider } from "@/design-system/nes-229931"
+```
+
+**Props:**
+
+| Prop | Type | Default |
+|---|---|---|
+| `defaultTheme` | any | `retro` |
+| `loadFont` | boolean | `true` |
+| `children` | any | `—` |
+
 ### NesRadio
 
 ```ts

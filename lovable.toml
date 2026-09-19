@@ -1,5 +1,4 @@
 [[libraries]]
-  name = "NES"
-  project_id = "2d41e7ac-ac8d-4713-844e-300c9d4181e6"
-  slug = "nes-229931"
-  version = "1.6.0"
+project_id = "2d41e7ac-ac8d-4713-844e-300c9d4181e6"
+version = "1.7.0"
+slug = "nes-229931"
