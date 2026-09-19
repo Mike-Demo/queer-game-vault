@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",
+    "@lovable.dev/cloud-auth-js": "^1.1.2",
     "@portabletext/react": "^8.0.1",
     "@sanity/client": "^8.6.2",
     "@sanity/image-url": "^2.1.1",
