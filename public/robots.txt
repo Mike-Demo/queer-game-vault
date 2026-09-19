@@ -4,6 +4,7 @@ Disallow: /auth
 Disallow: /my-library
 Disallow: /settings
 Disallow: /imports
+Disallow: /import-search
 Disallow: /review
 Disallow: /profile/
 
