@@ -9,6 +9,13 @@ import {
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
 import { contentPageQueryOptions } from "@/lib/publicData";
+import {
+  breadcrumbs,
+  jsonLdScript,
+  organization,
+  webPage,
+  website,
+} from "@/lib/seo/structuredData";
 
 export const Route = createFileRoute("/about")({
   staticData: { sitemap: true },
@@ -21,10 +28,29 @@ export const Route = createFileRoute("/about")({
       },
       { property: "og:title", content: "About — QueerCade" },
       { property: "og:description", content: "How the arcade is curated, and where the game data comes from." },
+      { property: "og:url", content: "https://queercade.mikedemo.dev/about" },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://queercade.mikedemo.dev/about" }],
+    scripts: [
+      jsonLdScript(
+        organization(),
+        website(),
+        webPage({
+          type: "AboutPage",
+          path: "/about",
+          name: "About — QueerCade",
+          description: "How the arcade is curated, and where the game data comes from.",
+        }),
+        breadcrumbs([
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ]),
+      ),
+    ],
   }),
+
   loader: ({ context }) => context.queryClient.ensureQueryData(contentPageQueryOptions("about")),
   errorComponent: () => (
     <AppShell>
