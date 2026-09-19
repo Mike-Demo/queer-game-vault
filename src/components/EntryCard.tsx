@@ -21,7 +21,7 @@ export function EntryCard({ entry, editable }: { entry: GameEntry; editable: boo
         </Link>
         {editable ? (
           <>
-            <label className="text-xs" htmlFor={controlId}>
+            <label className="visually-hidden" htmlFor={controlId}>
               {`Status for ${entry.title}`}
             </label>
             <NesSelect
@@ -59,8 +59,9 @@ export function EntryCard({ entry, editable }: { entry: GameEntry; editable: boo
                   status: null,
                 })
               }
+              aria-label={`Remove ${entry.title} from my library`}
             >
-              {`Remove ${entry.title}`}
+              Remove
             </NesButton>
           </>
         ) : null}
