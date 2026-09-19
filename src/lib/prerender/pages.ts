@@ -3,7 +3,7 @@
  * so it uses plain fetch against the public (read-only) content API.
  */
 
-export const STATIC_PUBLIC_PATHS = ["/", "/library", "/collections", "/discover", "/about"] as const;
+export const STATIC_PUBLIC_PATHS = ["/", "/library", "/collections", "/discover", "/about", "/licenses"] as const;
 
 /** Safety valve: publishing rejects builds over 50,000 files. */
 export const MAX_PRERENDER_PAGES = 4000;
