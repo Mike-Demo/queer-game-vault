@@ -2,10 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/AppShell";
+import { GameCard } from "@/components/GameCard";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
 import { TrackControl } from "@/components/TrackControl";
 import { NesBadge, NesContainer, NesText } from "@/design-system/nes-229931";
-import { coverUrl, gameQueryOptions } from "@/lib/publicData";
+import { coverUrl, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/games/$slug")({
   staticData: { sitemap: true },
@@ -244,6 +245,8 @@ function GamePage() {
           </NesContainer>
         ) : null}
 
+        <RelatedGames id={data._id} genreIds={data.genres.map((genre) => genre._id)} />
+
         {data.importedAt ? (
           <NesText className="text-xs">
             {`Imported ${formatDateTime(data.importedAt)}`}
@@ -252,5 +255,24 @@ function GamePage() {
         ) : null}
       </div>
     </AppShell>
+  );
+}
+
+function RelatedGames({ id, genreIds }: { id: string; genreIds: string[] }) {
+  const related = useQuery(relatedGamesQueryOptions(id, genreIds));
+  const games = related.data ?? [];
+  if (games.length === 0) return null;
+
+  return (
+    <section className="stack">
+      <h2 className="title-md">
+        <NesText>Related games</NesText>
+      </h2>
+      <div className="card-grid">
+        {games.map((game) => (
+          <GameCard key={game._id} game={game} />
+        ))}
+      </div>
+    </section>
   );
 }
