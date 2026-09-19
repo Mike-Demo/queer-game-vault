@@ -97,3 +97,11 @@ export const importHistoryQuery = `*[_type == "importRecord"] | order(coalesce(r
   errorMessage,
   "game": game->{ _id, title, "slug": slug.current }
 }`;
+
+/** Sitemap: publicly visible game slugs, paginated by stable _id order. */
+export const sitemapGameSlugsQuery = `*[${PUBLIC_GAME_FILTER} && defined(slug.current)]
+  | order(_id asc)[$start...$end]{ "slug": slug.current }`;
+
+/** Sitemap: published collection slugs, paginated by stable _id order. */
+export const sitemapCollectionSlugsQuery = `*[_type == "gameCollection" && status == "published" && defined(slug.current)]
+  | order(_id asc)[$start...$end]{ "slug": slug.current }`;
