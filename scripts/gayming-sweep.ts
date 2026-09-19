@@ -327,6 +327,21 @@ async function filterMatches(): Promise<void> {
   console.log(`kept ${kept.length}, dropped ${droppedNames.size}`);
 }
 
+
+/** Sanity occasionally answers 503; retry a few times before giving up. */
+async function withRetry<T>(action: () => Promise<T>, label: string): Promise<T | null> {
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    try {
+      return await action();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "unknown";
+      console.log(`retry ${attempt + 1} for ${label}: ${message.slice(0, 80)}`);
+      await new Promise((resolve) => setTimeout(resolve, 2000 * (attempt + 1)));
+    }
+  }
+  return null;
+}
+
 async function importMatches(): Promise<void> {
   const { importOneGame } = await import("../src/lib/import/import.server");
   const { getSanityWriteClient } = await import("../src/lib/sanity/write.server");
@@ -362,14 +377,24 @@ async function importMatches(): Promise<void> {
     let gameId: string | null = `game-igdb-${match.igdbId}`;
 
     if (isNew) {
-      const outcome = await importOneGame(match.igdbId, { updateExisting: false });
+      const outcome = await withRetry(
+        () => importOneGame(match.igdbId, { updateExisting: false }),
+        `import ${match.igdbTitle}`,
+      );
+      if (!outcome) {
+        failed.push({ title: match.igdbTitle, error: "Sanity unavailable" });
+        continue;
+      }
       if (outcome.result === "failed") {
         failed.push({ title: match.igdbTitle, error: outcome.error ?? "unknown" });
         continue;
       }
       gameId = outcome.gameId;
       if (gameId) {
-        await client.patch(gameId).set({ editorialStatus: "approved" }).commit({ visibility: "async" });
+        await withRetry(
+          () => client.patch(gameId!).set({ editorialStatus: "approved" }).commit({ visibility: "async" }),
+          `approve ${match.igdbTitle}`,
+        );
       }
       created.push(match.igdbTitle);
     } else {
@@ -377,9 +402,12 @@ async function importMatches(): Promise<void> {
     }
 
     if (gameId) {
-      const current = await client.fetch<{ sources?: { url?: string }[] } | null>(
-        `*[_id == $id][0]{ sources }`,
-        { id: gameId },
+      const current = await withRetry(
+        () =>
+          client.fetch<{ sources?: { url?: string }[] } | null>(`*[_id == $id][0]{ sources }`, {
+            id: gameId,
+          }),
+        `read sources ${match.igdbTitle}`,
       );
       const known = new Set((current?.sources ?? []).map((item) => item.url));
       const additions = match.sources
@@ -394,11 +422,15 @@ async function importMatches(): Promise<void> {
           capturedAt,
         }));
       if (additions.length > 0) {
-        await client
-          .patch(gameId)
-          .setIfMissing({ sources: [] })
-          .append("sources", additions)
-          .commit({ visibility: "async" });
+        await withRetry(
+          () =>
+            client
+              .patch(gameId!)
+              .setIfMissing({ sources: [] })
+              .append("sources", additions)
+              .commit({ visibility: "async" }),
+          `sources ${match.igdbTitle}`,
+        );
       }
     }
 
