@@ -39,12 +39,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      // The pixel font is self-hosted, so preload it instead of connecting to a
+      // third-party font host. Cover art comes from the image CDN.
       {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap",
+        rel: "preload",
+        href: "/fonts/press-start-2p-latin.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
       },
+      { rel: "preconnect", href: "https://cdn.sanity.io", crossOrigin: "anonymous" },
+      { rel: "preconnect", href: "https://images.igdb.com", crossOrigin: "anonymous" },
     ],
   }),
   shellComponent: RootShell,

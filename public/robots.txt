@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /auth
+Disallow: /my-library
+Disallow: /settings
+Disallow: /imports
+Disallow: /review
+Disallow: /profile/
 
 Sitemap: https://queercade.mikedemo.dev/sitemap.xml
