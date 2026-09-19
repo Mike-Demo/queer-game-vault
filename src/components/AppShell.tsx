@@ -10,6 +10,14 @@ import { siteSettingsQueryOptions } from "@/lib/publicData";
 /** Paths only editors and admins should be offered. */
 const EDITOR_PATHS = new Set(["/discover", "/imports", "/review"]);
 
+/** Shown while site settings are still loading, so the header is never empty. */
+const FALLBACK_NAV = [
+  { label: "Home", path: "/" },
+  { label: "Library", path: "/library" },
+  { label: "Collections", path: "/collections" },
+  { label: "About", path: "/about" },
+];
+
 export function AppShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { data: settings } = useQuery(siteSettingsQueryOptions);
@@ -17,9 +25,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { data: access } = useEditorAccess(Boolean(session));
   const isEditor = Boolean(access?.role);
 
-  const navItems = (settings?.primaryNavigation ?? []).filter(
-    (item) => !EDITOR_PATHS.has(item.path) || isEditor,
-  );
+  const sourceNav = settings?.primaryNavigation?.length ? settings.primaryNavigation : FALLBACK_NAV;
+  const navItems = sourceNav.filter((item) => !EDITOR_PATHS.has(item.path) || isEditor);
   const currentPath = router.state.location.pathname;
 
   return (
