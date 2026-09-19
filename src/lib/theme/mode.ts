@@ -1,4 +1,6 @@
 /** Light/dark appearance preference, stored in a cookie so SSR renders it too. */
+import { createIsomorphicFn } from "@tanstack/react-start";
+import { getCookie } from "@tanstack/react-start/server";
 
 export type ThemeMode = "light" | "dark" | "system";
 
@@ -46,9 +48,6 @@ export const readAppearance = createIsomorphicFn()
   });
 
 
-function toMode(value: string | undefined): ThemeMode {
-  return isThemeMode(value) ? value : "system";
-}
 
 /** Persists appearance for a year so the next server render matches. */
 export function writeAppearanceCookies(appearance: Partial<Appearance>): void {
