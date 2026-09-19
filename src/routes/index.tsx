@@ -3,6 +3,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
+import { EditorQuickStart } from "@/components/EditorQuickStart";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
 import { NesContainer, NesText } from "@/design-system/nes-229931";
 import {
