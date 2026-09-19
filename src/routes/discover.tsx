@@ -34,7 +34,7 @@ function matchedCharacters(game: GameSummary, term: string): string[] {
   const query = term.trim().toLowerCase();
   if (query.length === 0 || game.title.toLowerCase().includes(query)) return [];
   return game.lgbtqCharacterNames.filter(
-    (name): name is string => Boolean(name) && name!.toLowerCase().includes(query),
+    (name): name is string => name != null && name.toLowerCase().includes(query),
   );
 }
 
