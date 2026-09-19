@@ -195,19 +195,19 @@ a {
 /* Dark appearance. Only design-system colour tokens are used: the library
    ships two light palettes plus dark component variants, so dark surfaces come
    from those variants and the page itself flips to the dark/background tokens. */
-[data-theme="dark"] body {
+html[data-theme="dark"] body {
   background-color: var(--nes-dark);
   color: var(--nes-bg);
 }
 
-[data-theme="dark"] a {
+html[data-theme="dark"] a {
   color: var(--nes-primary);
 }
 
-[data-theme="dark"] .app-header a,
-[data-theme="dark"] .app-footer,
-[data-theme="dark"] .title-xl,
-[data-theme="dark"] .title-md {
+html[data-theme="dark"] .app-header a,
+html[data-theme="dark"] .app-footer,
+html[data-theme="dark"] .title-xl,
+html[data-theme="dark"] .title-md {
   color: var(--nes-bg);
 }
 
@@ -250,6 +250,11 @@ a {
 .auth-layout {
   max-width: 34rem;
   margin-inline: auto;
+}
+
+.nes-select,
+.nes-select select {
+  width: 100%;
 }
 
 .cover-sm {
