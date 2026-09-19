@@ -126,8 +126,8 @@ function CollectionDetailPage() {
           <EmptyState title="No public games in this collection yet" />
         ) : (
           <div className="card-grid">
-            {data.games.map((game) => (
-              <GameCard key={game._id} game={game} />
+            {data.games.map((game, index) => (
+              <GameCard key={game._id} game={game} priority={index < 4} />
             ))}
           </div>
         )}
