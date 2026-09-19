@@ -36,9 +36,7 @@ function Collections() {
   return (
     <AppShell>
       <div className="stack-lg">
-        <NesText variant="primary" className="title-xl">
-          Collections
-        </NesText>
+        <h1 className="title-xl"><NesText variant="primary">Collections</NesText></h1>
         {collections.isPending ? <LoadingState label="Loading collections" /> : null}
         {collections.isError ? <ErrorState message="Collections could not be loaded." /> : null}
         {collections.data && collections.data.length === 0 ? (

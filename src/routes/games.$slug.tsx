@@ -82,9 +82,7 @@ function GamePage() {
             )}
           </NesContainer>
           <div className="stack">
-            <NesText variant="primary" className="title-xl">
-              {data.title}
-            </NesText>
+            <h1 className="title-xl"><NesText variant="primary">{data.title}</NesText></h1>
             <div className="row">
               {data.releaseYear ? <NesBadge variant="primary">{String(data.releaseYear)}</NesBadge> : null}
               {data.featured ? <NesBadge variant="warning">Featured</NesBadge> : null}
