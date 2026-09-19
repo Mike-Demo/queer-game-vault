@@ -28,7 +28,9 @@ export const GAME_DETAIL_PROJECTION = `{
   "genres": coalesce(genres[]->${TAXONOMY}, []),
   "platforms": coalesce(platforms[]->${TAXONOMY}, []),
   "sources": coalesce(sources[]{ publication, title, url, capturedAt }, []),
+  "lgbtqCharacters": coalesce(lgbtqCharacters[]{ name, identity, sourceUrl }, []),
   importStatus, importedAt, lastSyncedAt
+
 }`;
 
 const PUBLIC_GAME_FILTER = `_type == "game" && editorialStatus in ["approved", "featured"]`;
