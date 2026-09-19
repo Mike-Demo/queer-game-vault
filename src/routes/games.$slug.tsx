@@ -8,6 +8,7 @@ import { coverUrl, gameQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/games/$slug")({
   staticData: { sitemap: true },
+  loader: ({ context, params }) => context.queryClient.ensureQueryData(gameQueryOptions(params.slug)),
   head: ({ loaderData, params }) => {
     const game = loaderData ?? null;
     const title = game ? `${game.title} — QueerCade` : `${params.slug} — QueerCade`;
@@ -33,7 +34,6 @@ export const Route = createFileRoute("/games/$slug")({
       ],
     };
   },
-  loader: ({ context, params }) => context.queryClient.ensureQueryData(gameQueryOptions(params.slug)),
   errorComponent: () => (
     <AppShell>
       <ErrorState message="This game could not be loaded. Please refresh." />
