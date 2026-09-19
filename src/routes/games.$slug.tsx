@@ -209,11 +209,21 @@ function GamePage() {
             <div className="shot-strip">
               {data.screenshots.map((shot) =>
                 shot.url ? (
-                  <img key={shot.url} className="cover" src={shot.url} alt={`${data.title} screenshot`} loading="lazy" />
+                  <figure key={shot.url}>
+                    <img className="cover" src={shot.url} alt={shot.caption ?? `${data.title} screenshot`} loading="lazy" />
+                    {shot.caption ? <figcaption><NesText className="text-xs">{shot.caption}</NesText></figcaption> : null}
+                  </figure>
                 ) : null,
               )}
             </div>
           </NesContainer>
+        ) : null}
+
+        {data.importedAt ? (
+          <NesText className="text-xs">
+            {`Imported ${formatDateTime(data.importedAt)}`}
+            {data.lastSyncedAt ? ` · Last synced ${formatDateTime(data.lastSyncedAt)}` : ""}
+          </NesText>
         ) : null}
       </div>
     </AppShell>
