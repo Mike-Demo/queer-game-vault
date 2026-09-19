@@ -31,7 +31,10 @@ export default defineConfig(async ({ command, mode }) => {
       mockupPreviewPlugin(),
       tsConfigPaths({ projects: ["./tsconfig.json"] }),
       ...(useCloudflare ? [cloudflare({ viteEnvironment: { name: "ssr" } })] : []),
-      tanstackStart(),
+      tanstackStart({
+        pages: prerenderPaths.map((route) => ({ path: route })),
+        prerender: { enabled: command === "build", autoStaticPathsDiscovery: false, crawlLinks: false },
+      }),
       viteReact(),
       ...(mode === "development" ? [componentTagger()] : []),
     ],
