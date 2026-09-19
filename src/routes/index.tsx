@@ -23,12 +23,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "A curated arcade: games discovered through IGDB, imported into Sanity, and approved by editors before they reach this screen.",
+          "Browse a hand-picked arcade of games with LGBTQ+ characters and stories — featured picks, curated collections, and a library you can track your own play through.",
       },
       { property: "og:title", content: "QueerCade — a curated arcade of games" },
       {
         property: "og:description",
-        content: "Editor-curated games, powered by IGDB data and a Sanity editorial workflow.",
+        content:
+          "Hand-picked games with LGBTQ+ characters and stories: featured picks, curated collections, and a library you can track.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

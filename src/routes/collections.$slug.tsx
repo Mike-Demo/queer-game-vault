@@ -12,17 +12,26 @@ import { collectionQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/collections/$slug")({
   staticData: { sitemap: true },
-  head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug} collection — QueerCade` },
-      { name: "description", content: "An editor-curated collection of games in the QueerCade arcade." },
-      { property: "og:title", content: `${params.slug} collection — QueerCade` },
-      { property: "og:description", content: "An editor-curated collection of games." },
-      { property: "og:type", content: "article" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
   loader: ({ context, params }) => context.queryClient.ensureQueryData(collectionQueryOptions(params.slug)),
+  head: ({ params, loaderData }) => {
+    const title = loaderData?.title ?? "Collection";
+    const description =
+      loaderData?.description ??
+      `Games curated in the ${title} collection on QueerCade.`;
+    const url = `https://queercade.mikedemo.dev/collections/${params.slug}`;
+    return {
+      meta: [
+        { title: `${title} — QueerCade` },
+        { name: "description", content: description },
+        { property: "og:title", content: `${title} — QueerCade` },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "article" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   errorComponent: () => (
     <AppShell>
       <ErrorState message="This collection could not be loaded. Please refresh." />
