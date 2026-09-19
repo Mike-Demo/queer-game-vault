@@ -10,6 +10,7 @@ import {
   featuredCollectionsQuery,
   featuredGamesQuery,
   gameBySlugQuery,
+  gameCollectionsBySlugQuery,
   publishedCollectionsQuery,
   relatedGamesQuery,
   searchGamesQuery,
@@ -17,6 +18,7 @@ import {
 } from "./sanity/queries";
 import type {
   CollectionDetail,
+  CollectionRef,
   CollectionSummary,
   ContentPage,
   GameDetail,

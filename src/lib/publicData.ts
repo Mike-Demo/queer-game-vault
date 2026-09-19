@@ -68,6 +68,14 @@ export function gameQueryOptions(slug: string) {
   });
 }
 
+export function gameCollectionsQueryOptions(slug: string) {
+  return queryOptions({
+    queryKey: ["game", slug, "collections"],
+    queryFn: () => fetchGameCollections({ data: { slug } }),
+    staleTime: 60 * 1000,
+  });
+}
+
 export function contentPageQueryOptions(slug: string) {
   return queryOptions({
     queryKey: ["contentPage", slug],
