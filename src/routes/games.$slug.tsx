@@ -215,6 +215,20 @@ function GamePage() {
           </div>
         </Surface>
 
+        {memberCollections.length > 0 ? (
+          <Surface title="In our collections">
+            <ul className="source-list">
+              {memberCollections.map((collection) => (
+                <li key={collection.slug}>
+                  <Link to="/collections/$slug" params={{ slug: collection.slug ?? "" }}>
+                    {collection.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Surface>
+        ) : null}
+
         {data.editorNotes ? (
           <Surface title="Editor notes">
             <p>{data.editorNotes}</p>
@@ -287,6 +301,13 @@ function GamePage() {
           <NesText className="text-xs">
             {`Imported ${formatDateTime(data.importedAt)}`}
             {data.lastSyncedAt ? ` · Last synced ${formatDateTime(data.lastSyncedAt)}` : ""}
+            {data.sourceUpdatedAt ? ` · IGDB record updated ${formatDateTime(data.sourceUpdatedAt)}` : ""}
+          </NesText>
+        ) : null}
+
+        {access?.role ? (
+          <NesText className="text-xs" variant="primary">
+            {`Editorial status: ${data.editorialStatus} · Import status: ${data.importStatus ?? "unknown"}`}
           </NesText>
         ) : null}
       </div>
