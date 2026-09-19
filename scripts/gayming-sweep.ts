@@ -14,6 +14,7 @@ const CANDIDATES = `${OUT}/candidates.json`;
 const MATCHES = `${OUT}/matches.json`;
 const REPORT = `${OUT}/report.json`;
 const PAGES = `${OUT}/pages.json`;
+const CHECKED = `${OUT}/checked.json`;
 
 const GATEWAY = "https://connector-gateway.lovable.dev/firecrawl/v2";
 
@@ -232,8 +233,13 @@ async function matchCandidates(): Promise<void> {
   const { searchGames } = await import("../src/lib/igdb/igdb.server");
   const candidates = JSON.parse(readFileSync(CANDIDATES, "utf8")) as Candidate[];
   const done: Match[] = existsSync(MATCHES) ? (JSON.parse(readFileSync(MATCHES, "utf8")) as Match[]) : [];
-  const seen = new Set(done.map((item) => normalizeTitle(item.name)));
-  const unmatched: string[] = [];
+  const seen = new Set<string>(
+    existsSync(CHECKED) ? (JSON.parse(readFileSync(CHECKED, "utf8")) as string[]) : [],
+  );
+  for (const item of done) seen.add(normalizeTitle(item.name));
+  const unmatched: string[] = existsSync(`${OUT}/unmatched.json`)
+    ? (JSON.parse(readFileSync(`${OUT}/unmatched.json`, "utf8")) as string[])
+    : [];
 
   let index = 0;
   for (const candidate of candidates) {
@@ -253,14 +259,18 @@ async function matchCandidates(): Promise<void> {
       console.log(`search failed for ${candidate.name}: ${error instanceof Error ? error.message : "unknown"}`);
       unmatched.push(candidate.name);
     }
+    seen.add(normalizeTitle(candidate.name));
     if (index % 50 === 0) {
       writeFileSync(MATCHES, JSON.stringify(done, null, 2));
+      writeFileSync(CHECKED, JSON.stringify([...seen], null, 2));
+      writeFileSync(`${OUT}/unmatched.json`, JSON.stringify(unmatched, null, 2));
       console.log(`${index}/${candidates.length} checked, ${done.length} matched`);
     }
-    await new Promise((resolve) => setTimeout(resolve, 230));
+    await new Promise((resolve) => setTimeout(resolve, 150));
   }
 
   writeFileSync(MATCHES, JSON.stringify(done, null, 2));
+  writeFileSync(CHECKED, JSON.stringify([...seen], null, 2));
   writeFileSync(`${OUT}/unmatched.json`, JSON.stringify(unmatched, null, 2));
   console.log(`matched ${done.length}, unmatched ${unmatched.length}`);
 }
