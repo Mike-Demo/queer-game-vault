@@ -112,7 +112,7 @@ export interface ContentPage {
   title: string;
   slug: string | null;
   summary: string | null;
-  body: unknown[] | null;
+  body: JsonValue[] | null;
   featuredImage: SanityImageRef | null;
   seoTitle: string | null;
   seoDescription: string | null;
