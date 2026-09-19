@@ -1,4 +1,6 @@
 /** Light/dark appearance preference, stored in a cookie so SSR renders it too. */
+import { createIsomorphicFn } from "@tanstack/react-start";
+import { getCookie } from "@tanstack/react-start/server";
 
 export type ThemeMode = "light" | "dark" | "system";
 
@@ -24,28 +26,28 @@ export interface Appearance {
   highContrast: boolean;
 }
 
-/** Reads the stored appearance on the server (request cookie) or in the browser. */
-export async function readAppearance(): Promise<Appearance> {
-  if (typeof document !== "undefined") {
-    return {
-      mode: toMode(readCookieValue(document.cookie, THEME_COOKIE)),
-      highContrast: readCookieValue(document.cookie, CONTRAST_COOKIE) === "high",
-    };
-  }
-  try {
-    const { getCookie } = await import("@tanstack/react-start/server");
-    return {
-      mode: toMode(getCookie(THEME_COOKIE)),
-      highContrast: getCookie(CONTRAST_COOKIE) === "high",
-    };
-  } catch {
-    return { mode: "system", highContrast: false };
-  }
-}
-
 function toMode(value: string | undefined): ThemeMode {
   return isThemeMode(value) ? value : "system";
 }
+
+/** Reads the stored appearance on the server (request cookie) or in the browser. */
+export const readAppearance = createIsomorphicFn()
+  .client((): Appearance => ({
+    mode: toMode(readCookieValue(document.cookie, THEME_COOKIE)),
+    highContrast: readCookieValue(document.cookie, CONTRAST_COOKIE) === "high",
+  }))
+  .server((): Appearance => {
+    try {
+      return {
+        mode: toMode(getCookie(THEME_COOKIE)),
+        highContrast: getCookie(CONTRAST_COOKIE) === "high",
+      };
+    } catch {
+      return { mode: "system", highContrast: false };
+    }
+  });
+
+
 
 /** Persists appearance for a year so the next server render matches. */
 export function writeAppearanceCookies(appearance: Partial<Appearance>): void {
