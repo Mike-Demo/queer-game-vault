@@ -6,6 +6,7 @@ import { NesBadge, NesButton, NesText } from "@/design-system/nes-229931";
 import { useEditorAccess, useSession } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { siteSettingsQueryOptions } from "@/lib/publicData";
+import { SiteFooter } from "@/components/SiteFooter";
 
 /** Paths only editors and admins should be offered. */
 const EDITOR_PATHS = new Set(["/import-search", "/imports", "/review"]);
@@ -104,6 +105,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <NesText className="text-xs">
           {settings?.footerContent ?? "QueerCade — game data from IGDB, curation by humans."}
         </NesText>
+        <SiteFooter />
       </footer>
     </div>
   );
