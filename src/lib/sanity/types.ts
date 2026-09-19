@@ -43,7 +43,15 @@ export interface GameExternalLink {
   url: string | null;
 }
 
+export interface GameSourceReference {
+  publication: string | null;
+  title: string | null;
+  url: string | null;
+  capturedAt: string | null;
+}
+
 export interface GameDetail extends GameSummary {
+  sources: GameSourceReference[];
   storyline: string | null;
   editorNotes: string | null;
   firstReleaseDate: string | null;
