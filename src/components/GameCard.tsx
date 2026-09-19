@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
+import { TrackControl } from "@/components/TrackControl";
 import { NesBadge, NesContainer, NesText } from "@/design-system/nes-229931";
 import { coverUrl } from "@/lib/publicData";
 import type { GameSummary } from "@/lib/sanity/types";
@@ -33,8 +34,13 @@ export function GameCard({ game }: { game: GameSummary }) {
         </div>
         {game.slug ? (
           <Link to="/games/$slug" params={{ slug: game.slug }}>
-            View game
+            View details
           </Link>
+        ) : null}
+        {game.slug ? (
+          <TrackControl
+            game={{ igdbId: game.igdbId, slug: game.slug, title: game.title, coverUrl: cover }}
+          />
         ) : null}
       </div>
     </NesContainer>

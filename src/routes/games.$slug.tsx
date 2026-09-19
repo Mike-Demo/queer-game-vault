@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/AppShell";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
+import { TrackControl } from "@/components/TrackControl";
 import { NesBadge, NesContainer, NesText } from "@/design-system/nes-229931";
 import { coverUrl, gameQueryOptions } from "@/lib/publicData";
 
@@ -133,6 +134,13 @@ function GamePage() {
                 <NesBadge key={platform._id}>{platform.abbreviation ?? platform.name}</NesBadge>
               ))}
             </div>
+            {data.slug ? (
+              <NesContainer title="Track this game" rounded>
+                <TrackControl
+                  game={{ igdbId: data.igdbId, slug: data.slug, title: data.title, coverUrl: cover }}
+                />
+              </NesContainer>
+            ) : null}
             {data.customDescription ? (
               <NesContainer title="From our editors">
                 <p>{data.customDescription}</p>
