@@ -53,12 +53,12 @@ export const Route = createFileRoute("/discover")({
       {
         name: "description",
         content:
-          "Search the QueerCade arcade by title, and filter games by genre, platform and theme.",
+          "Search the QueerCade arcade by game title or LGBTQ+ character, and filter games by genre, platform and theme.",
       },
       { property: "og:title", content: "Discover games — QueerCade" },
       {
         property: "og:description",
-        content: "Search and filter every game in the QueerCade arcade.",
+        content: "Search every game in the QueerCade arcade by title or character.",
       },
       { property: "og:url", content: "https://queercade.mikedemo.dev/discover" },
       { property: "og:type", content: "website" },
@@ -75,7 +75,7 @@ export const Route = createFileRoute("/discover")({
           type: "SearchResultsPage",
           path: "/discover",
           name: "Discover games — QueerCade",
-          description: "Search and filter every game in the QueerCade arcade.",
+          description: "Search every game in the QueerCade arcade by title or LGBTQ+ character.",
         }),
         breadcrumbs([
           { name: "Home", path: "/" },
@@ -148,12 +148,12 @@ function DiscoverPage() {
         <div className="discover-layout">
           <Surface title="Filters" rounded>
             <div className="stack">
-              <NesField label="Search games" htmlFor="discover-term">
+              <NesField label="Search by game or character" htmlFor="discover-term">
                 <NesInput
                   id="discover-term"
                   type="search"
                   value={term}
-                  placeholder="Title"
+                  placeholder="Game or character"
                   onChange={(event) => setTerm(event.target.value)}
                 />
               </NesField>
