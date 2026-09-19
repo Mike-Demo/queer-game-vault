@@ -10,6 +10,7 @@ import {
   featuredCollectionsQuery,
   featuredGamesQuery,
   gameBySlugQuery,
+  gameCollectionsBySlugQuery,
   publishedCollectionsQuery,
   relatedGamesQuery,
   searchGamesQuery,
@@ -17,6 +18,7 @@ import {
 } from "./sanity/queries";
 import type {
   CollectionDetail,
+  CollectionRef,
   CollectionSummary,
   ContentPage,
   GameDetail,
@@ -71,6 +73,12 @@ export const fetchGame = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) => slugInput.parse(data))
   .handler(async ({ data }): Promise<GameDetail | null> =>
     sanityPublicClient.fetch<GameDetail | null>(gameBySlugQuery, { slug: data.slug }),
+  );
+
+export const fetchGameCollections = createServerFn({ method: "GET" })
+  .inputValidator((data: unknown) => slugInput.parse(data))
+  .handler(async ({ data }): Promise<CollectionRef[]> =>
+    sanityPublicClient.fetch<CollectionRef[]>(gameCollectionsBySlugQuery, { slug: data.slug }),
   );
 
 export const fetchContentPage = createServerFn({ method: "GET" })

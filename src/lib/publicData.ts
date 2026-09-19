@@ -8,6 +8,7 @@ import {
   fetchFeaturedCollections,
   fetchFeaturedGames,
   fetchGame,
+  fetchGameCollections,
   fetchLibraryGames,
   fetchRelatedGames,
   fetchSiteSettings,
@@ -64,6 +65,14 @@ export function gameQueryOptions(slug: string) {
   return queryOptions({
     queryKey: ["game", slug],
     queryFn: () => fetchGame({ data: { slug } }),
+    staleTime: 60 * 1000,
+  });
+}
+
+export function gameCollectionsQueryOptions(slug: string) {
+  return queryOptions({
+    queryKey: ["game", slug, "collections"],
+    queryFn: () => fetchGameCollections({ data: { slug } }),
     staleTime: 60 * 1000,
   });
 }

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
@@ -10,11 +10,16 @@ import {
   NesText,
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
-import { coverUrl, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
+import { coverUrl, gameCollectionsQueryOptions, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
+import { useEditorAccess, useSession } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/games/$slug")({
   staticData: { sitemap: true },
-  loader: ({ context, params }) => context.queryClient.ensureQueryData(gameQueryOptions(params.slug)),
+  loader: async ({ context, params }) => {
+    const game = await context.queryClient.ensureQueryData(gameQueryOptions(params.slug));
+    await context.queryClient.ensureQueryData(gameCollectionsQueryOptions(params.slug));
+    return game;
+  },
   head: ({ loaderData, params }) => {
     const game = loaderData ?? null;
     const title = game ? `${game.title} — QueerCade` : `${params.slug} — QueerCade`;
@@ -56,6 +61,9 @@ export const Route = createFileRoute("/games/$slug")({
 function GamePage() {
   const { slug } = Route.useParams();
   const game = useQuery(gameQueryOptions(slug));
+  const collections = useQuery(gameCollectionsQueryOptions(slug));
+  const { session } = useSession();
+  const { data: access } = useEditorAccess(Boolean(session));
 
   if (game.isPending) {
     return (
@@ -115,7 +123,10 @@ function GamePage() {
     });
   }
   if (data.totalRating) metaRows.push({ label: "Total rating", value: `${Math.round(data.totalRating)} / 100` });
+  if (data.popularity) metaRows.push({ label: "Popularity", value: String(Math.round(data.popularity)) });
   metaRows.push({ label: "IGDB ID", value: String(data.igdbId) });
+
+  const memberCollections = (collections.data ?? []).filter((collection) => collection.slug);
 
   return (
     <AppShell>
@@ -205,6 +216,20 @@ function GamePage() {
           </div>
         </Surface>
 
+        {memberCollections.length > 0 ? (
+          <Surface title="In our collections">
+            <ul className="source-list">
+              {memberCollections.map((collection) => (
+                <li key={collection.slug}>
+                  <Link to="/collections/$slug" params={{ slug: collection.slug ?? "" }}>
+                    {collection.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Surface>
+        ) : null}
+
         {data.editorNotes ? (
           <Surface title="Editor notes">
             <p>{data.editorNotes}</p>
@@ -277,6 +302,13 @@ function GamePage() {
           <NesText className="text-xs">
             {`Imported ${formatDateTime(data.importedAt)}`}
             {data.lastSyncedAt ? ` · Last synced ${formatDateTime(data.lastSyncedAt)}` : ""}
+            {data.sourceUpdatedAt ? ` · IGDB record updated ${formatDateTime(data.sourceUpdatedAt)}` : ""}
+          </NesText>
+        ) : null}
+
+        {access?.role ? (
+          <NesText className="text-xs" variant="primary">
+            {`Editorial status: ${data.editorialStatus} · Import status: ${data.importStatus ?? "unknown"}`}
           </NesText>
         ) : null}
       </div>

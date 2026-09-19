@@ -29,6 +29,7 @@ export const GAME_DETAIL_PROJECTION = `{
   "platforms": coalesce(platforms[]->${TAXONOMY}, []),
   "sources": coalesce(sources[]{ publication, title, url, capturedAt }, []),
   "lgbtqCharacters": coalesce(lgbtqCharacters[]{ name, identity, sourceUrl }, []),
+  popularity, sourceUpdatedAt,
   importStatus, importedAt, lastSyncedAt
 
 }`;
@@ -64,6 +65,11 @@ export const collectionBySlugQuery = `*[_type == "gameCollection" && status == "
   "gameCount": count(games[@->editorialStatus in ["approved", "featured"]]),
   "games": coalesce(games[@->editorialStatus in ["approved", "featured"]]->${GAME_SUMMARY_PROJECTION}, [])
 }`;
+
+/** Collections that include the game with the given slug. */
+export const gameCollectionsBySlugQuery = `*[_type == "gameCollection" && status == "published"
+  && $slug in games[]->slug.current]
+  | order(title asc){ title, "slug": slug.current }`;
 
 /** Editorial: everything awaiting or in review (authorized reads only). */
 export const reviewQueueQuery = `*[_type == "game" && editorialStatus in ["imported", "underReview"]]
