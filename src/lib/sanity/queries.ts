@@ -20,9 +20,11 @@ export const GAME_DETAIL_PROJECTION = `{
   "screenshots": coalesce(screenshots[]{ url, caption }, []),
   "themes": coalesce(themes, []),
   "gameModes": coalesce(gameModes, []),
-  "ageRatings": coalesce(ageRatings[]{ category, rating }, []),
+  "ageRatings": coalesce(ageRatings[]{ category, rating, "descriptors": coalesce(descriptors, []) }, []),
   "externalLinks": coalesce(externalLinks[]{ label, url }, []),
+  "storeLinks": coalesce(storeLinks[]{ store, url }, []),
   igdbRating, igdbRatingCount, totalRating, igdbCollectionName, franchise,
+  gameType, "alternativeNames": coalesce(alternativeNames, []),
   "developer": developer->{ name },
   "publisher": publisher->{ name },
   "involvedCompanies": coalesce(involvedCompanies[]->{ name }, []),
@@ -30,7 +32,8 @@ export const GAME_DETAIL_PROJECTION = `{
   "platforms": coalesce(platforms[]->${TAXONOMY}, []),
   "sources": coalesce(sources[]{ publication, title, url, capturedAt }, []),
   "lgbtqCharacters": coalesce(lgbtqCharacters[]{ name, identity, sourceUrl }, []),
-  popularity, sourceUpdatedAt,
+  "igdbCharacters": coalesce(igdbCharacters[]{ igdbId, name, description, gender, species, mugshotUrl, igdbUrl }, []),
+  popularity, "popularityScores": coalesce(popularityScores[]{ type, value }, []), sourceUpdatedAt,
   importStatus, importedAt, lastSyncedAt
 
 }`;

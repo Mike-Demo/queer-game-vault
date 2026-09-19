@@ -177,6 +177,11 @@ function GamePage() {
   if (otherCompanies.length > 0) metaRows.push({ label: "Also involved", value: otherCompanies.join(", ") });
   if (data.franchise) metaRows.push({ label: "Franchise", value: data.franchise });
   if (data.igdbCollectionName) metaRows.push({ label: "Series", value: data.igdbCollectionName });
+  if (data.gameType && data.gameType !== "Main Game") metaRows.push({ label: "Release type", value: data.gameType });
+  const alternativeNames = data.alternativeNames.filter((name): name is string => Boolean(name));
+  if (alternativeNames.length > 0) {
+    metaRows.push({ label: "Also known as", value: alternativeNames.join(", ") });
+  }
   if (data.gameModes.length > 0) metaRows.push({ label: "Modes", value: data.gameModes.join(", ") });
   if (data.themes.length > 0) metaRows.push({ label: "Themes", value: data.themes.join(", ") });
   if (data.igdbRating) {
@@ -186,7 +191,24 @@ function GamePage() {
     });
   }
   if (data.totalRating) metaRows.push({ label: "Total rating", value: `${Math.round(data.totalRating)} / 100` });
-  if (data.popularity) metaRows.push({ label: "Popularity", value: String(Math.round(data.popularity)) });
+  // IGDB's popularity primitives are normalized scores, not raw counts.
+  if (data.popularity !== null) {
+    metaRows.push({ label: "Popularity (IGDB visits)", value: data.popularity.toFixed(4) });
+  }
+  const popularitySignals = data.popularityScores.filter(
+    (score): score is { type: string; value: number } => Boolean(score.type) && (score.value ?? 0) > 0,
+  );
+  const contentDescriptors = [
+    ...new Set(
+      data.ageRatings.flatMap((rating) =>
+        rating.descriptors.filter((descriptor): descriptor is string => Boolean(descriptor)),
+      ),
+    ),
+  ];
+  const storeLinks = data.storeLinks.filter(
+    (link): link is { store: string; url: string } => Boolean(link.store) && Boolean(link.url),
+  );
+  const igdbCharacters = data.igdbCharacters.filter((character) => Boolean(character.name));
   metaRows.push({ label: "IGDB ID", value: String(data.igdbId) });
 
   const memberCollections = (collections.data ?? []).filter((collection) => collection.slug);
@@ -276,6 +298,25 @@ function GamePage() {
                 ))}
               </div>
             ) : null}
+            {contentDescriptors.length > 0 ? (
+              <NesText className="text-xs">{`Content descriptors: ${contentDescriptors.join(", ")}`}</NesText>
+            ) : null}
+            {popularitySignals.length > 0 ? (
+              <NesText className="text-xs">
+                {`IGDB signals: ${popularitySignals
+                  .map((score) => `${score.type} ${score.value.toFixed(4)}`)
+                  .join(" · ")}`}
+              </NesText>
+            ) : null}
+            {storeLinks.length > 0 ? (
+              <div className="row">
+                {storeLinks.map((link) => (
+                  <a key={link.url} href={link.url} rel="noreferrer noopener" target="_blank">
+                    {`Buy on ${link.store}`}
+                  </a>
+                ))}
+              </div>
+            ) : null}
             <div className="row">
               {data.externalLinks.map((link) =>
                 link.url ? (
@@ -335,6 +376,39 @@ function GamePage() {
                 </li>
               ))}
             </ul>
+          </Surface>
+        ) : null}
+
+        {igdbCharacters.length > 0 ? (
+          <Surface title="Cast">
+            <div className="character-grid">
+              {igdbCharacters.map((character, index) => (
+                <div key={`${character.igdbId ?? character.name}-${index}`}>
+                  {character.mugshotUrl ? (
+                    <img
+                      alt={character.name ?? "Character portrait"}
+                      className="character-portrait"
+                      loading="lazy"
+                      src={character.mugshotUrl}
+                    />
+                  ) : null}
+                  <NesText className="text-xs" variant="primary">
+                    {character.name ?? "Unnamed"}
+                  </NesText>
+                  {character.gender || character.species ? (
+                    <NesText className="text-xs">
+                      {[character.gender, character.species].filter(Boolean).join(" · ")}
+                    </NesText>
+                  ) : null}
+                  {character.description ? <NesText className="text-xs">{character.description}</NesText> : null}
+                  {character.igdbUrl ? (
+                    <a href={character.igdbUrl} rel="noreferrer noopener" target="_blank">
+                      IGDB profile
+                    </a>
+                  ) : null}
+                </div>
+              ))}
+            </div>
           </Surface>
         ) : null}
 

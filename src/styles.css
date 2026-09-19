@@ -219,6 +219,20 @@ a {
   font-size: var(--app-font-xs);
 }
 
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--app-card-min), 1fr));
+  gap: var(--app-space-2);
+  font-size: var(--app-font-xs);
+}
+
+.character-portrait {
+  height: var(--app-cover-height-sm);
+  width: auto;
+  image-rendering: pixelated;
+}
+
+
 .title-xl {
   font-size: var(--app-font-lg);
   line-height: 1.6;
