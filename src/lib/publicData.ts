@@ -5,10 +5,13 @@ import {
   approvedGamesQuery,
   collectionBySlugQuery,
   contentPageBySlugQuery,
+  discoverFacetsQuery,
   featuredCollectionsQuery,
   featuredGamesQuery,
   gameBySlugQuery,
   publishedCollectionsQuery,
+  relatedGamesQuery,
+  searchGamesQuery,
   siteSettingsQuery,
 } from "./sanity/queries";
 import type {
@@ -18,6 +21,7 @@ import type {
   GameDetail,
   GameSummary,
   SiteSettings,
+  TaxonomyRef,
 } from "./sanity/types";
 
 /** Best available cover art: editor upload first, IGDB source URL as fallback. */
@@ -77,5 +81,51 @@ export function contentPageQueryOptions(slug: string) {
     queryKey: ["contentPage", slug],
     queryFn: () => sanityPublicClient.fetch<ContentPage | null>(contentPageBySlugQuery, { slug }),
     staleTime: 5 * 60 * 1000,
+  });
+}
+
+export function relatedGamesQueryOptions(id: string, genreIds: string[]) {
+  return queryOptions({
+    queryKey: ["games", "related", id, genreIds],
+    queryFn: () =>
+      genreIds.length === 0
+        ? Promise.resolve([])
+        : sanityPublicClient.fetch<GameSummary[]>(relatedGamesQuery, { id, genreIds, limit: 3 }),
+    staleTime: 5 * 60 * 1000,
+  });
+}
+
+export interface DiscoverFilters {
+  term: string;
+  genre: string;
+  platform: string;
+  theme: string;
+}
+
+export interface DiscoverFacets {
+  genres: TaxonomyRef[];
+  platforms: TaxonomyRef[];
+  themes: (string | null)[] | null;
+}
+
+export const discoverFacetsQueryOptions = queryOptions({
+  queryKey: ["discoverFacets"],
+  queryFn: () => sanityPublicClient.fetch<DiscoverFacets>(discoverFacetsQuery),
+  staleTime: 10 * 60 * 1000,
+});
+
+export function discoverSearchQueryOptions(filters: DiscoverFilters) {
+  const term = filters.term.trim();
+  return queryOptions({
+    queryKey: ["discoverSearch", filters],
+    queryFn: () =>
+      sanityPublicClient.fetch<GameSummary[]>(searchGamesQuery, {
+        term: term.length > 0 ? `${term}*` : "",
+        genre: filters.genre,
+        platform: filters.platform,
+        theme: filters.theme,
+        limit: 48,
+      }),
+    staleTime: 60 * 1000,
   });
 }

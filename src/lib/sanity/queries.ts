@@ -106,3 +106,24 @@ export const sitemapGameSlugsQuery = `*[${PUBLIC_GAME_FILTER} && defined(slug.cu
 /** Sitemap: published collection slugs, paginated by stable _id order. */
 export const sitemapCollectionSlugsQuery = `*[_type == "gameCollection" && status == "published" && defined(slug.current)]
   | order(_id asc)[$start...$end]{ "slug": slug.current }`;
+
+/** Related games: shares at least one genre with the given game. */
+export const relatedGamesQuery = `*[${PUBLIC_GAME_FILTER} && _id != $id && count((genres[]->_id)[@ in $genreIds]) > 0]
+  | order(coalesce(igdbRating, 0) desc)[0...$limit] ${GAME_SUMMARY_PROJECTION}`;
+
+/** Public discovery search: free text plus optional genre, platform and theme. */
+export const searchGamesQuery = `*[${PUBLIC_GAME_FILTER}
+  && ($term == "" || title match $term)
+  && ($genre == "" || $genre in genres[]->slug.current)
+  && ($platform == "" || $platform in platforms[]->slug.current)
+  && ($theme == "" || $theme in themes)]
+  | order(title asc)[0...$limit] ${GAME_SUMMARY_PROJECTION}`;
+
+/** Filter options, limited to taxonomy actually used by publicly visible games. */
+export const discoverFacetsQuery = `{
+  "genres": *[_type == "genre" && count(*[${PUBLIC_GAME_FILTER} && references(^._id)]) > 0]
+    | order(name asc){ _id, name, "slug": slug.current },
+  "platforms": *[_type == "platform" && count(*[${PUBLIC_GAME_FILTER} && references(^._id)]) > 0]
+    | order(name asc){ _id, name, "slug": slug.current },
+  "themes": array::unique(*[${PUBLIC_GAME_FILTER}].themes[])
+}`;
