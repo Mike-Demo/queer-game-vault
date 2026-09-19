@@ -18,10 +18,12 @@ import { Route as LibraryRouteImport } from './routes/library'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedImportSearchRouteImport } from './routes/_authenticated/import-search'
 import { Route as AuthenticatedImportsRouteImport } from './routes/_authenticated/imports'
+import { Route as AuthenticatedMyLibraryRouteImport } from './routes/_authenticated/my-library'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as GamesSlugRouteImport } from './routes/games.$slug'
+import { Route as ProfileUsernameRouteImport } from './routes/profile.$username'
 import { Route as Char91__componentChar93PreviewSplatRouteImport } from './routes/[__component].preview.$'
 import { Route as Char91__mockupChar93PreviewSplatRouteImport } from './routes/[__mockup].preview.$'
 
@@ -70,6 +72,11 @@ const AuthenticatedImportsRoute = AuthenticatedImportsRouteImport.update({
   path: '/imports',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMyLibraryRoute = AuthenticatedMyLibraryRouteImport.update({
+  id: '/my-library',
+  path: '/my-library',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
   id: '/review',
   path: '/review',
@@ -88,6 +95,11 @@ const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
 const GamesSlugRoute = GamesSlugRouteImport.update({
   id: '/games/$slug',
   path: '/games/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileUsernameRoute = ProfileUsernameRouteImport.update({
+  id: '/profile/$username',
+  path: '/profile/$username',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91__componentChar93PreviewSplatRoute =
@@ -112,9 +124,11 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/import-search': typeof AuthenticatedImportSearchRoute
   '/imports': typeof AuthenticatedImportsRoute
+  '/my-library': typeof AuthenticatedMyLibraryRoute
   '/review': typeof AuthenticatedReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
+  '/profile/$username': typeof ProfileUsernameRoute
   '/collections/': typeof CollectionsIndexRoute
   '/__component/preview/$': typeof Char91__componentChar93PreviewSplatRoute
   '/__mockup/preview/$': typeof Char91__mockupChar93PreviewSplatRoute
@@ -128,9 +142,11 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/import-search': typeof AuthenticatedImportSearchRoute
   '/imports': typeof AuthenticatedImportsRoute
+  '/my-library': typeof AuthenticatedMyLibraryRoute
   '/review': typeof AuthenticatedReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
+  '/profile/$username': typeof ProfileUsernameRoute
   '/collections': typeof CollectionsIndexRoute
   '/__component/preview/$': typeof Char91__componentChar93PreviewSplatRoute
   '/__mockup/preview/$': typeof Char91__mockupChar93PreviewSplatRoute
@@ -146,9 +162,11 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/import-search': typeof AuthenticatedImportSearchRoute
   '/_authenticated/imports': typeof AuthenticatedImportsRoute
+  '/_authenticated/my-library': typeof AuthenticatedMyLibraryRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
+  '/profile/$username': typeof ProfileUsernameRoute
   '/collections/': typeof CollectionsIndexRoute
   '/__component/preview/$': typeof Char91__componentChar93PreviewSplatRoute
   '/__mockup/preview/$': typeof Char91__mockupChar93PreviewSplatRoute
@@ -164,9 +182,11 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/import-search'
     | '/imports'
+    | '/my-library'
     | '/review'
     | '/collections/$slug'
     | '/games/$slug'
+    | '/profile/$username'
     | '/collections/'
     | '/__component/preview/$'
     | '/__mockup/preview/$'
@@ -180,9 +200,11 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/import-search'
     | '/imports'
+    | '/my-library'
     | '/review'
     | '/collections/$slug'
     | '/games/$slug'
+    | '/profile/$username'
     | '/collections'
     | '/__component/preview/$'
     | '/__mockup/preview/$'
@@ -197,9 +219,11 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_authenticated/import-search'
     | '/_authenticated/imports'
+    | '/_authenticated/my-library'
     | '/_authenticated/review'
     | '/collections/$slug'
     | '/games/$slug'
+    | '/profile/$username'
     | '/collections/'
     | '/__component/preview/$'
     | '/__mockup/preview/$'
@@ -215,6 +239,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   GamesSlugRoute: typeof GamesSlugRoute
+  ProfileUsernameRoute: typeof ProfileUsernameRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   Char91__componentChar93PreviewSplatRoute: typeof Char91__componentChar93PreviewSplatRoute
   Char91__mockupChar93PreviewSplatRoute: typeof Char91__mockupChar93PreviewSplatRoute
@@ -285,6 +310,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedImportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my-library': {
+      id: '/_authenticated/my-library'
+      path: '/my-library'
+      fullPath: '/my-library'
+      preLoaderRoute: typeof AuthenticatedMyLibraryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/review': {
       id: '/_authenticated/review'
       path: '/review'
@@ -313,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GamesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile/$username': {
+      id: '/profile/$username'
+      path: '/profile/$username'
+      fullPath: '/profile/$username'
+      preLoaderRoute: typeof ProfileUsernameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/__component/preview/$': {
       id: '/__component/preview/$'
       path: '/__component/preview/$'
@@ -333,12 +372,14 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedImportSearchRoute: typeof AuthenticatedImportSearchRoute
   AuthenticatedImportsRoute: typeof AuthenticatedImportsRoute
+  AuthenticatedMyLibraryRoute: typeof AuthenticatedMyLibraryRoute
   AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedImportSearchRoute: AuthenticatedImportSearchRoute,
   AuthenticatedImportsRoute: AuthenticatedImportsRoute,
+  AuthenticatedMyLibraryRoute: AuthenticatedMyLibraryRoute,
   AuthenticatedReviewRoute: AuthenticatedReviewRoute,
 }
 
@@ -355,6 +396,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   GamesSlugRoute: GamesSlugRoute,
+  ProfileUsernameRoute: ProfileUsernameRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   Char91__componentChar93PreviewSplatRoute:
     Char91__componentChar93PreviewSplatRoute,
