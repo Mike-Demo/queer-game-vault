@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import {
   breadcrumbs,
+  DEFAULT_SHARE_IMAGE,
   jsonLdScript,
   organization,
   webPage,
@@ -62,6 +63,8 @@ export const Route = createFileRoute("/discover")({
       { property: "og:url", content: "https://queercade.mikedemo.dev/discover" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:image", content: DEFAULT_SHARE_IMAGE },
+      { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
     ],
     links: [{ rel: "canonical", href: "https://queercade.mikedemo.dev/discover" }],
     scripts: [
