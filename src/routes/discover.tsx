@@ -3,6 +3,14 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { AppShell } from "@/components/AppShell";
+import {
+  breadcrumbs,
+  jsonLdScript,
+  organization,
+  webPage,
+  website,
+} from "@/lib/seo/structuredData";
+
 import { GameCard } from "@/components/GameCard";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
 import {

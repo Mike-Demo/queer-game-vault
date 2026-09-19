@@ -10,8 +10,16 @@ import {
   NesText,
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
+import {
+  jsonLdScript,
+  organization,
+  person,
+  webPage,
+  website,
+} from "@/lib/seo/structuredData";
 import { getProfileByUsername } from "@/lib/tracking.functions";
 import { STATUS_LABELS, TRACK_STATUSES } from "@/lib/tracking/types";
+
 
 export const Route = createFileRoute("/profile/$username")({
   ssr: false,
