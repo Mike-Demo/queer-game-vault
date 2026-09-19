@@ -1229,8 +1229,22 @@ export function mockupPreviewPlugin(): Plugin {
       }));
     }
 
+    const TRUSTED_MESSAGE_DOMAINS = [".lovable.app", ".lovableproject.com", ".lovable.dev", ".gpt-eng.com"];
+    function isTrustedMessageOrigin(origin) {
+      if (!origin) return false;
+      let hostname = "";
+      try {
+        hostname = new URL(origin).hostname;
+      } catch {
+        return false;
+      }
+      if (hostname === "localhost" || hostname === "127.0.0.1") return true;
+      return TRUSTED_MESSAGE_DOMAINS.some((domain) => hostname.endsWith(domain));
+    }
+
     window.addEventListener("message", (event) => {
       if (event.source !== parent) return;
+      if (!isTrustedMessageOrigin(event.origin)) return;
       const next = specimenPropsFromMessage(event.data);
       if (!next) return;
       specimenProps = next;
