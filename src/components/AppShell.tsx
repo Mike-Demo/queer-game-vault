@@ -13,9 +13,18 @@ const EDITOR_PATHS = new Set(["/import-search", "/imports", "/review"]);
 /** Shown while site settings are still loading, so the header is never empty. */
 const FALLBACK_NAV = [
   { label: "Home", path: "/" },
+  { label: "Discover", path: "/discover" },
   { label: "Library", path: "/library" },
   { label: "Collections", path: "/collections" },
   { label: "About", path: "/about" },
+];
+
+/** Always offered, whatever site settings say. */
+const PUBLIC_EXTRA_NAV = [{ label: "Discover", path: "/discover" }];
+
+const SIGNED_IN_NAV = [
+  { label: "My library", path: "/my-library" },
+  { label: "Settings", path: "/settings" },
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -26,7 +35,14 @@ export function AppShell({ children }: { children: ReactNode }) {
   const isEditor = Boolean(access?.role);
 
   const sourceNav = settings?.primaryNavigation?.length ? settings.primaryNavigation : FALLBACK_NAV;
-  const navItems = sourceNav.filter((item) => !EDITOR_PATHS.has(item.path) || isEditor);
+  const visibleNav = sourceNav.filter((item) => !EDITOR_PATHS.has(item.path) || isEditor);
+  const candidates = [...visibleNav, ...PUBLIC_EXTRA_NAV, ...(session ? SIGNED_IN_NAV : [])];
+  const seen = new Set<string>();
+  const navItems = candidates.filter((item) => {
+    if (seen.has(item.path)) return false;
+    seen.add(item.path);
+    return true;
+  });
   const currentPath = router.state.location.pathname;
 
   return (
