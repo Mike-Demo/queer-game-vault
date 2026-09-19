@@ -73,6 +73,12 @@ export const fetchGame = createServerFn({ method: "GET" })
     sanityPublicClient.fetch<GameDetail | null>(gameBySlugQuery, { slug: data.slug }),
   );
 
+export const fetchGameCollections = createServerFn({ method: "GET" })
+  .inputValidator((data: unknown) => slugInput.parse(data))
+  .handler(async ({ data }): Promise<CollectionRef[]> =>
+    sanityPublicClient.fetch<CollectionRef[]>(gameCollectionsBySlugQuery, { slug: data.slug }),
+  );
+
 export const fetchContentPage = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) => slugInput.parse(data))
   .handler(async ({ data }): Promise<ContentPage | null> =>
