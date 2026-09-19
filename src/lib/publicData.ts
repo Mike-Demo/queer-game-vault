@@ -23,6 +23,21 @@ export function coverUrl(game: Pick<GameSummary, "cover" | "sourceCoverUrl">, wi
   return game.sourceCoverUrl ?? null;
 }
 
+/**
+ * Candidate widths for a cover so phones download phone-sized art. Only editor
+ * uploads can be resized; IGDB source URLs are one fixed size, so they get no
+ * srcset at all rather than a set of identical entries.
+ */
+export function coverSrcSet(
+  game: Pick<GameSummary, "cover" | "sourceCoverUrl">,
+  widths: number[] = [200, 320, 400, 640],
+): string | undefined {
+  if (!game.cover?.asset?._ref) return undefined;
+  return widths
+    .map((width) => `${sanityImageUrl(game.cover!, width, Math.round(width * 1.33))} ${width}w`)
+    .join(", ");
+}
+
 export const siteSettingsQueryOptions = queryOptions({
   queryKey: ["siteSettings"],
   queryFn: () => fetchSiteSettings(),

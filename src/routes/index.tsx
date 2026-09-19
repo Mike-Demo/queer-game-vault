@@ -17,6 +17,7 @@ import {
 } from "@/lib/publicData";
 import {
   breadcrumbs,
+  DEFAULT_SHARE_IMAGE,
   itemList,
   jsonLdScript,
   organization,
@@ -49,6 +50,8 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "https://queercade.mikedemo.dev/" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:image", content: DEFAULT_SHARE_IMAGE },
+      { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
     ],
     links: [{ rel: "canonical", href: "https://queercade.mikedemo.dev/" }],
     scripts: [
@@ -112,8 +115,8 @@ function Home() {
           ) : null}
           {games.data && games.data.length > 0 ? (
             <div className="card-grid">
-              {games.data.map((game) => (
-                <GameCard key={game._id} game={game} />
+              {games.data.map((game, index) => (
+                <GameCard key={game._id} game={game} priority={index < 4} />
               ))}
             </div>
           ) : null}

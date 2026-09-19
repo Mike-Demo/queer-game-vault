@@ -3,6 +3,7 @@ import type { ReactElement } from "react";
 
 import { NesContainer } from "@/design-system/nes-229931";
 import {
+  DEFAULT_SHARE_IMAGE,
   SITE_URL,
   breadcrumbs,
   jsonLdScript,
@@ -35,7 +36,7 @@ const GROUPS: readonly LicenseGroup[] = [
         author: "CodeMan38",
         license: "SIL Open Font License 1.1",
         url: "https://openfontlicense.org",
-        note: "Pixel display typeface used across the whole site. Served from Google Fonts.",
+        note: "Pixel display typeface used across the whole site. Self-hosted from this site.",
       },
     ],
   },
@@ -181,7 +182,9 @@ export const Route = createFileRoute("/licenses")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE_URL}/licenses` },
-      { name: "twitter:card", content: "summary" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:image", content: DEFAULT_SHARE_IMAGE },
+      { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/licenses` }],
     scripts: [

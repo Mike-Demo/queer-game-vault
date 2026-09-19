@@ -10,7 +10,7 @@ import {
   NesText,
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
-import { coverUrl, gameCollectionsQueryOptions, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
+import { coverSrcSet, coverUrl, gameCollectionsQueryOptions, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
 import {
   breadcrumbs,
   jsonLdScript,
@@ -55,7 +55,11 @@ export const Route = createFileRoute("/games/$slug")({
             ]
           : []),
       ],
-      links: [{ rel: "canonical", href: url }],
+      links: [
+        { rel: "canonical", href: url },
+        // The cover is this page's largest paint: fetch it alongside the HTML.
+        ...(image ? [{ rel: "preload", as: "image", href: image, fetchPriority: "high" as const }] : []),
+      ],
       scripts: [
         jsonLdScript(
           organization(),
@@ -193,7 +197,18 @@ function GamePage() {
         <div className="detail-layout">
           <Surface rounded>
             {cover ? (
-              <img className="cover" src={cover} alt={`${data.title} cover art`} />
+              <img
+                className="cover"
+                src={cover}
+                srcSet={coverSrcSet(data, [320, 640, 960])}
+                sizes="(min-width: 64rem) 20rem, 100vw"
+                alt={`${data.title} cover art`}
+                width={640}
+                height={851}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+              />
             ) : (
               <div className="cover-placeholder">
                 <NesText>No cover art</NesText>
@@ -353,7 +368,15 @@ function GamePage() {
               {data.screenshots.map((shot) =>
                 shot.url ? (
                   <figure key={shot.url}>
-                    <img className="cover" src={shot.url} alt={shot.caption ?? `${data.title} screenshot`} loading="lazy" />
+                    <img
+                      className="cover"
+                      src={shot.url}
+                      alt={shot.caption ?? `${data.title} screenshot`}
+                      width={640}
+                      height={360}
+                      loading="lazy"
+                      decoding="async"
+                    />
                     {shot.caption ? <figcaption><NesText className="text-xs">{shot.caption}</NesText></figcaption> : null}
                   </figure>
                 ) : null,

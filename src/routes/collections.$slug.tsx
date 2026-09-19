@@ -11,6 +11,7 @@ import { Surface } from "@/components/Surface";
 import { collectionQueryOptions, coverUrl } from "@/lib/publicData";
 import {
   breadcrumbs,
+  DEFAULT_SHARE_IMAGE,
   itemList,
   jsonLdScript,
   organization,
@@ -37,6 +38,8 @@ export const Route = createFileRoute("/collections/$slug")({
         { property: "og:url", content: url },
         { property: "og:type", content: "article" },
         { name: "twitter:card", content: "summary_large_image" },
+        { property: "og:image", content: DEFAULT_SHARE_IMAGE },
+        { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [
@@ -126,8 +129,8 @@ function CollectionDetailPage() {
           <EmptyState title="No public games in this collection yet" />
         ) : (
           <div className="card-grid">
-            {data.games.map((game) => (
-              <GameCard key={game._id} game={game} />
+            {data.games.map((game, index) => (
+              <GameCard key={game._id} game={game} priority={index < 4} />
             ))}
           </div>
         )}

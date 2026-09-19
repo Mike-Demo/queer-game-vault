@@ -15,7 +15,7 @@ const BASE_URL = "https://queercade.mikedemo.dev";
 
 const PAGE_SIZE = 200;
 
-type SlugRow = { slug: string | null };
+type SlugRow = { slug: string | null; lastmod?: string | null };
 
 async function collectSlugPaths(
   router: Awaited<ReturnType<typeof getRouterInstance>>,
@@ -37,7 +37,8 @@ async function collectSlugPaths(
         hash: "",
       });
       const path = sitemapPathForLocation(router, location, routeId);
-      if (path) entries.push({ path });
+      // lastmod comes from the document's own last-edited time, never build time.
+      if (path) entries.push({ path, lastmod: row.lastmod ?? undefined });
     }
     start += rows.length;
   }
@@ -61,7 +62,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           );
         }
         return new Response(sitemapXML(BASE_URL, entries), {
-          headers: { "Content-Type": "application/xml", "Cache-Control": "public, max-age=3600" },
+          headers: { "Content-Type": "application/xml", "Cache-Control": "public, max-age=3600, s-maxage=86400" },
         });
       },
     },

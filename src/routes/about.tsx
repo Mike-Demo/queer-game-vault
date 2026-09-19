@@ -11,6 +11,7 @@ import { Surface } from "@/components/Surface";
 import { contentPageQueryOptions } from "@/lib/publicData";
 import {
   breadcrumbs,
+  DEFAULT_SHARE_IMAGE,
   jsonLdScript,
   organization,
   webPage,
@@ -31,6 +32,8 @@ export const Route = createFileRoute("/about")({
       { property: "og:url", content: "https://queercade.mikedemo.dev/about" },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:image", content: DEFAULT_SHARE_IMAGE },
+      { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
     ],
     links: [{ rel: "canonical", href: "https://queercade.mikedemo.dev/about" }],
     scripts: [

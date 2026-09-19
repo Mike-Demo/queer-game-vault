@@ -28,6 +28,7 @@ export const Route = createFileRoute("/_authenticated/review")({
   staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Review queue — QueerCade" },
       { name: "description", content: "Review imported games, write editorial copy, and approve what goes public." },
       { property: "og:title", content: "Review queue — QueerCade" },

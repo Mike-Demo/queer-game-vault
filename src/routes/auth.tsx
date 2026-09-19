@@ -24,6 +24,7 @@ export const Route = createFileRoute("/auth")({
   }),
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Sign in or register — QueerCade" },
       {
         name: "description",

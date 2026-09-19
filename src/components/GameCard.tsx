@@ -6,18 +6,34 @@ import {
   NesText,
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
-import { coverUrl } from "@/lib/publicData";
+import { coverSrcSet, coverUrl } from "@/lib/publicData";
 import type { GameSummary } from "@/lib/sanity/types";
 
-export function GameCard({ game }: { game: GameSummary }) {
+/**
+ * A game in a grid. `priority` marks the first row's covers so they load
+ * immediately instead of lazily — those are the largest paint on a listing.
+ */
+export function GameCard({ game, priority = false }: { game: GameSummary; priority?: boolean }) {
   const cover = coverUrl(game);
+  const srcSet = coverSrcSet(game);
   const blurb = game.customDescription ?? game.summary;
 
   return (
     <Surface rounded>
       <div className="stack">
         {cover ? (
-          <img className="cover" src={cover} alt={`${game.title} cover art`} loading="lazy" />
+          <img
+            className="cover"
+            src={cover}
+            srcSet={srcSet}
+            sizes="(min-width: 64rem) 20rem, (min-width: 48rem) 33vw, 100vw"
+            alt={`${game.title} cover art`}
+            width={400}
+            height={532}
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "auto"}
+            decoding="async"
+          />
         ) : (
           <div className="cover-placeholder">
             <NesText>No cover art</NesText>

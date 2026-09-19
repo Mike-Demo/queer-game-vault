@@ -26,6 +26,6 @@ const builder = imageUrlBuilder(sanityPublicClient);
 type SanityImageSource = Parameters<ReturnType<typeof imageUrlBuilder>["image"]>[0];
 
 export function sanityImageUrl(source: SanityImageSource, width: number, height?: number): string {
-  const image = builder.image(source).width(width).auto("format");
+  const image = builder.image(source).width(width).quality(75).auto("format");
   return (height ? image.height(height).fit("crop") : image).url();
 }

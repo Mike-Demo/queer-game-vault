@@ -15,6 +15,7 @@ export const Route = createFileRoute("/_authenticated/imports")({
   staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Import history — QueerCade" },
       { name: "description", content: "Every IGDB import and refresh recorded for the QueerCade library." },
       { property: "og:title", content: "Import history — QueerCade" },
