@@ -38,6 +38,23 @@ function AuthPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  async function signInWithGoogle() {
+    setBusy(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+      });
+      if (result.redirected) return;
+      if (result.error) throw result.error;
+      await router.navigate({ to: "/" });
+    } catch (oauthError) {
+      setError(oauthError instanceof Error ? oauthError.message : "Google sign-in failed.");
+      setBusy(false);
+    }
+  }
+
   async function submit(event: React.FormEvent) {
     event.preventDefault();
     setBusy(true);
