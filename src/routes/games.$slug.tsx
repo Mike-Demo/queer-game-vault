@@ -16,8 +16,9 @@ import { useEditorAccess, useSession } from "@/hooks/useAuth";
 export const Route = createFileRoute("/games/$slug")({
   staticData: { sitemap: true },
   loader: async ({ context, params }) => {
-    await context.queryClient.ensureQueryData(gameQueryOptions(params.slug));
+    const game = await context.queryClient.ensureQueryData(gameQueryOptions(params.slug));
     await context.queryClient.ensureQueryData(gameCollectionsQueryOptions(params.slug));
+    return game;
   },
   head: ({ loaderData, params }) => {
     const game = loaderData ?? null;
@@ -61,7 +62,7 @@ function GamePage() {
   const { slug } = Route.useParams();
   const game = useQuery(gameQueryOptions(slug));
   const collections = useQuery(gameCollectionsQueryOptions(slug));
-  const { data: session } = useSession();
+  const { session } = useSession();
   const { data: access } = useEditorAccess(Boolean(session));
 
   if (game.isPending) {
