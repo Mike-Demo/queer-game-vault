@@ -145,7 +145,19 @@ export const updateGameEditorial = createServerFn({ method: "POST" })
 
     const { getSanityWriteClient } = await import("@/lib/sanity/write.server");
     try {
-      await getSanityWriteClient().patch(data.gameId).set(patch).commit();
+      const client = getSanityWriteClient();
+
+      // Bind the patch target to a real, published game document so an editor
+      // cannot rewrite editorial fields on arbitrary Sanity documents by ID.
+      const target = await client.fetch<{ _type: string } | null>(
+        `*[_id == $id && !(_id in path("drafts.**"))][0]{ _type }`,
+        { id: data.gameId },
+      );
+      if (!target || target._type !== "game") {
+        return { ok: false, error: "That game could not be found in the library." };
+      }
+
+      await client.patch(data.gameId).set(patch).commit();
       return { ok: true, error: null };
     } catch (error) {
       const code = error instanceof Error ? error.message : "SANITY_WRITE_FAILED";
