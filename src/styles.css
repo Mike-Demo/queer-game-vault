@@ -17,7 +17,7 @@
   --app-cover-height: 14rem;
   --app-card-min: 15rem;
   --app-cover-height-sm: 9rem;
-  --app-sidebar-width: 18rem;
+  --app-sidebar-width: 22rem;
   --app-form-measure: 34rem;
 }
 
@@ -253,11 +253,6 @@ html[data-theme="dark"] .title-md {
 .auth-layout {
   max-width: var(--app-form-measure);
   margin-inline: auto;
-}
-
-.nes-select,
-.nes-select select {
-  width: 100%;
 }
 
 .cover-sm {
