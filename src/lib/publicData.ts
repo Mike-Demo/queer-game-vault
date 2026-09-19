@@ -8,6 +8,7 @@ import {
   fetchFeaturedCollections,
   fetchFeaturedGames,
   fetchGame,
+  fetchGameCollections,
   fetchLibraryGames,
   fetchRelatedGames,
   fetchSiteSettings,

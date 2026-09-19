@@ -10,11 +10,15 @@ import {
   NesText,
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
-import { coverUrl, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
+import { coverUrl, gameCollectionsQueryOptions, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
+import { useEditorAccess, useSession } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/games/$slug")({
   staticData: { sitemap: true },
-  loader: ({ context, params }) => context.queryClient.ensureQueryData(gameQueryOptions(params.slug)),
+  loader: async ({ context, params }) => {
+    await context.queryClient.ensureQueryData(gameQueryOptions(params.slug));
+    await context.queryClient.ensureQueryData(gameCollectionsQueryOptions(params.slug));
+  },
   head: ({ loaderData, params }) => {
     const game = loaderData ?? null;
     const title = game ? `${game.title} — QueerCade` : `${params.slug} — QueerCade`;
