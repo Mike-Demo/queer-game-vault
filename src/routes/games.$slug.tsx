@@ -198,6 +198,23 @@ function GamePage() {
           </NesContainer>
         ) : null}
 
+        {data.sources.length > 0 ? (
+          <NesContainer title="Where we found it">
+            <ul className="source-list">
+              {data.sources.map((source) =>
+                source.url ? (
+                  <li key={source.url}>
+                    <a href={source.url} rel="noreferrer noopener" target="_blank">
+                      {source.title ?? source.url}
+                    </a>
+                    {source.publication ? <NesText className="text-xs">{` — ${source.publication}`}</NesText> : null}
+                  </li>
+                ) : null,
+              )}
+            </ul>
+          </NesContainer>
+        ) : null}
+
         {data.storyline ? (
           <NesContainer title="Storyline (source: IGDB)">
             <p>{data.storyline}</p>
