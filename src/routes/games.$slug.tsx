@@ -7,6 +7,7 @@ import { NesBadge, NesContainer, NesText } from "@/design-system/nes-229931";
 import { coverUrl, gameQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/games/$slug")({
+  staticData: { sitemap: true },
   head: ({ params }) => ({
     meta: [
       { title: `${params.slug} — QueerCade` },

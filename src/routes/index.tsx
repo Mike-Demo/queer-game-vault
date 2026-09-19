@@ -12,6 +12,7 @@ import {
 } from "@/lib/publicData";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "QueerCade — a curated arcade of games" },

@@ -8,6 +8,7 @@ import { NesContainer, NesText } from "@/design-system/nes-229931";
 import { contentPageQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/about")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "About — QueerCade" },

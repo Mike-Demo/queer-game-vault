@@ -6,6 +6,7 @@ import { createElement, Suspense, useEffect, useState, type ComponentType, type 
 import { mockups } from "@/.generated/mockup-components";
 
 export const Route = createFileRoute("/__mockup/preview/$")({
+  staticData: { sitemap: false },
   component: MockupPreview,
 });
 

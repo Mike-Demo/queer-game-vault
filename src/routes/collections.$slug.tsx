@@ -8,6 +8,7 @@ import { NesContainer, NesText } from "@/design-system/nes-229931";
 import { collectionQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/collections/$slug")({
+  staticData: { sitemap: true },
   head: ({ params }) => ({
     meta: [
       { title: `${params.slug} collection — QueerCade` },

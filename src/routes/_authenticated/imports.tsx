@@ -8,6 +8,7 @@ import { NesBadge, NesContainer, NesText } from "@/design-system/nes-229931";
 import { getImportHistory } from "@/lib/editorial.functions";
 
 export const Route = createFileRoute("/_authenticated/imports")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Import history — QueerCade" },

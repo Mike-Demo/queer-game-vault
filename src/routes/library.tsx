@@ -8,6 +8,7 @@ import { NesText } from "@/design-system/nes-229931";
 import { libraryQueryOptions, siteSettingsQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/library")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Game library — QueerCade" },

@@ -20,6 +20,7 @@ type SpecimenProps = Record<string, string | number | boolean>;
 type SchemaProp = { name: string; type?: string; values?: string[] };
 
 export const Route = createFileRoute("/__component/preview/$")({
+  staticData: { sitemap: false },
   component: ComponentPreview,
 });
 

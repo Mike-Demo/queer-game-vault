@@ -25,6 +25,7 @@ import { studioDocumentUrl } from "@/lib/sanity/config";
 import type { GameDetail } from "@/lib/sanity/types";
 
 export const Route = createFileRoute("/_authenticated/review")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Review queue — QueerCade" },
