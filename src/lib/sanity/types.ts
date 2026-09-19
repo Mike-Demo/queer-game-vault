@@ -29,6 +29,8 @@ export interface GameSummary {
   featured: boolean;
   genres: TaxonomyRef[];
   platforms: TaxonomyRef[];
+  /** Character names only (summaries); the detail projection carries full entries. */
+  lgbtqCharacters: (string | null)[];
 }
 
 export interface GameScreenshot {
