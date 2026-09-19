@@ -109,11 +109,11 @@ export const importHistoryQuery = `*[_type == "importRecord"] | order(coalesce(r
 
 /** Sitemap: publicly visible game slugs, paginated by stable _id order. */
 export const sitemapGameSlugsQuery = `*[${PUBLIC_GAME_FILTER} && defined(slug.current)]
-  | order(_id asc)[$start...$end]{ "slug": slug.current }`;
+  | order(_id asc)[$start...$end]{ "slug": slug.current, "lastmod": _updatedAt }`;
 
 /** Sitemap: published collection slugs, paginated by stable _id order. */
 export const sitemapCollectionSlugsQuery = `*[_type == "gameCollection" && status == "published" && defined(slug.current)]
-  | order(_id asc)[$start...$end]{ "slug": slug.current }`;
+  | order(_id asc)[$start...$end]{ "slug": slug.current, "lastmod": _updatedAt }`;
 
 /** Related games: shares at least one genre with the given game. */
 export const relatedGamesQuery = `*[${PUBLIC_GAME_FILTER} && _id != $id && count((genres[]->_id)[@ in $genreIds]) > 0]
