@@ -96,7 +96,7 @@ export interface IgdbGameDetailsResponse {
     publisherName: string | null;
     franchise: string | null;
     igdbCollectionName: string | null;
-    ageRatings: { category: string; rating: string }[];
+    ageRatings: { category: string; rating: string; descriptors: string[] }[];
     externalLinks: { label: string; url: string }[];
     igdbRating: number | null;
     igdbRatingCount: number | null;

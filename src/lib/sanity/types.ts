@@ -41,11 +41,22 @@ export interface GameScreenshot {
 export interface GameAgeRating {
   category: string | null;
   rating: string | null;
+  descriptors: (string | null)[];
 }
 
 export interface GameExternalLink {
   label: string | null;
   url: string | null;
+}
+
+export interface GameStoreLink {
+  store: string | null;
+  url: string | null;
+}
+
+export interface GamePopularityScore {
+  type: string | null;
+  value: number | null;
 }
 
 export interface GameSourceReference {
@@ -61,9 +72,21 @@ export interface GameCharacter {
   sourceUrl: string | null;
 }
 
+/** A character record imported from IGDB's own character database. */
+export interface IgdbGameCharacter {
+  igdbId: number | null;
+  name: string | null;
+  description: string | null;
+  gender: string | null;
+  species: string | null;
+  mugshotUrl: string | null;
+  igdbUrl: string | null;
+}
+
 export interface GameDetail extends GameSummary {
   sources: GameSourceReference[];
   lgbtqCharacters: GameCharacter[];
+  igdbCharacters: IgdbGameCharacter[];
 
   storyline: string | null;
   editorNotes: string | null;
@@ -73,6 +96,9 @@ export interface GameDetail extends GameSummary {
   gameModes: string[];
   ageRatings: GameAgeRating[];
   externalLinks: GameExternalLink[];
+  storeLinks: GameStoreLink[];
+  gameType: string | null;
+  alternativeNames: (string | null)[];
   igdbRating: number | null;
   igdbRatingCount: number | null;
   totalRating: number | null;
@@ -82,6 +108,7 @@ export interface GameDetail extends GameSummary {
   publisher: { name: string } | null;
   involvedCompanies: { name: string }[];
   popularity: number | null;
+  popularityScores: GamePopularityScore[];
   sourceUpdatedAt: string | null;
   importStatus: string | null;
   importedAt: string | null;
