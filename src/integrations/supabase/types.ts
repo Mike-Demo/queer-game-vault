@@ -14,24 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
+      game_entries: {
+        Row: {
+          cover_url: string | null
+          created_at: string
+          game_slug: string
+          id: string
+          igdb_id: number
+          status: Database["public"]["Enums"]["game_entry_status"]
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cover_url?: string | null
+          created_at?: string
+          game_slug: string
+          id?: string
+          igdb_id: number
+          status: Database["public"]["Enums"]["game_entry_status"]
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cover_url?: string | null
+          created_at?: string
+          game_slug?: string
+          id?: string
+          igdb_id?: number
+          status?: Database["public"]["Enums"]["game_entry_status"]
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          avatar_url: string | null
+          bio: string | null
           created_at: string
           display_name: string | null
           email: string | null
+          high_contrast: boolean
           id: string
+          profile_visibility: string
+          theme_preference: string
+          updated_at: string
+          username: string | null
         }
         Insert: {
+          avatar_url?: string | null
+          bio?: string | null
           created_at?: string
           display_name?: string | null
           email?: string | null
+          high_contrast?: boolean
           id: string
+          profile_visibility?: string
+          theme_preference?: string
+          updated_at?: string
+          username?: string | null
         }
         Update: {
+          avatar_url?: string | null
+          bio?: string | null
           created_at?: string
           display_name?: string | null
           email?: string | null
+          high_contrast?: boolean
           id?: string
+          profile_visibility?: string
+          theme_preference?: string
+          updated_at?: string
+          username?: string | null
         }
         Relationships: []
       }
@@ -61,6 +118,29 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_username: { Args: { _seed: string }; Returns: string }
+      get_public_game_entries: {
+        Args: { _username: string }
+        Returns: {
+          cover_url: string
+          game_slug: string
+          igdb_id: number
+          status: Database["public"]["Enums"]["game_entry_status"]
+          title: string
+          updated_at: string
+        }[]
+      }
+      get_public_profile: {
+        Args: { _username: string }
+        Returns: {
+          avatar_url: string
+          bio: string
+          created_at: string
+          display_name: string
+          id: string
+          username: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -71,6 +151,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "editor" | "user"
+      game_entry_status: "playing" | "completed" | "wishlist" | "dropped"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -199,6 +280,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "editor", "user"],
+      game_entry_status: ["playing", "completed", "wishlist", "dropped"],
     },
   },
 } as const

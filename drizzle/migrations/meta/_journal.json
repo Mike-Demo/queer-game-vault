@@ -8,6 +8,13 @@
       "when": 1789771752640,
       "tag": "0000_profiles_and_editor_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789791620750,
+      "tag": "0001_add_profiles_fields_and_game_entries",
+      "breakpoints": true
     }
   ]
 }
