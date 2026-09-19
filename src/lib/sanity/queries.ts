@@ -27,6 +27,7 @@ export const GAME_DETAIL_PROJECTION = `{
   "involvedCompanies": coalesce(involvedCompanies[]->{ name }, []),
   "genres": coalesce(genres[]->${TAXONOMY}, []),
   "platforms": coalesce(platforms[]->${TAXONOMY}, []),
+  "sources": coalesce(sources[]{ publication, title, url, capturedAt }, []),
   importStatus, importedAt, lastSyncedAt
 }`;
 
