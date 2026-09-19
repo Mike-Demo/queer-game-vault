@@ -62,6 +62,8 @@ function Home() {
           </div>
         </NesContainer>
 
+        <EditorQuickStart />
+
         <section className="stack">
           <h2 className="title-md"><NesText>Featured games</NesText></h2>
           {games.isPending ? <LoadingState label="Loading featured games" /> : null}
