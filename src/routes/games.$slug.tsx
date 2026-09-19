@@ -11,7 +11,16 @@ import {
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
 import { coverUrl, gameCollectionsQueryOptions, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
+import {
+  breadcrumbs,
+  jsonLdScript,
+  organization,
+  videoGame,
+  webPage,
+  website,
+} from "@/lib/seo/structuredData";
 import { useEditorAccess, useSession } from "@/hooks/useAuth";
+
 
 export const Route = createFileRoute("/games/$slug")({
   staticData: { sitemap: true },
@@ -28,12 +37,15 @@ export const Route = createFileRoute("/games/$slug")({
       game?.summary?.slice(0, 160) ??
       "A curated game page: editorial writing alongside metadata sourced from IGDB.";
     const image = game ? coverUrl(game, 640) : null;
+    const path = `/games/${params.slug}`;
+    const url = `https://queercade.mikedemo.dev${path}`;
     return {
       meta: [
         { title },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
+        { property: "og:url", content: url },
         { property: "og:type", content: "article" },
         { name: "twitter:card", content: "summary_large_image" },
         ...(image
@@ -43,8 +55,55 @@ export const Route = createFileRoute("/games/$slug")({
             ]
           : []),
       ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        jsonLdScript(
+          organization(),
+          website(),
+          webPage({
+            path,
+            name: title,
+            description,
+            primaryImage: image,
+          }),
+          breadcrumbs([
+            { name: "Home", path: "/" },
+            { name: "Discover", path: "/discover" },
+            { name: game?.title ?? params.slug, path },
+          ]),
+          game
+            ? videoGame({
+                path,
+                name: game.title,
+                description: game.customDescription ?? game.summary,
+                image,
+                releaseDate: game.firstReleaseDate,
+                genres: game.genres.map((genre) => genre.name),
+                platforms: game.platforms.map((platform) => platform.name),
+                gameModes: game.gameModes,
+                keywords: game.themes,
+                developer: game.developer?.name ?? null,
+                publisher: game.publisher?.name ?? null,
+                franchise: game.franchise ?? game.igdbCollectionName,
+                sameAs: game.externalLinks
+                  .map((link) => link.url)
+                  .filter((link): link is string => Boolean(link)),
+                screenshots: game.screenshots
+                  .map((shot) => shot.url)
+                  .filter((src): src is string => Boolean(src)),
+                rating:
+                  game.igdbRating !== null && game.igdbRatingCount !== null && game.igdbRatingCount > 0
+                    ? { value: game.igdbRating, count: game.igdbRatingCount }
+                    : null,
+                contentRating:
+                  game.ageRatings.find((entry) => entry.rating)?.rating ?? null,
+              })
+            : undefined,
+        ),
+      ],
     };
   },
+
   errorComponent: () => (
     <AppShell>
       <ErrorState message="This game could not be loaded. Please refresh." />
