@@ -86,6 +86,12 @@ function AuthPage() {
   return (
     <AppShell>
       <NesContainer title={mode === "signIn" ? "Editor sign in" : "Create editor account"} rounded>
+        <div className="stack">
+          <NesButton type="button" variant="primary" disabled={busy} onClick={signInWithGoogle}>
+            <NesIcon name="google" aria-hidden /> Continue with Google
+          </NesButton>
+          <NesText className="text-xs">or use email and password:</NesText>
+        </div>
         <form className="stack" onSubmit={submit}>
           <NesField label="Email" htmlFor="email">
             <NesInput
