@@ -188,7 +188,23 @@ export const addGameToCollection = createServerFn({ method: "POST" })
 
     const { getSanityWriteClient } = await import("@/lib/sanity/write.server");
     try {
-      await getSanityWriteClient()
+      const client = getSanityWriteClient();
+      // Verify both IDs point to documents of the expected types before patching.
+      const target = await client.fetch<{ _id: string } | null>(
+        `*[_type == "gameCollection" && _id == $id][0]{ _id }`,
+        { id: data.collectionId }
+      );
+      if (!target) {
+        return { ok: false, error: "That collection does not exist." };
+      }
+      const game = await client.fetch<{ _id: string } | null>(
+        `*[_type == "game" && _id == $id][0]{ _id }`,
+        { id: data.gameId }
+      );
+      if (!game) {
+        return { ok: false, error: "That game does not exist." };
+      }
+      await client
         .patch(data.collectionId)
         .setIfMissing({ games: [] })
         .insert("after", "games[-1]", [
