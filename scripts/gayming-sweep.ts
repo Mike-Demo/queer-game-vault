@@ -13,20 +13,21 @@ const OUT = "/tmp/fc";
 const CANDIDATES = `${OUT}/candidates.json`;
 const MATCHES = `${OUT}/matches.json`;
 const REPORT = `${OUT}/report.json`;
+const PAGES = `${OUT}/pages.json`;
 
 const GATEWAY = "https://connector-gateway.lovable.dev/firecrawl/v2";
 
-const LISTING_CATEGORIES = [
-  "reviews",
-  "previews",
-  "features",
-  "guides",
-  "features/gayme-of-the-week",
-  "features/indie-gayming",
-  "features/indie-way",
-  "features/kitty-reviews",
-  "features/retro-gayming",
-  "mobile-gayming",
+const LISTING_CATEGORIES: { path: string; maxPages: number }[] = [
+  { path: "reviews", maxPages: 40 },
+  { path: "previews", maxPages: 15 },
+  { path: "features", maxPages: 30 },
+  { path: "guides", maxPages: 10 },
+  { path: "features/gayme-of-the-week", maxPages: 15 },
+  { path: "features/indie-gayming", maxPages: 15 },
+  { path: "features/indie-way", maxPages: 10 },
+  { path: "features/kitty-reviews", maxPages: 5 },
+  { path: "features/retro-gayming", maxPages: 5 },
+  { path: "mobile-gayming", maxPages: 5 },
 ];
 
 const TAG_SITEMAPS = [
@@ -86,6 +87,7 @@ async function firecrawlScrape(url: string): Promise<string> {
   const connectionKey = process.env["FIRECRAWL_API_KEY"];
   if (!lovableKey || !connectionKey) throw new Error("Firecrawl credentials missing");
 
+  for (let attempt = 0; ; attempt += 1) {
   const response = await fetch(`${GATEWAY}/scrape`, {
     method: "POST",
     headers: {
@@ -96,8 +98,13 @@ async function firecrawlScrape(url: string): Promise<string> {
     body: JSON.stringify({ url, formats: ["markdown"], onlyMainContent: true }),
   });
   const body = (await response.json()) as { data?: { markdown?: string }; markdown?: string; error?: string };
+  if (response.status === 429 && attempt < 8) {
+    await new Promise((resolve) => setTimeout(resolve, 8000));
+    continue;
+  }
   if (!response.ok) throw new Error(`Firecrawl ${response.status}: ${body.error ?? "failed"}`);
   return body.data?.markdown ?? body.markdown ?? "";
+  }
 }
 
 /** Pulls article title/url pairs out of a category listing page's markdown. */
@@ -160,6 +167,14 @@ function addCandidate(
 
 async function collectCandidates(): Promise<void> {
   const candidates = new Map<string, Candidate>();
+  const seenPages = new Set<string>(
+    existsSync(PAGES) ? (JSON.parse(readFileSync(PAGES, "utf8")) as string[]) : [],
+  );
+  if (existsSync(CANDIDATES)) {
+    for (const item of JSON.parse(readFileSync(CANDIDATES, "utf8")) as Candidate[]) {
+      candidates.set(normalizeTitle(item.name), item);
+    }
+  }
 
   for (const sitemap of TAG_SITEMAPS) {
     const urls = sitemapLocations(await fetchText(sitemap));
@@ -172,11 +187,15 @@ async function collectCandidates(): Promise<void> {
   for (const category of LISTING_CATEGORIES) {
     let page = 1;
     let empty = 0;
-    while (page <= 60) {
+    while (page <= category.maxPages) {
       const url =
         page === 1
-          ? `https://gaymingmag.com/category/${category}/`
-          : `https://gaymingmag.com/category/${category}/page/${page}/`;
+          ? `https://gaymingmag.com/category/${category.path}/`
+          : `https://gaymingmag.com/category/${category.path}/page/${page}/`;
+      if (seenPages.has(url)) {
+        page += 1;
+        continue;
+      }
       let markdown = "";
       try {
         markdown = await firecrawlScrape(url);
@@ -193,6 +212,9 @@ async function collectCandidates(): Promise<void> {
         for (const name of gameNamesFromHeadline(article.title)) addCandidate(candidates, name, article);
       }
       console.log(`  ${url}: ${articles.length} articles (candidates ${candidates.size})`);
+      writeFileSync(CANDIDATES, JSON.stringify([...candidates.values()], null, 2));
+      seenPages.add(url);
+      writeFileSync(PAGES, JSON.stringify([...seenPages], null, 2));
       page += 1;
     }
   }
