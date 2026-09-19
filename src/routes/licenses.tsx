@@ -182,7 +182,9 @@ export const Route = createFileRoute("/licenses")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE_URL}/licenses` },
-      { name: "twitter:card", content: "summary" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:image", content: DEFAULT_SHARE_IMAGE },
+      { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/licenses` }],
     scripts: [

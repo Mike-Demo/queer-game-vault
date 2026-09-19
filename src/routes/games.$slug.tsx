@@ -58,7 +58,7 @@ export const Route = createFileRoute("/games/$slug")({
       links: [
         { rel: "canonical", href: url },
         // The cover is this page's largest paint: fetch it alongside the HTML.
-        ...(image ? [{ rel: "preload", as: "image", href: image, fetchPriority: "high" }] : []),
+        ...(image ? [{ rel: "preload", as: "image", href: image, fetchPriority: "high" as const }] : []),
       ],
       scripts: [
         jsonLdScript(
