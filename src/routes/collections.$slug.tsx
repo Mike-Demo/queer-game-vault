@@ -4,7 +4,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
-import { NesContainer, NesText } from "@/design-system/nes-229931";
+import {
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { collectionQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/collections/$slug")({
@@ -69,12 +72,12 @@ function CollectionDetailPage() {
     <AppShell>
       <div className="stack-lg">
         <h1 className="title-xl"><NesText variant="primary">{data.title}</NesText></h1>
-        <NesContainer rounded>
+        <Surface rounded>
           <div className="stack">
             {data.description ? <p>{data.description}</p> : null}
             {data.curatorNotes ? <p className="text-xs">{data.curatorNotes}</p> : null}
           </div>
-        </NesContainer>
+        </Surface>
         {data.games.length === 0 ? (
           <EmptyState title="No public games in this collection yet" />
         ) : (

@@ -8,13 +8,16 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { NesProvider } from "@/design-system/nes-229931";
 import { supabase } from "@/integrations/supabase/client";
+import { readAppearance } from "@/lib/theme/mode";
 
 import appCss from "../styles.css?url";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   staticData: { sitemap: false },
+  loader: () => readAppearance(),
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -66,6 +69,7 @@ function RootShell({ children }: { children: ReactNode }) {
 // /__component) render inside it, so any chrome leaks into every frame.
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const appearance = Route.useLoaderData();
   const router = useRouter();
 
   useEffect(() => {
@@ -80,8 +84,10 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <NesProvider loadFont={false}>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
+        <ThemeProvider initial={appearance}>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </ThemeProvider>
       </NesProvider>
     </QueryClientProvider>
   );

@@ -16,6 +16,9 @@
   --app-font-lg: 1.375rem;
   --app-cover-height: 14rem;
   --app-card-min: 15rem;
+  --app-cover-height-sm: 9rem;
+  --app-sidebar-width: 22rem;
+  --app-form-measure: 34rem;
 }
 
 * {
@@ -189,5 +192,92 @@ a {
 
   .detail-layout {
     grid-template-columns: 20rem 1fr;
+  }
+}
+
+/* Dark appearance. Only design-system colour tokens are used: the library
+   ships two light palettes plus dark component variants, so dark surfaces come
+   from those variants and the page itself flips to the dark/background tokens. */
+html[data-theme="dark"] body {
+  background-color: var(--nes-dark);
+  color: var(--nes-bg);
+}
+
+html[data-theme="dark"] a {
+  color: var(--nes-primary);
+}
+
+html[data-theme="dark"] .app-header a,
+html[data-theme="dark"] .app-footer,
+html[data-theme="dark"] .title-xl,
+html[data-theme="dark"] .title-md {
+  color: var(--nes-bg);
+}
+
+[data-contrast="high"] a {
+  text-decoration: underline;
+}
+
+[data-contrast="high"] .text-xs {
+  font-size: var(--app-font-sm);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.discover-layout {
+  display: grid;
+  gap: var(--app-space-3);
+  grid-template-columns: 1fr;
+}
+
+.library-columns {
+  display: grid;
+  gap: var(--app-space-3);
+  grid-template-columns: 1fr;
+}
+
+.settings-layout {
+  display: grid;
+  gap: var(--app-space-3);
+  grid-template-columns: 1fr;
+}
+
+.auth-layout {
+  max-width: var(--app-form-measure);
+  margin-inline: auto;
+}
+
+.cover-sm {
+  height: var(--app-cover-height-sm);
+  width: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 48rem) {
+  .discover-layout {
+    grid-template-columns: var(--app-sidebar-width) 1fr;
+    align-items: start;
+  }
+
+  .library-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .settings-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 72rem) {
+  .library-columns {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

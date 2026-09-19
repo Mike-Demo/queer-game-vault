@@ -5,7 +5,10 @@ import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
 import { EditorQuickStart } from "@/components/EditorQuickStart";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
-import { NesContainer, NesText } from "@/design-system/nes-229931";
+import {
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import {
   featuredCollectionsQueryOptions,
   featuredGamesQueryOptions,
@@ -53,14 +56,14 @@ function Home() {
   return (
     <AppShell>
       <div className="stack-lg">
-        <NesContainer rounded>
+        <Surface rounded>
           <div className="stack">
             <h1 className="title-xl">
               <NesText variant="primary">{settings.data?.homepageHeading ?? "PRESS START"}</NesText>
             </h1>
             <p>{settings.data?.homepageIntroduction}</p>
           </div>
-        </NesContainer>
+        </Surface>
 
         <EditorQuickStart />
 
@@ -90,7 +93,7 @@ function Home() {
             </EmptyState>
           ) : null}
           {collections.data?.map((collection) => (
-            <NesContainer key={collection._id} title={collection.title}>
+            <Surface key={collection._id} title={collection.title}>
               <div className="stack">
                 <p className="text-xs">{collection.description}</p>
                 {collection.slug ? (
@@ -99,7 +102,7 @@ function Home() {
                   </Link>
                 ) : null}
               </div>
-            </NesContainer>
+            </Surface>
           ))}
         </section>
       </div>
