@@ -19,6 +19,17 @@ function prerenderServerEntryAlias(): Plugin {
   return {
     name: "queercade:prerender-server-entry-alias",
     apply: "build",
+    configResolved() {
+      // Importing the Worker bundle during prerendering swaps the global
+      // `process` for a stub whose stdin lacks `off`, which crashes Vite's
+      // preview-server teardown. Pin the real Node process object.
+      const realProcess = globalThis.process;
+      Object.defineProperty(globalThis, "process", {
+        get: () => realProcess,
+        set: () => {},
+        configurable: true,
+      });
+    },
     writeBundle: {
       order: "post",
       handler(options) {
