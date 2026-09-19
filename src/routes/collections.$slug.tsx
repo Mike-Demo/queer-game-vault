@@ -8,6 +8,7 @@ import { NesContainer, NesText } from "@/design-system/nes-229931";
 import { collectionQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/collections/$slug")({
+  staticData: { sitemap: true },
   head: ({ params }) => ({
     meta: [
       { title: `${params.slug} collection — QueerCade` },
@@ -67,7 +68,8 @@ function CollectionDetailPage() {
   return (
     <AppShell>
       <div className="stack-lg">
-        <NesContainer title={data.title} rounded>
+        <h1 className="title-xl"><NesText variant="primary">{data.title}</NesText></h1>
+        <NesContainer rounded>
           <div className="stack">
             {data.description ? <p>{data.description}</p> : null}
             {data.curatorNotes ? <p className="text-xs">{data.curatorNotes}</p> : null}

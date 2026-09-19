@@ -8,6 +8,7 @@ import { NesContainer, NesText } from "@/design-system/nes-229931";
 import { contentPageQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/about")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "About — QueerCade" },
@@ -40,9 +41,7 @@ function About() {
       {page.data === null ? <EmptyState title="This page has not been published yet" /> : null}
       {page.data ? (
         <div className="stack-lg">
-          <NesText variant="primary" className="title-xl">
-            {page.data.title}
-          </NesText>
+          <h1 className="title-xl"><NesText variant="primary">{page.data.title}</NesText></h1>
           {page.data.summary ? <p>{page.data.summary}</p> : null}
           <NesContainer rounded>
             <div className="prose">

@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LibraryRouteImport } from './routes/library'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedDiscoverRouteImport } from './routes/_authenticated/discover'
 import { Route as AuthenticatedImportsRouteImport } from './routes/_authenticated/imports'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
@@ -45,6 +46,11 @@ const AuthRoute = AuthRouteImport.update({
 const LibraryRoute = LibraryRouteImport.update({
   id: '/library',
   path: '/library',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDiscoverRoute = AuthenticatedDiscoverRouteImport.update({
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/library': typeof LibraryRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/discover': typeof AuthenticatedDiscoverRoute
   '/imports': typeof AuthenticatedImportsRoute
   '/review': typeof AuthenticatedReviewRoute
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/library': typeof LibraryRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/discover': typeof AuthenticatedDiscoverRoute
   '/imports': typeof AuthenticatedImportsRoute
   '/review': typeof AuthenticatedReviewRoute
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/library': typeof LibraryRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/discover': typeof AuthenticatedDiscoverRoute
   '/_authenticated/imports': typeof AuthenticatedImportsRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/library'
+    | '/sitemap.xml'
     | '/discover'
     | '/imports'
     | '/review'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/library'
+    | '/sitemap.xml'
     | '/discover'
     | '/imports'
     | '/review'
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/library'
+    | '/sitemap.xml'
     | '/_authenticated/discover'
     | '/_authenticated/imports'
     | '/_authenticated/review'
@@ -186,6 +198,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   LibraryRoute: typeof LibraryRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   GamesSlugRoute: typeof GamesSlugRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
@@ -228,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/library'
       fullPath: '/library'
       preLoaderRoute: typeof LibraryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/discover': {
@@ -310,6 +330,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   LibraryRoute: LibraryRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   GamesSlugRoute: GamesSlugRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,

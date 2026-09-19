@@ -7,6 +7,7 @@ import { NesBadge, NesContainer, NesText } from "@/design-system/nes-229931";
 import { collectionsQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/collections/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Curated collections — QueerCade" },
@@ -35,9 +36,7 @@ function Collections() {
   return (
     <AppShell>
       <div className="stack-lg">
-        <NesText variant="primary" className="title-xl">
-          Collections
-        </NesText>
+        <h1 className="title-xl"><NesText variant="primary">Collections</NesText></h1>
         {collections.isPending ? <LoadingState label="Loading collections" /> : null}
         {collections.isError ? <ErrorState message="Collections could not be loaded." /> : null}
         {collections.data && collections.data.length === 0 ? (

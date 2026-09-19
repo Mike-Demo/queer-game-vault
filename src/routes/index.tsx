@@ -12,6 +12,7 @@ import {
 } from "@/lib/publicData";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "QueerCade — a curated arcade of games" },
@@ -53,15 +54,15 @@ function Home() {
       <div className="stack-lg">
         <NesContainer rounded>
           <div className="stack">
-            <NesText variant="primary" className="title-xl">
-              {settings.data?.homepageHeading ?? "PRESS START"}
-            </NesText>
+            <h1 className="title-xl">
+              <NesText variant="primary">{settings.data?.homepageHeading ?? "PRESS START"}</NesText>
+            </h1>
             <p>{settings.data?.homepageIntroduction}</p>
           </div>
         </NesContainer>
 
         <section className="stack">
-          <NesText className="title-md">Featured games</NesText>
+          <h2 className="title-md"><NesText>Featured games</NesText></h2>
           {games.isPending ? <LoadingState label="Loading featured games" /> : null}
           {games.isError ? <ErrorState message="Featured games could not be loaded." /> : null}
           {games.data && games.data.length === 0 ? (
@@ -79,7 +80,7 @@ function Home() {
         </section>
 
         <section className="stack">
-          <NesText className="title-md">Featured collections</NesText>
+          <h2 className="title-md"><NesText>Featured collections</NesText></h2>
           {collections.data && collections.data.length === 0 ? (
             <EmptyState title="No collections yet">
               <NesText>Editors can curate collections in the studio.</NesText>

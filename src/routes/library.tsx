@@ -8,6 +8,7 @@ import { NesText } from "@/design-system/nes-229931";
 import { libraryQueryOptions, siteSettingsQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/library")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Game library — QueerCade" },
@@ -37,9 +38,7 @@ function Library() {
   return (
     <AppShell>
       <div className="stack-lg">
-        <NesText variant="primary" className="title-xl">
-          Game library
-        </NesText>
+        <h1 className="title-xl"><NesText variant="primary">Game library</NesText></h1>
         {games.isPending ? <LoadingState label="Loading the library" /> : null}
         {games.isError ? <ErrorState message="The library could not be loaded." /> : null}
         {games.data && games.data.length === 0 ? (

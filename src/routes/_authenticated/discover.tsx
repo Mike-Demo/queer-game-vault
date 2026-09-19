@@ -19,6 +19,7 @@ import { importGamesFromIgdb, type ImportSummary } from "@/lib/editorial.functio
 import { getIgdbGameDetails, searchIgdbGames, type IgdbSearchResult } from "@/lib/igdb.functions";
 
 export const Route = createFileRoute("/_authenticated/discover")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Discover games — QueerCade" },
