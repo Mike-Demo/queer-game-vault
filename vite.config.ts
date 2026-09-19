@@ -10,6 +10,27 @@ import viteReact from "@vitejs/plugin-react";
 import { componentTagger } from "lovable-tagger";
 import { mockupPreviewPlugin } from "./mockupPreviewPlugin";
 
+/**
+ * The Cloudflare plugin emits the server bundle as dist/server/index.js, while
+ * the prerender step's preview server imports dist/server/server.js. Alias one
+ * to the other so static prerendering can render pages during the build.
+ */
+function prerenderServerEntryAlias(): Plugin {
+  return {
+    name: "queercade:prerender-server-entry-alias",
+    apply: "build",
+    writeBundle: {
+      order: "post",
+      handler(options) {
+        if (this.environment.name !== "ssr") return;
+        const dir = options.dir;
+        if (!dir) return;
+        writeFileSync(path.join(dir, "server.js"), 'export { default } from "./index.js";\n');
+      },
+    },
+  };
+}
+
 export default defineConfig(async ({ command, mode }) => {
   // Cloudflare Workers plugin only on build (produces the worker output);
   // the workerd runtime isn't available for the dev server.
