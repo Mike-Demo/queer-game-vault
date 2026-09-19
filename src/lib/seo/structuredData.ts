@@ -9,6 +9,9 @@ export const SITE_URL = "https://queercade.mikedemo.dev";
 export const SITE_NAME = "QueerCade";
 const LOGO_URL = `${SITE_URL}/favicon.png`;
 
+/** Branded share image for pages that have no picture of their own. */
+export const DEFAULT_SHARE_IMAGE = `${SITE_URL}/og-image.png`;
+
 export type JsonLd = Record<string, unknown>;
 
 /** Recursively drops undefined, null, empty strings and empty arrays/objects. */
