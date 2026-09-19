@@ -3,6 +3,7 @@ import type { ReactElement } from "react";
 
 import { NesContainer } from "@/design-system/nes-229931";
 import {
+  DEFAULT_SHARE_IMAGE,
   SITE_URL,
   breadcrumbs,
   jsonLdScript,
@@ -35,7 +36,7 @@ const GROUPS: readonly LicenseGroup[] = [
         author: "CodeMan38",
         license: "SIL Open Font License 1.1",
         url: "https://openfontlicense.org",
-        note: "Pixel display typeface used across the whole site. Served from Google Fonts.",
+        note: "Pixel display typeface used across the whole site. Self-hosted from this site.",
       },
     ],
   },
