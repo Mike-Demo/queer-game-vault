@@ -112,8 +112,8 @@ function Home() {
           ) : null}
           {games.data && games.data.length > 0 ? (
             <div className="card-grid">
-              {games.data.map((game) => (
-                <GameCard key={game._id} game={game} />
+              {games.data.map((game, index) => (
+                <GameCard key={game._id} game={game} priority={index < 4} />
               ))}
             </div>
           ) : null}
