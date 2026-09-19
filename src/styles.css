@@ -16,6 +16,9 @@
   --app-font-lg: 1.375rem;
   --app-cover-height: 14rem;
   --app-card-min: 15rem;
+  --app-cover-height-sm: 9rem;
+  --app-sidebar-width: 18rem;
+  --app-form-measure: 34rem;
 }
 
 * {
@@ -248,7 +251,7 @@ html[data-theme="dark"] .title-md {
 }
 
 .auth-layout {
-  max-width: 34rem;
+  max-width: var(--app-form-measure);
   margin-inline: auto;
 }
 
@@ -258,14 +261,14 @@ html[data-theme="dark"] .title-md {
 }
 
 .cover-sm {
-  height: 9rem;
+  height: var(--app-cover-height-sm);
   width: 100%;
   object-fit: cover;
 }
 
 @media (min-width: 48rem) {
   .discover-layout {
-    grid-template-columns: 18rem 1fr;
+    grid-template-columns: var(--app-sidebar-width) 1fr;
     align-items: start;
   }
 
