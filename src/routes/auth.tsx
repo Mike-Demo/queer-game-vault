@@ -2,7 +2,15 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 
 import { AppShell } from "@/components/AppShell";
-import { NesButton, NesContainer, NesField, NesInput, NesText } from "@/design-system/nes-229931";
+import {
+  NesButton,
+  NesContainer,
+  NesField,
+  NesIcon,
+  NesInput,
+  NesText,
+} from "@/design-system/nes-229931";
+import { lovable } from "@/integrations/lovable";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/auth")({
