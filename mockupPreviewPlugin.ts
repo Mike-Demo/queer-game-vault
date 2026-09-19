@@ -301,6 +301,7 @@ function PreviewDocument({ previewPath }: { previewPath: string }): ReactElement
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
       if (event.source !== parent) return;
+      if (!isTrustedEditorOrigin(event.origin)) return;
       const schemaProps = (entryRef.current as { schemaProps?: SchemaProp[] } | null)?.schemaProps ?? [];
       const props = specimenPropsFromMessage(event.data, schemaProps);
       if (!props) return;
@@ -361,6 +362,19 @@ function isLovablePreviewHost(hostname: string): boolean {
   if (hostname.endsWith(".sandbox.lovable.dev")) return true;
   if (!PREVIEW_DOMAINS.some((domain) => hostname.endsWith(domain))) return false;
   return /^(id-)?preview(-[0-9a-f]+)?--/.test(hostname.split(".")[0]);
+}
+
+/** Only accept specimen-prop messages from the Lovable editor/preview frames. */
+function isTrustedEditorOrigin(origin: string): boolean {
+  if (!origin) return false;
+  let hostname: string;
+  try {
+    hostname = new URL(origin).hostname;
+  } catch {
+    return false;
+  }
+  if (hostname === "localhost" || hostname === "127.0.0.1") return true;
+  return PREVIEW_DOMAINS.some((domain) => hostname.endsWith(domain));
 }
 
 function specimenPropsFromMessage(message: unknown, schemaProps: readonly SchemaProp[]): SpecimenProps | null {
@@ -1215,8 +1229,22 @@ export function mockupPreviewPlugin(): Plugin {
       }));
     }
 
+    const TRUSTED_MESSAGE_DOMAINS = [".lovable.app", ".lovableproject.com", ".lovable.dev", ".gpt-eng.com"];
+    function isTrustedMessageOrigin(origin) {
+      if (!origin) return false;
+      let hostname = "";
+      try {
+        hostname = new URL(origin).hostname;
+      } catch {
+        return false;
+      }
+      if (hostname === "localhost" || hostname === "127.0.0.1") return true;
+      return TRUSTED_MESSAGE_DOMAINS.some((domain) => hostname.endsWith(domain));
+    }
+
     window.addEventListener("message", (event) => {
       if (event.source !== parent) return;
+      if (!isTrustedMessageOrigin(event.origin)) return;
       const next = specimenPropsFromMessage(event.data);
       if (!next) return;
       specimenProps = next;
