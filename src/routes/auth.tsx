@@ -2,7 +2,15 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 
 import { AppShell } from "@/components/AppShell";
-import { NesButton, NesContainer, NesField, NesInput, NesText } from "@/design-system/nes-229931";
+import {
+  NesButton,
+  NesContainer,
+  NesField,
+  NesIcon,
+  NesInput,
+  NesText,
+} from "@/design-system/nes-229931";
+import { lovable } from "@/integrations/lovable";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/auth")({
@@ -29,6 +37,23 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  async function signInWithGoogle() {
+    setBusy(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+      });
+      if (result.redirected) return;
+      if (result.error) throw result.error;
+      await router.navigate({ to: "/" });
+    } catch (oauthError) {
+      setError(oauthError instanceof Error ? oauthError.message : "Google sign-in failed.");
+      setBusy(false);
+    }
+  }
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -61,6 +86,12 @@ function AuthPage() {
   return (
     <AppShell>
       <NesContainer title={mode === "signIn" ? "Editor sign in" : "Create editor account"} rounded>
+        <div className="stack">
+          <NesButton type="button" variant="primary" disabled={busy} onClick={signInWithGoogle}>
+            <NesIcon name="google" aria-hidden /> Continue with Google
+          </NesButton>
+          <NesText className="text-xs">or use email and password:</NesText>
+        </div>
         <form className="stack" onSubmit={submit}>
           <NesField label="Email" htmlFor="email">
             <NesInput
