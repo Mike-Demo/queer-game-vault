@@ -1,3 +1,6 @@
+/** Plain JSON, safe to send from server functions to the browser. */
+export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
 export type EditorialStatus = "imported" | "underReview" | "approved" | "featured" | "archived";
 export type CollectionStatus = "draft" | "published" | "archived";
 
