@@ -48,7 +48,7 @@ function About() {
           {page.data.summary ? <p>{page.data.summary}</p> : null}
           <Surface rounded>
             <div className="prose">
-              <PortableText value={(page.data.body ?? []) as PortableTextBlock[]} />
+              <PortableText value={(page.data.body ?? []) as unknown as PortableTextBlock[]} />
             </div>
           </Surface>
         </div>

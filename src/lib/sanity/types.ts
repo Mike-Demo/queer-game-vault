@@ -1,3 +1,6 @@
+/** Plain JSON, safe to send from server functions to the browser. */
+export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
 export type EditorialStatus = "imported" | "underReview" | "approved" | "featured" | "archived";
 export type CollectionStatus = "draft" | "published" | "archived";
 
@@ -112,7 +115,7 @@ export interface ContentPage {
   title: string;
   slug: string | null;
   summary: string | null;
-  body: unknown[] | null;
+  body: JsonValue[] | null;
   featuredImage: SanityImageRef | null;
   seoTitle: string | null;
   seoDescription: string | null;
