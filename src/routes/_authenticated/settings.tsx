@@ -44,6 +44,7 @@ function SettingsPage() {
   const [bio, setBio] = useState("");
   const [visibility, setVisibility] = useState<"public" | "private">("public");
   const [saved, setSaved] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState<string | null>(null);
@@ -60,10 +61,14 @@ function SettingsPage() {
   async function saveProfile(event: React.FormEvent) {
     event.preventDefault();
     setSaved(false);
-    await update
-      .mutateAsync({ username, bio, profileVisibility: visibility })
-      .then(() => setSaved(true))
-      .catch(() => setSaved(false));
+    setSaveError(null);
+    try {
+      const result = await update.mutateAsync({ username, bio, profileVisibility: visibility });
+      if (result.ok) setSaved(true);
+      else setSaveError(result.error ?? "That could not be saved.");
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : "That could not be saved.");
+    }
   }
 
   async function savePassword(event: React.FormEvent) {
@@ -140,9 +145,9 @@ function SettingsPage() {
                   />
                 </fieldset>
 
-                {update.isError ? (
+                {saveError ? (
                   <NesText variant="error" role="alert">
-                    {update.error instanceof Error ? update.error.message : "That could not be saved."}
+                    {saveError}
                   </NesText>
                 ) : null}
                 {saved ? <NesText variant="success">Saved.</NesText> : null}

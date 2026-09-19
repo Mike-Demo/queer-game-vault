@@ -191,13 +191,20 @@ export const updateMyProfile = createServerFn({ method: "POST" })
     return patch;
   })
   .handler(async ({ data, context }): Promise<{ ok: boolean; error: string | null }> => {
-    const update: Record<string, unknown> = {};
-    if (data.username !== undefined) update["username"] = data.username;
-    if (data.displayName !== undefined) update["display_name"] = data.displayName;
-    if (data.bio !== undefined) update["bio"] = data.bio;
-    if (data.profileVisibility !== undefined) update["profile_visibility"] = data.profileVisibility;
-    if (data.themePreference !== undefined) update["theme_preference"] = data.themePreference;
-    if (data.highContrast !== undefined) update["high_contrast"] = data.highContrast;
+    const update: {
+      username?: string;
+      display_name?: string | null;
+      bio?: string | null;
+      profile_visibility?: string;
+      theme_preference?: string;
+      high_contrast?: boolean;
+    } = {};
+    if (data.username !== undefined) update.username = data.username;
+    if (data.displayName !== undefined) update.display_name = data.displayName;
+    if (data.bio !== undefined) update.bio = data.bio;
+    if (data.profileVisibility !== undefined) update.profile_visibility = data.profileVisibility;
+    if (data.themePreference !== undefined) update.theme_preference = data.themePreference;
+    if (data.highContrast !== undefined) update.high_contrast = data.highContrast;
 
     if (Object.keys(update).length === 0) return { ok: true, error: null };
 
