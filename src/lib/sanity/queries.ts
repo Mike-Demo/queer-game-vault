@@ -11,7 +11,7 @@ export const GAME_SUMMARY_PROJECTION = `{
   cover, sourceCoverUrl, editorialStatus, featured,
   "genres": coalesce(genres[]->${TAXONOMY}, []),
   "platforms": coalesce(platforms[]->${TAXONOMY}, []),
-  "lgbtqCharacters": coalesce(lgbtqCharacters[].name, [])
+  "lgbtqCharacterNames": coalesce(lgbtqCharacters[].name, [])
 }`;
 
 export const GAME_DETAIL_PROJECTION = `{
