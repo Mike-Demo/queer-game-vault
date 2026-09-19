@@ -29,6 +29,7 @@ export const GAME_DETAIL_PROJECTION = `{
   "platforms": coalesce(platforms[]->${TAXONOMY}, []),
   "sources": coalesce(sources[]{ publication, title, url, capturedAt }, []),
   "lgbtqCharacters": coalesce(lgbtqCharacters[]{ name, identity, sourceUrl }, []),
+  popularity, sourceUpdatedAt,
   importStatus, importedAt, lastSyncedAt
 
 }`;

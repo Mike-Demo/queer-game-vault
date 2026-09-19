@@ -79,9 +79,16 @@ export interface GameDetail extends GameSummary {
   developer: { name: string } | null;
   publisher: { name: string } | null;
   involvedCompanies: { name: string }[];
+  popularity: number | null;
+  sourceUpdatedAt: string | null;
   importStatus: string | null;
   importedAt: string | null;
   lastSyncedAt: string | null;
+}
+
+export interface CollectionRef {
+  title: string;
+  slug: string | null;
 }
 
 export interface CollectionSummary {
