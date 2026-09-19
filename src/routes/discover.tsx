@@ -5,7 +5,14 @@ import { useEffect, useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
-import { NesButton, NesContainer, NesField, NesInput, NesSelect, NesText } from "@/design-system/nes-229931";
+import {
+  NesButton,
+  NesField,
+  NesInput,
+  NesSelect,
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import {
   discoverFacetsQueryOptions,
   discoverSearchQueryOptions,
@@ -109,7 +116,7 @@ function DiscoverPage() {
         </div>
 
         <div className="discover-layout">
-          <NesContainer title="Filters" rounded>
+          <Surface title="Filters" rounded>
             <div className="stack">
               <NesField label="Search games" htmlFor="discover-term">
                 <NesInput
@@ -182,7 +189,7 @@ function DiscoverPage() {
                 </NesButton>
               ) : null}
             </div>
-          </NesContainer>
+          </Surface>
 
           <div className="stack">
             {results.isPending ? <LoadingState label="Searching games" /> : null}

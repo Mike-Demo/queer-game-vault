@@ -9,11 +9,11 @@ import {
   NesBadge,
   NesButton,
   NesCheckbox,
-  NesContainer,
   NesField,
   NesInput,
   NesText,
 } from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { studioDocumentUrl } from "@/lib/sanity/config";
 import { importGamesFromIgdb, type ImportSummary } from "@/lib/editorial.functions";
 import { getIgdbGameDetails, searchIgdbGames, type IgdbSearchResult } from "@/lib/igdb.functions";
@@ -113,7 +113,7 @@ function DiscoverPage() {
           Discover games
         </NesText>
 
-        <NesContainer title="Search IGDB" rounded>
+        <Surface title="Search IGDB" rounded>
           <div className="stack">
             <NesField label="Game title" htmlFor="search">
               <NesInput
@@ -149,10 +149,10 @@ function DiscoverPage() {
               </NesButton>
             </div>
           </div>
-        </NesContainer>
+        </Surface>
 
         {summary ? (
-          <NesContainer title="Import summary">
+          <Surface title="Import summary">
             <div className="stack" role="status">
               {summary.error ? <NesText variant="error">{summary.error}</NesText> : null}
               <NesText>
@@ -193,7 +193,7 @@ function DiscoverPage() {
                 Dismiss
               </NesButton>
             </div>
-          </NesContainer>
+          </Surface>
         ) : null}
 
         {!searchEnabled ? (
@@ -213,7 +213,7 @@ function DiscoverPage() {
         {results.length > 0 ? (
           <div className="card-grid">
             {results.map((result) => (
-              <NesContainer key={result.igdbId} rounded>
+              <Surface key={result.igdbId} rounded>
                 <div className="stack">
                   {result.coverUrl ? (
                     <img className="cover" src={result.coverUrl} alt={`${result.title} cover art`} loading="lazy" />
@@ -246,7 +246,7 @@ function DiscoverPage() {
                     Preview IGDB data
                   </NesButton>
                 </div>
-              </NesContainer>
+              </Surface>
             ))}
           </div>
         ) : null}
@@ -258,7 +258,7 @@ function DiscoverPage() {
         ) : null}
 
         {previewId !== null ? (
-          <NesContainer title="IGDB preview (source data)" rounded>
+          <Surface title="IGDB preview (source data)" rounded>
             <div className="stack">
               {detailsQuery.isPending ? <LoadingState label="Loading IGDB record" /> : null}
               {detailsQuery.data?.error ? <ErrorState message={detailsQuery.data.error} /> : null}
@@ -309,7 +309,7 @@ function DiscoverPage() {
                   </div>
 
                   {detailsQuery.data.existing ? (
-                    <NesContainer title="Already in your library">
+                    <Surface title="Already in your library">
                       <div className="stack">
                         <NesText variant="warning" className="text-xs">
                           {`This game is already in your Sanity library as "${detailsQuery.data.existing.title}" (${detailsQuery.data.existing.editorialStatus}). Refreshing replaces IGDB metadata only — your custom description, notes, status, featured flag and collections stay as they are.`}
@@ -337,7 +337,7 @@ function DiscoverPage() {
                           </NesButton>
                         </div>
                       </div>
-                    </NesContainer>
+                    </Surface>
                   ) : (
                     <div className="row">
                       <NesButton
@@ -356,7 +356,7 @@ function DiscoverPage() {
                 </>
               ) : null}
             </div>
-          </NesContainer>
+          </Surface>
         ) : null}
       </div>
     </AppShell>

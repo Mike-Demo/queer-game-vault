@@ -5,7 +5,11 @@ import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
 import { TrackControl } from "@/components/TrackControl";
-import { NesBadge, NesContainer, NesText } from "@/design-system/nes-229931";
+import {
+  NesBadge,
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { coverUrl, gameQueryOptions, relatedGamesQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/games/$slug")({
@@ -117,7 +121,7 @@ function GamePage() {
     <AppShell>
       <div className="stack-lg">
         <div className="detail-layout">
-          <NesContainer rounded>
+          <Surface rounded>
             {cover ? (
               <img className="cover" src={cover} alt={`${data.title} cover art`} />
             ) : (
@@ -125,7 +129,7 @@ function GamePage() {
                 <NesText>No cover art</NesText>
               </div>
             )}
-          </NesContainer>
+          </Surface>
           <div className="stack">
             <h1 className="title-xl"><NesText variant="primary">{data.title}</NesText></h1>
             <div className="row">
@@ -136,26 +140,26 @@ function GamePage() {
               ))}
             </div>
             {data.slug ? (
-              <NesContainer title="Track this game" rounded>
+              <Surface title="Track this game" rounded>
                 <TrackControl
                   game={{ igdbId: data.igdbId, slug: data.slug, title: data.title, coverUrl: cover }}
                 />
-              </NesContainer>
+              </Surface>
             ) : null}
             {data.customDescription ? (
-              <NesContainer title="From our editors">
+              <Surface title="From our editors">
                 <p>{data.customDescription}</p>
-              </NesContainer>
+              </Surface>
             ) : null}
             {data.summary ? (
-              <NesContainer title="Summary (source: IGDB)">
+              <Surface title="Summary (source: IGDB)">
                 <p>{data.summary}</p>
-              </NesContainer>
+              </Surface>
             ) : null}
           </div>
         </div>
 
-        <NesContainer title="Metadata (source: IGDB)">
+        <Surface title="Metadata (source: IGDB)">
           <div className="stack">
             {data.genres.length > 0 ? (
               <div className="row">
@@ -199,16 +203,16 @@ function GamePage() {
               </div>
             ) : null}
           </div>
-        </NesContainer>
+        </Surface>
 
         {data.editorNotes ? (
-          <NesContainer title="Editor notes">
+          <Surface title="Editor notes">
             <p>{data.editorNotes}</p>
-          </NesContainer>
+          </Surface>
         ) : null}
 
         {data.sources.length > 0 ? (
-          <NesContainer title="Where we found it">
+          <Surface title="Where we found it">
             <ul className="source-list">
               {data.sources.map((source) =>
                 source.url ? (
@@ -221,17 +225,17 @@ function GamePage() {
                 ) : null,
               )}
             </ul>
-          </NesContainer>
+          </Surface>
         ) : null}
 
         {data.storyline ? (
-          <NesContainer title="Storyline (source: IGDB)">
+          <Surface title="Storyline (source: IGDB)">
             <p>{data.storyline}</p>
-          </NesContainer>
+          </Surface>
         ) : null}
 
         {data.screenshots.length > 0 ? (
-          <NesContainer title="Screenshots (source: IGDB)">
+          <Surface title="Screenshots (source: IGDB)">
             <div className="shot-strip">
               {data.screenshots.map((shot) =>
                 shot.url ? (
@@ -242,7 +246,7 @@ function GamePage() {
                 ) : null,
               )}
             </div>
-          </NesContainer>
+          </Surface>
         ) : null}
 
         <RelatedGames id={data._id} genreIds={data.genres.map((genre) => genre._id)} />

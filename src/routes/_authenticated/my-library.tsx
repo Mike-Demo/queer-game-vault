@@ -3,7 +3,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import { EntryCard } from "@/components/EntryCard";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
-import { NesContainer, NesText } from "@/design-system/nes-229931";
+import {
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { useMyProfile } from "@/hooks/useProfile";
 import { useMyEntries } from "@/hooks/useTracking";
 import { STATUS_LABELS, TRACK_STATUSES, type TrackStatus } from "@/lib/tracking/types";
@@ -75,9 +78,9 @@ function MyLibraryPage() {
                     <NesText>{`${STATUS_LABELS[status]} (${grouped[status]?.length ?? 0})`}</NesText>
                   </h2>
                   {(grouped[status]?.length ?? 0) === 0 ? (
-                    <NesContainer rounded>
+                    <Surface rounded>
                       <NesText className="text-xs">No games here yet.</NesText>
-                    </NesContainer>
+                    </Surface>
                   ) : (
                     <div className="stack">
                       {grouped[status]?.map((entry) => (

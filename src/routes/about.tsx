@@ -4,7 +4,10 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/AppShell";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
-import { NesContainer, NesText } from "@/design-system/nes-229931";
+import {
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { contentPageQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/about")({
@@ -43,11 +46,11 @@ function About() {
         <div className="stack-lg">
           <h1 className="title-xl"><NesText variant="primary">{page.data.title}</NesText></h1>
           {page.data.summary ? <p>{page.data.summary}</p> : null}
-          <NesContainer rounded>
+          <Surface rounded>
             <div className="prose">
               <PortableText value={(page.data.body ?? []) as PortableTextBlock[]} />
             </div>
-          </NesContainer>
+          </Surface>
         </div>
       ) : null}
     </AppShell>

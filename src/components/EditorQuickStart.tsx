@@ -1,6 +1,9 @@
 import { Link } from "@tanstack/react-router";
 
-import { NesContainer, NesText } from "@/design-system/nes-229931";
+import {
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { useEditorAccess, useSession } from "@/hooks/useAuth";
 
 /**
@@ -14,7 +17,7 @@ export function EditorQuickStart() {
   if (!access?.role) return null;
 
   return (
-    <NesContainer title="How it works" rounded>
+    <Surface title="How it works" rounded>
       <div className="stack">
         <p className="text-xs">
           <NesText>
@@ -36,6 +39,6 @@ export function EditorQuickStart() {
           <Link to="/imports">Import history</Link>
         </div>
       </div>
-    </NesContainer>
+    </Surface>
   );
 }

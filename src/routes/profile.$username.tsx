@@ -5,7 +5,11 @@ import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/AppShell";
 import { EntryCard } from "@/components/EntryCard";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
-import { NesAvatar, NesContainer, NesText } from "@/design-system/nes-229931";
+import {
+  NesAvatar,
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { getProfileByUsername } from "@/lib/tracking.functions";
 import { STATUS_LABELS, TRACK_STATUSES } from "@/lib/tracking/types";
 
@@ -50,7 +54,7 @@ function ProfilePage() {
 
         {data?.profile ? (
           <>
-            <NesContainer rounded>
+            <Surface rounded>
               <div className="row">
                 <NesAvatar src={data.profile.avatarUrl ?? undefined} alt="" size="large" />
                 <div className="stack">
@@ -63,7 +67,7 @@ function ProfilePage() {
                   </NesText>
                 </div>
               </div>
-            </NesContainer>
+            </Surface>
 
             {data.entries.length === 0 ? (
               <EmptyState title="No games tracked yet">

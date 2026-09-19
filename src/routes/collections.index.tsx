@@ -3,7 +3,11 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/AppShell";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
-import { NesBadge, NesContainer, NesText } from "@/design-system/nes-229931";
+import {
+  NesBadge,
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { collectionsQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/collections/")({
@@ -46,7 +50,7 @@ function Collections() {
         ) : null}
         <div className="card-grid">
           {collections.data?.map((collection) => (
-            <NesContainer key={collection._id} title={collection.title} rounded>
+            <Surface key={collection._id} title={collection.title} rounded>
               <div className="stack">
                 <p className="text-xs">{collection.description}</p>
                 <div className="row">
@@ -59,7 +63,7 @@ function Collections() {
                   </Link>
                 ) : null}
               </div>
-            </NesContainer>
+            </Surface>
           ))}
         </div>
       </div>

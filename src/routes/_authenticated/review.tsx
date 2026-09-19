@@ -9,12 +9,12 @@ import {
   NesBadge,
   NesButton,
   NesCheckbox,
-  NesContainer,
   NesField,
   NesSelect,
   NesText,
   NesTextarea,
 } from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import {
   addGameToCollection,
   getReviewQueue,
@@ -163,7 +163,7 @@ function ReviewCard({ game, collections, busy, onSave, onRefresh, onAddToCollect
   const [confirmRefresh, setConfirmRefresh] = useState(false);
 
   return (
-    <NesContainer title={game.title} rounded>
+    <Surface title={game.title} rounded>
       <div className="stack">
         <div className="row">
           <NesBadge variant="warning">{game.editorialStatus}</NesBadge>
@@ -283,6 +283,6 @@ function ReviewCard({ game, collections, busy, onSave, onRefresh, onAddToCollect
           </NesButton>
         )}
       </div>
-    </NesContainer>
+    </Surface>
   );
 }

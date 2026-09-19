@@ -1,6 +1,11 @@
 import { Link } from "@tanstack/react-router";
 
-import { NesButton, NesContainer, NesSelect, NesText } from "@/design-system/nes-229931";
+import {
+  NesButton,
+  NesSelect,
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { useSetGameStatus } from "@/hooks/useTracking";
 import { isTrackStatus, STATUS_LABELS, TRACK_STATUSES, type GameEntry } from "@/lib/tracking/types";
 
@@ -10,7 +15,7 @@ export function EntryCard({ entry, editable }: { entry: GameEntry; editable: boo
   const controlId = `entry-${entry.igdbId}`;
 
   return (
-    <NesContainer rounded>
+    <Surface rounded>
       <div className="stack">
         {entry.coverUrl ? (
           <img className="cover cover-sm" src={entry.coverUrl} alt={`${entry.title} cover art`} loading="lazy" />
@@ -66,6 +71,6 @@ export function EntryCard({ entry, editable }: { entry: GameEntry; editable: boo
           </>
         ) : null}
       </div>
-    </NesContainer>
+    </Surface>
   );
 }

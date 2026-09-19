@@ -1,7 +1,11 @@
 import { Link } from "@tanstack/react-router";
 
 import { TrackControl } from "@/components/TrackControl";
-import { NesBadge, NesContainer, NesText } from "@/design-system/nes-229931";
+import {
+  NesBadge,
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { coverUrl } from "@/lib/publicData";
 import type { GameSummary } from "@/lib/sanity/types";
 
@@ -10,7 +14,7 @@ export function GameCard({ game }: { game: GameSummary }) {
   const blurb = game.customDescription ?? game.summary;
 
   return (
-    <NesContainer rounded>
+    <Surface rounded>
       <div className="stack">
         {cover ? (
           <img className="cover" src={cover} alt={`${game.title} cover art`} loading="lazy" />
@@ -43,6 +47,6 @@ export function GameCard({ game }: { game: GameSummary }) {
           />
         ) : null}
       </div>
-    </NesContainer>
+    </Surface>
   );
 }

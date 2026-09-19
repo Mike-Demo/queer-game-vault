@@ -4,7 +4,11 @@ import { useServerFn } from "@tanstack/react-start";
 
 import { AppShell } from "@/components/AppShell";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
-import { NesBadge, NesContainer, NesText } from "@/design-system/nes-229931";
+import {
+  NesBadge,
+  NesText,
+} from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { getImportHistory } from "@/lib/editorial.functions";
 
 export const Route = createFileRoute("/_authenticated/imports")({
@@ -51,7 +55,7 @@ function ImportsPage() {
           </EmptyState>
         ) : null}
         {history.data?.records.map((record) => (
-          <NesContainer key={record._id} title={record.gameTitle ?? `IGDB ${record.igdbId}`}>
+          <Surface key={record._id} title={record.gameTitle ?? `IGDB ${record.igdbId}`}>
             <div className="stack">
               <div className="row">
                 <NesBadge variant={resultVariant(record.result)}>{record.result ?? "unknown"}</NesBadge>
@@ -79,7 +83,7 @@ function ImportsPage() {
                 </Link>
               ) : null}
             </div>
-          </NesContainer>
+          </Surface>
         ))}
       </div>
     </AppShell>

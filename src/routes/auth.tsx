@@ -4,12 +4,12 @@ import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import {
   NesButton,
-  NesContainer,
   NesField,
   NesIcon,
   NesInput,
   NesText,
 } from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import { lovable } from "@/integrations/lovable";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -142,7 +142,7 @@ function AuthPage() {
   return (
     <AppShell>
       <div className="auth-layout">
-        <NesContainer title={registering ? "Register for QueerCade" : "Sign in to QueerCade"} rounded>
+        <Surface title={registering ? "Register for QueerCade" : "Sign in to QueerCade"} rounded>
           <div className="stack">
             <h1 className="title-md">
               <NesText variant="primary">{registering ? "Create your account" : "Welcome back"}</NesText>
@@ -232,7 +232,7 @@ function AuthPage() {
               </NesButton>
             </div>
           </form>
-        </NesContainer>
+        </Surface>
       </div>
     </AppShell>
   );
