@@ -10,8 +10,16 @@ import {
   NesText,
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
+import {
+  jsonLdScript,
+  organization,
+  person,
+  webPage,
+  website,
+} from "@/lib/seo/structuredData";
 import { getProfileByUsername } from "@/lib/tracking.functions";
 import { STATUS_LABELS, TRACK_STATUSES } from "@/lib/tracking/types";
+
 
 export const Route = createFileRoute("/profile/$username")({
   ssr: false,
@@ -26,7 +34,24 @@ export const Route = createFileRoute("/profile/$username")({
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
+    scripts: [
+      jsonLdScript(
+        organization(),
+        website(),
+        webPage({
+          type: "ProfilePage",
+          path: `/profile/${params.username}`,
+          name: `${params.username} — QueerCade profile`,
+          description: `Games ${params.username} is playing on QueerCade.`,
+        }),
+        person({
+          path: `/profile/${params.username}`,
+          name: params.username,
+        }),
+      ),
+    ],
   }),
+
   component: ProfilePage,
 });
 

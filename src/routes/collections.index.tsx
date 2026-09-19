@@ -9,10 +9,19 @@ import {
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
 import { collectionsQueryOptions } from "@/lib/publicData";
+import {
+  breadcrumbs,
+  itemList,
+  jsonLdScript,
+  organization,
+  webPage,
+  website,
+} from "@/lib/seo/structuredData";
 
 export const Route = createFileRoute("/collections/")({
   staticData: { sitemap: true },
-  head: () => ({
+  loader: ({ context }) => context.queryClient.ensureQueryData(collectionsQueryOptions),
+  head: ({ loaderData }) => ({
     meta: [
       { title: "Curated collections — QueerCade" },
       {
@@ -21,11 +30,37 @@ export const Route = createFileRoute("/collections/")({
       },
       { property: "og:title", content: "Curated collections — QueerCade" },
       { property: "og:description", content: "Editor-curated groupings of games in the QueerCade arcade." },
+      { property: "og:url", content: "https://queercade.mikedemo.dev/collections" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://queercade.mikedemo.dev/collections" }],
+    scripts: [
+      jsonLdScript(
+        organization(),
+        website(),
+        webPage({
+          type: "CollectionPage",
+          path: "/collections",
+          name: "Curated collections — QueerCade",
+          description: "Editor-curated collections of games, grouped by theme, mood and era.",
+        }),
+        breadcrumbs([
+          { name: "Home", path: "/" },
+          { name: "Collections", path: "/collections" },
+        ]),
+        itemList(
+          "Curated collections",
+          (loaderData ?? []).map((collection) => ({
+            name: collection.title,
+            path: collection.slug ? `/collections/${collection.slug}` : null,
+            type: "CollectionPage" as const,
+          })),
+        ),
+      ),
+    ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(collectionsQueryOptions),
+
   errorComponent: () => (
     <AppShell>
       <ErrorState message="Collections could not be loaded. Please refresh." />

@@ -8,7 +8,15 @@ import {
   NesText,
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
-import { collectionQueryOptions } from "@/lib/publicData";
+import { collectionQueryOptions, coverUrl } from "@/lib/publicData";
+import {
+  breadcrumbs,
+  itemList,
+  jsonLdScript,
+  organization,
+  webPage,
+  website,
+} from "@/lib/seo/structuredData";
 
 export const Route = createFileRoute("/collections/$slug")({
   staticData: { sitemap: true },
@@ -18,7 +26,8 @@ export const Route = createFileRoute("/collections/$slug")({
     const description =
       loaderData?.description ??
       `Games curated in the ${title} collection on QueerCade.`;
-    const url = `https://queercade.mikedemo.dev/collections/${params.slug}`;
+    const path = `/collections/${params.slug}`;
+    const url = `https://queercade.mikedemo.dev${path}`;
     return {
       meta: [
         { title: `${title} — QueerCade` },
@@ -30,8 +39,34 @@ export const Route = createFileRoute("/collections/$slug")({
         { name: "twitter:card", content: "summary_large_image" },
       ],
       links: [{ rel: "canonical", href: url }],
+      scripts: [
+        jsonLdScript(
+          organization(),
+          website(),
+          webPage({
+            type: "CollectionPage",
+            path,
+            name: `${title} — QueerCade`,
+            description,
+          }),
+          breadcrumbs([
+            { name: "Home", path: "/" },
+            { name: "Collections", path: "/collections" },
+            { name: title, path },
+          ]),
+          itemList(
+            title,
+            (loaderData?.games ?? []).map((game) => ({
+              name: game.title,
+              path: game.slug ? `/games/${game.slug}` : null,
+              image: coverUrl(game, 400),
+            })),
+          ),
+        ),
+      ],
     };
   },
+
   errorComponent: () => (
     <AppShell>
       <ErrorState message="This collection could not be loaded. Please refresh." />

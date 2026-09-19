@@ -10,14 +10,29 @@ import {
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
 import {
+  coverUrl,
   featuredCollectionsQueryOptions,
   featuredGamesQueryOptions,
   siteSettingsQueryOptions,
 } from "@/lib/publicData";
+import {
+  breadcrumbs,
+  itemList,
+  jsonLdScript,
+  organization,
+  webPage,
+  website,
+} from "@/lib/seo/structuredData";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
-  head: () => ({
+  loader: ({ context }) =>
+    Promise.all([
+      context.queryClient.ensureQueryData(siteSettingsQueryOptions),
+      context.queryClient.ensureQueryData(featuredGamesQueryOptions),
+      context.queryClient.ensureQueryData(featuredCollectionsQueryOptions),
+    ]),
+  head: ({ loaderData }) => ({
     meta: [
       { title: "QueerCade — a curated arcade of games" },
       {
@@ -31,16 +46,34 @@ export const Route = createFileRoute("/")({
         content:
           "Hand-picked games with LGBTQ+ characters and stories: featured picks, curated collections, and a library you can track.",
       },
+      { property: "og:url", content: "https://queercade.mikedemo.dev/" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://queercade.mikedemo.dev/" }],
+    scripts: [
+      jsonLdScript(
+        organization(),
+        website(),
+        webPage({
+          path: "/",
+          name: "QueerCade — a curated arcade of games",
+          description:
+            "Hand-picked games with LGBTQ+ characters and stories: featured picks, curated collections, and a library you can track.",
+        }),
+        breadcrumbs([{ name: "Home", path: "/" }]),
+        itemList(
+          "Featured games",
+          (loaderData?.[1] ?? []).map((game) => ({
+            name: game.title,
+            path: game.slug ? `/games/${game.slug}` : null,
+            image: coverUrl(game, 400),
+          })),
+        ),
+      ),
+    ],
   }),
-  loader: ({ context }) =>
-    Promise.all([
-      context.queryClient.ensureQueryData(siteSettingsQueryOptions),
-      context.queryClient.ensureQueryData(featuredGamesQueryOptions),
-      context.queryClient.ensureQueryData(featuredCollectionsQueryOptions),
-    ]),
+
   errorComponent: () => (
     <AppShell>
       <ErrorState message="The arcade could not load its content right now. Please refresh." />
