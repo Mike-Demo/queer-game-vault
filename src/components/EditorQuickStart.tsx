@@ -31,7 +31,7 @@ export function EditorQuickStart() {
           <NesText>3. Approved and featured games appear here and in the public library.</NesText>
         </p>
         <div className="row-between">
-          <Link to="/discover">Discover games</Link>
+          <Link to="/import-search">Import games from IGDB</Link>
           <Link to="/review">Review queue</Link>
           <Link to="/imports">Import history</Link>
         </div>

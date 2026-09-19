@@ -18,13 +18,13 @@ import { studioDocumentUrl } from "@/lib/sanity/config";
 import { importGamesFromIgdb, type ImportSummary } from "@/lib/editorial.functions";
 import { getIgdbGameDetails, searchIgdbGames, type IgdbSearchResult } from "@/lib/igdb.functions";
 
-export const Route = createFileRoute("/_authenticated/discover")({
+export const Route = createFileRoute("/_authenticated/import-search")({
   staticData: { sitemap: false },
   head: () => ({
     meta: [
-      { title: "Discover games — QueerCade" },
+      { title: "Import games — QueerCade" },
       { name: "description", content: "Search IGDB, preview a game's full record, and import it into Sanity." },
-      { property: "og:title", content: "Discover games — QueerCade" },
+      { property: "og:title", content: "Import games — QueerCade" },
       { property: "og:description", content: "Search IGDB and import games into the curated library." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -15,7 +15,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as AuthenticatedDiscoverRouteImport } from './routes/_authenticated/discover'
+import { Route as AuthenticatedImportSearchRouteImport } from './routes/_authenticated/import-search'
 import { Route as AuthenticatedImportsRouteImport } from './routes/_authenticated/imports'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
@@ -53,11 +53,12 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDiscoverRoute = AuthenticatedDiscoverRouteImport.update({
-  id: '/discover',
-  path: '/discover',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
+const AuthenticatedImportSearchRoute =
+  AuthenticatedImportSearchRouteImport.update({
+    id: '/import-search',
+    path: '/import-search',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedImportsRoute = AuthenticatedImportsRouteImport.update({
   id: '/imports',
   path: '/imports',
@@ -102,7 +103,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/library': typeof LibraryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/discover': typeof AuthenticatedDiscoverRoute
+  '/import-search': typeof AuthenticatedImportSearchRoute
   '/imports': typeof AuthenticatedImportsRoute
   '/review': typeof AuthenticatedReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
@@ -117,7 +118,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/library': typeof LibraryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/discover': typeof AuthenticatedDiscoverRoute
+  '/import-search': typeof AuthenticatedImportSearchRoute
   '/imports': typeof AuthenticatedImportsRoute
   '/review': typeof AuthenticatedReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
@@ -134,7 +135,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/library': typeof LibraryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/_authenticated/discover': typeof AuthenticatedDiscoverRoute
+  '/_authenticated/import-search': typeof AuthenticatedImportSearchRoute
   '/_authenticated/imports': typeof AuthenticatedImportsRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/collections/$slug': typeof CollectionsSlugRoute
@@ -151,7 +152,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/library'
     | '/sitemap.xml'
-    | '/discover'
+    | '/import-search'
     | '/imports'
     | '/review'
     | '/collections/$slug'
@@ -166,7 +167,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/library'
     | '/sitemap.xml'
-    | '/discover'
+    | '/import-search'
     | '/imports'
     | '/review'
     | '/collections/$slug'
@@ -182,7 +183,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/library'
     | '/sitemap.xml'
-    | '/_authenticated/discover'
+    | '/_authenticated/import-search'
     | '/_authenticated/imports'
     | '/_authenticated/review'
     | '/collections/$slug'
@@ -250,11 +251,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/discover': {
-      id: '/_authenticated/discover'
-      path: '/discover'
-      fullPath: '/discover'
-      preLoaderRoute: typeof AuthenticatedDiscoverRouteImport
+    '/_authenticated/import-search': {
+      id: '/_authenticated/import-search'
+      path: '/import-search'
+      fullPath: '/import-search'
+      preLoaderRoute: typeof AuthenticatedImportSearchRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/imports': {
@@ -310,13 +311,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedDiscoverRoute: typeof AuthenticatedDiscoverRoute
+  AuthenticatedImportSearchRoute: typeof AuthenticatedImportSearchRoute
   AuthenticatedImportsRoute: typeof AuthenticatedImportsRoute
   AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedDiscoverRoute: AuthenticatedDiscoverRoute,
+  AuthenticatedImportSearchRoute: AuthenticatedImportSearchRoute,
   AuthenticatedImportsRoute: AuthenticatedImportsRoute,
   AuthenticatedReviewRoute: AuthenticatedReviewRoute,
 }

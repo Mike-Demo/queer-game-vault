@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { siteSettingsQueryOptions } from "@/lib/publicData";
 
 /** Paths only editors and admins should be offered. */
-const EDITOR_PATHS = new Set(["/discover", "/imports", "/review"]);
+const EDITOR_PATHS = new Set(["/import-search", "/imports", "/review"]);
 
 /** Shown while site settings are still loading, so the header is never empty. */
 const FALLBACK_NAV = [
