@@ -74,7 +74,6 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: var(--app-space-2);
-  border-block-start: var(--app-space-0) solid currentColor;
   padding-block-start: var(--app-space-2);
 }
 
