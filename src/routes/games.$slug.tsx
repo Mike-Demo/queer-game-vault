@@ -261,17 +261,24 @@ function GamePage() {
                 ))}
               </div>
             ) : null}
-            {data.externalLinks.length > 0 ? (
-              <div className="row">
-                {data.externalLinks.map((link) =>
-                  link.url ? (
-                    <a key={link.url} href={link.url} rel="noreferrer noopener" target="_blank">
-                      {link.label ?? "Link"}
-                    </a>
-                  ) : null,
-                )}
-              </div>
-            ) : null}
+            <div className="row">
+              {data.externalLinks.map((link) =>
+                link.url ? (
+                  <a key={link.url} href={link.url} rel="noreferrer noopener" target="_blank">
+                    {link.label ?? "Link"}
+                  </a>
+                ) : null,
+              )}
+              {data.externalLinks.some((link) => link.url?.includes("humblebundle.com")) ? null : (
+                <a
+                  href={`https://www.humblebundle.com/store/search?search=${encodeURIComponent(data.title)}`}
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  Find on Humble Bundle
+                </a>
+              )}
+            </div>
           </div>
         </Surface>
 
