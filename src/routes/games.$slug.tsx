@@ -211,6 +211,28 @@ function GamePage() {
           </Surface>
         ) : null}
 
+        {data.lgbtqCharacters.length > 0 ? (
+          <Surface title="LGBTQ+ characters">
+            <ul className="source-list">
+              {data.lgbtqCharacters.map((character, index) => (
+                <li key={`${character.name ?? "character"}-${index}`}>
+                  <NesText className="text-xs" variant="primary">{character.name ?? "Unnamed"}</NesText>
+                  {character.identity ? <NesText className="text-xs">{` — ${character.identity}`}</NesText> : null}
+                  {character.sourceUrl ? (
+                    <>
+                      {" "}
+                      <a href={character.sourceUrl} rel="noreferrer noopener" target="_blank">
+                        Source
+                      </a>
+                    </>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </Surface>
+        ) : null}
+
+
         {data.sources.length > 0 ? (
           <Surface title="Where we found it">
             <ul className="source-list">

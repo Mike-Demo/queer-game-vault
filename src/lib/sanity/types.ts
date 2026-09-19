@@ -53,8 +53,16 @@ export interface GameSourceReference {
   capturedAt: string | null;
 }
 
+export interface GameCharacter {
+  name: string | null;
+  identity: string | null;
+  sourceUrl: string | null;
+}
+
 export interface GameDetail extends GameSummary {
   sources: GameSourceReference[];
+  lgbtqCharacters: GameCharacter[];
+
   storyline: string | null;
   editorNotes: string | null;
   firstReleaseDate: string | null;
