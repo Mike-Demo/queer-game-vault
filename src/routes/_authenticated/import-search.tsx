@@ -22,6 +22,7 @@ export const Route = createFileRoute("/_authenticated/import-search")({
   staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Import games — QueerCade" },
       { name: "description", content: "Search IGDB, preview a game's full record, and import it into Sanity." },
       { property: "og:title", content: "Import games — QueerCade" },
