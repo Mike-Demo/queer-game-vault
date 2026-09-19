@@ -80,6 +80,37 @@ function GamePage() {
   const data = game.data;
   const cover = coverUrl(data, 640);
 
+  const releaseDate = data.firstReleaseDate
+    ? new Date(data.firstReleaseDate).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : null;
+  const formatDateTime = (value: string) =>
+    new Date(value).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+
+  const metaRows: { label: string; value: string }[] = [];
+  if (releaseDate) metaRows.push({ label: "Release date", value: releaseDate });
+  if (data.developer) metaRows.push({ label: "Developer", value: data.developer.name });
+  if (data.publisher) metaRows.push({ label: "Publisher", value: data.publisher.name });
+  const otherCompanies = data.involvedCompanies
+    .map((company) => company.name)
+    .filter((name) => name !== data.developer?.name && name !== data.publisher?.name);
+  if (otherCompanies.length > 0) metaRows.push({ label: "Also involved", value: otherCompanies.join(", ") });
+  if (data.franchise) metaRows.push({ label: "Franchise", value: data.franchise });
+  if (data.igdbCollectionName) metaRows.push({ label: "Series", value: data.igdbCollectionName });
+  if (data.gameModes.length > 0) metaRows.push({ label: "Modes", value: data.gameModes.join(", ") });
+  if (data.themes.length > 0) metaRows.push({ label: "Themes", value: data.themes.join(", ") });
+  if (data.igdbRating) {
+    metaRows.push({
+      label: "IGDB rating",
+      value: `${Math.round(data.igdbRating)} / 100 from ${data.igdbRatingCount ?? 0} ratings`,
+    });
+  }
+  if (data.totalRating) metaRows.push({ label: "Total rating", value: `${Math.round(data.totalRating)} / 100` });
+  metaRows.push({ label: "IGDB ID", value: String(data.igdbId) });
+
   return (
     <AppShell>
       <div className="stack-lg">
