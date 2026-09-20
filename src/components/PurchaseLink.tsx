@@ -1,4 +1,4 @@
-import { useRef, type MouseEvent } from "react";
+import { useId, useRef, type MouseEvent } from "react";
 
 import {
   NesButton,
@@ -24,6 +24,7 @@ interface PurchaseLinkProps {
  */
 export function PurchaseLink({ children, destinationLabel, gameTitle, href }: PurchaseLinkProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
   const { resolved } = useTheme();
   const humbleSearchUrl = `https://www.humblebundle.com/store/search?search=${encodeURIComponent(gameTitle)}`;
 
@@ -41,14 +42,14 @@ export function PurchaseLink({ children, destinationLabel, gameTitle, href }: Pu
         {children}
       </a>
       <NesDialog
-        aria-labelledby="purchase-reminder-title"
+        aria-labelledby={titleId}
         className="purchase-dialog"
         dark={resolved === "dark"}
         ref={dialogRef}
         rounded
       >
         <div className="stack">
-          <h2 className="title-md" id="purchase-reminder-title">
+          <h2 className="title-md" id={titleId}>
             Check Humble first?
           </h2>
           <p>
