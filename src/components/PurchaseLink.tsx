@@ -47,7 +47,6 @@ export function PurchaseLink({ children, destinationLabel, gameTitle, href }: Pu
       </a>
       <NesDialog
         aria-labelledby={titleId}
-        className="purchase-dialog"
         dark={resolved === "dark"}
         ref={dialogRef}
         rounded

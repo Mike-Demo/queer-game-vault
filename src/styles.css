@@ -183,11 +183,6 @@ a {
   justify-content: space-between;
 }
 
-.purchase-dialog {
-  width: 100%;
-  max-width: var(--app-form-measure);
-}
-
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--app-card-min), 1fr));
