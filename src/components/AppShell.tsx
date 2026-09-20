@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link, useRouter, type LinkProps } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
 import { NesBadge, NesButton, NesText } from "@/design-system/nes-229931";
@@ -62,16 +62,16 @@ export function AppShell({ children }: { children: ReactNode }) {
             <ul className="app-nav">
               {navItems.map((item) => (
                 <li key={item.path}>
-                  <a href={item.path} data-active={currentPath === item.path}>
+                  <Link to={item.path as LinkProps["to"]} data-active={currentPath === item.path}>
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
               {isEditor ? (
                 <li>
-                  <a href="/review" data-active={currentPath === "/review"}>
+                  <Link to="/review" data-active={currentPath === "/review"}>
                     Review
-                  </a>
+                  </Link>
                 </li>
               ) : null}
             </ul>

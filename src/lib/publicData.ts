@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query";
+import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 import {
   fetchCollection,
@@ -50,9 +50,15 @@ export const featuredGamesQueryOptions = queryOptions({
   staleTime: 60 * 1000,
 });
 
-export const libraryQueryOptions = queryOptions({
-  queryKey: ["games", "library"],
-  queryFn: () => fetchLibraryGames(),
+/** Games per page on the library screen. */
+export const LIBRARY_PAGE_SIZE = 60;
+
+export const libraryInfiniteQueryOptions = infiniteQueryOptions({
+  queryKey: ["games", "library", "paged"],
+  queryFn: ({ pageParam }) => fetchLibraryGames({ data: { offset: pageParam, limit: LIBRARY_PAGE_SIZE } }),
+  initialPageParam: 0,
+  getNextPageParam: (lastPage, allPages) =>
+    lastPage.length < LIBRARY_PAGE_SIZE ? undefined : allPages.length * LIBRARY_PAGE_SIZE,
   staleTime: 60 * 1000,
 });
 

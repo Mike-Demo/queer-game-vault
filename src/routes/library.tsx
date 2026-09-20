@@ -1,11 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
-import { NesText } from "@/design-system/nes-229931";
-import { libraryQueryOptions, siteSettingsQueryOptions } from "@/lib/publicData";
+import { NesButton, NesText } from "@/design-system/nes-229931";
+import { libraryInfiniteQueryOptions, siteSettingsQueryOptions } from "@/lib/publicData";
 
 export const Route = createFileRoute("/library")({
   staticData: { sitemap: true },
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/library")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(libraryQueryOptions),
+  loader: ({ context }) => context.queryClient.ensureInfiniteQueryData(libraryInfiniteQueryOptions),
   errorComponent: () => (
     <AppShell>
       <ErrorState message="The library could not be loaded. Please refresh." />
@@ -32,26 +32,40 @@ export const Route = createFileRoute("/library")({
 });
 
 function Library() {
-  const games = useQuery(libraryQueryOptions);
+  const library = useInfiniteQuery(libraryInfiniteQueryOptions);
   const settings = useQuery(siteSettingsQueryOptions);
+  const games = library.data?.pages.flat() ?? [];
 
   return (
     <AppShell>
       <div className="stack-lg">
         <h1 className="title-xl"><NesText variant="primary">Game library</NesText></h1>
-        {games.isPending ? <LoadingState label="Loading the library" /> : null}
-        {games.isError ? <ErrorState message="The library could not be loaded." /> : null}
-        {games.data && games.data.length === 0 ? (
+        {library.isPending ? <LoadingState label="Loading the library" /> : null}
+        {library.isError ? <ErrorState message="The library could not be loaded." /> : null}
+        {library.data && games.length === 0 ? (
           <EmptyState title="The cabinet is empty">
             <NesText>{settings.data?.emptyStateCopy}</NesText>
           </EmptyState>
         ) : null}
-        {games.data && games.data.length > 0 ? (
-          <div className="card-grid">
-            {games.data.map((game, index) => (
-              <GameCard key={game._id} game={game} priority={index < 4} />
-            ))}
-          </div>
+        {games.length > 0 ? (
+          <>
+            <div className="card-grid">
+              {games.map((game, index) => (
+                <GameCard key={game._id} game={game} priority={index < 4} />
+              ))}
+            </div>
+            <NesText className="text-xs">{games.length} games shown</NesText>
+            {library.hasNextPage ? (
+              <NesButton
+                type="button"
+                variant="primary"
+                onClick={() => void library.fetchNextPage()}
+                disabled={library.isFetchingNextPage}
+              >
+                {library.isFetchingNextPage ? "Loading…" : "Load more games"}
+              </NesButton>
+            ) : null}
+          </>
         ) : null}
       </div>
     </AppShell>
