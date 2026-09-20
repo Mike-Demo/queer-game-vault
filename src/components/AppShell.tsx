@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link, useRouter, type LinkProps } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
 import { NesBadge, NesButton, NesText } from "@/design-system/nes-229931";
