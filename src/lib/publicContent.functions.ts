@@ -48,10 +48,18 @@ export const fetchFeaturedGames = createServerFn({ method: "GET" }).handler(
   async (): Promise<GameSummary[]> => sanityPublicClient.fetch<GameSummary[]>(featuredGamesQuery, { limit: 6 }),
 );
 
-export const fetchLibraryGames = createServerFn({ method: "GET" }).handler(
-  async (): Promise<GameSummary[]> =>
-    sanityPublicClient.fetch<GameSummary[]>(approvedGamesQuery, { offset: 0, end: 60 }),
-);
+export const fetchLibraryGames = createServerFn({ method: "GET" })
+  .inputValidator((data: unknown) =>
+    z
+      .object({ offset: z.number().int().min(0).max(10000), limit: z.number().int().min(1).max(120) })
+      .parse(data ?? { offset: 0, limit: 60 }),
+  )
+  .handler(async ({ data }): Promise<GameSummary[]> =>
+    sanityPublicClient.fetch<GameSummary[]>(approvedGamesQuery, {
+      offset: data.offset,
+      end: data.offset + data.limit,
+    }),
+  );
 
 export const fetchFeaturedCollections = createServerFn({ method: "GET" }).handler(
   async (): Promise<CollectionSummary[]> =>
