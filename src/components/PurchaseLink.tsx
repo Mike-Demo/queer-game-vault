@@ -36,6 +36,10 @@ export function PurchaseLink({ children, destinationLabel, gameTitle, href }: Pu
     dialog.showModal();
   };
 
+  const openExternal = (url: string) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <>
       <a href={href} onClick={openReminder} rel="noreferrer noopener" target="_blank">
@@ -57,12 +61,12 @@ export function PurchaseLink({ children, destinationLabel, gameTitle, href }: Pu
             Consider Gay Gaming Professionals (GGP).
           </p>
           <div className="purchase-dialog-actions">
-            <a className="nes-btn is-primary" href={humbleSearchUrl} rel="noreferrer noopener" target="_blank">
+            <NesButton onClick={() => openExternal(humbleSearchUrl)} variant="primary">
               Check Humble Bundle
-            </a>
-            <a className="nes-btn" href={href} rel="noreferrer noopener" target="_blank">
+            </NesButton>
+            <NesButton onClick={() => openExternal(href)}>
               {`Continue to ${destinationLabel}`}
-            </a>
+            </NesButton>
             <a href={CHARITY_GUIDE_URL} rel="noreferrer noopener" target="_blank">
               How to choose your charity
             </a>
