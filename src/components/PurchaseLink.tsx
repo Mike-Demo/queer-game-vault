@@ -60,7 +60,7 @@ export function PurchaseLink({ children, destinationLabel, gameTitle, href }: Pu
             Eligible Humble Bundle promotions may let you direct part of your purchase to a charity.
             Consider Gay Gaming Professionals (GGP).
           </p>
-          <div className="purchase-dialog-actions">
+          <div className="stack">
             <NesButton onClick={() => openExternal(humbleSearchUrl)} variant="primary">
               Check Humble Bundle
             </NesButton>
@@ -77,7 +77,7 @@ export function PurchaseLink({ children, destinationLabel, gameTitle, href }: Pu
           <form method="dialog">
             <NesButton>Cancel</NesButton>
           </form>
-          <NesText className="text-xs">
+          <NesText>
             Availability and charity eligibility vary by promotion.
           </NesText>
         </div>
