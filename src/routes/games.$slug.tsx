@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
+import { PurchaseLink } from "@/components/PurchaseLink";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
 import { TrackControl } from "@/components/TrackControl";
 import {
@@ -311,28 +312,46 @@ function GamePage() {
             {storeLinks.length > 0 ? (
               <div className="row">
                 {storeLinks.map((link) => (
-                  <a key={link.url} href={link.url} rel="noreferrer noopener" target="_blank">
+                  <PurchaseLink
+                    destinationLabel={link.store}
+                    gameTitle={data.title}
+                    href={link.url}
+                    key={link.url}
+                  >
                     {`Buy on ${link.store}`}
-                  </a>
+                  </PurchaseLink>
                 ))}
               </div>
             ) : null}
             <div className="row">
-              {data.externalLinks.map((link) =>
-                link.url ? (
+              {data.externalLinks.map((link) => {
+                if (!link.url) return null;
+                if (link.url.includes("humblebundle.com")) {
+                  return (
+                    <PurchaseLink
+                      destinationLabel="Humble Bundle"
+                      gameTitle={data.title}
+                      href={link.url}
+                      key={link.url}
+                    >
+                      {link.label ?? "Humble Bundle"}
+                    </PurchaseLink>
+                  );
+                }
+                return (
                   <a key={link.url} href={link.url} rel="noreferrer noopener" target="_blank">
                     {link.label ?? "Link"}
                   </a>
-                ) : null,
-              )}
+                );
+              })}
               {data.externalLinks.some((link) => link.url?.includes("humblebundle.com")) ? null : (
-                <a
+                <PurchaseLink
+                  destinationLabel="Humble Bundle"
+                  gameTitle={data.title}
                   href={`https://www.humblebundle.com/store/search?search=${encodeURIComponent(data.title)}`}
-                  rel="noreferrer noopener"
-                  target="_blank"
                 >
                   Find on Humble Bundle
-                </a>
+                </PurchaseLink>
               )}
             </div>
           </div>
