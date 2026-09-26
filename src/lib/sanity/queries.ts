@@ -139,3 +139,12 @@ export const discoverFacetsQuery = `{
     | order(name asc){ _id, name, "slug": slug.current },
   "themes": array::unique(*[${PUBLIC_GAME_FILTER}].themes[])
 }`;
+
+/** Public API: title/character search with offset paging. */
+export const publicApiGamesQuery = `*[${PUBLIC_GAME_FILTER}
+  && ($term == "" || title match $term || lgbtqCharacters[].name match $term)]
+  | order(title asc)[$offset...$end] ${GAME_SUMMARY_PROJECTION}`;
+
+/** llms-full.txt: every public game title and slug. */
+export const llmsGamesQuery = `*[${PUBLIC_GAME_FILTER} && defined(slug.current)]
+  | order(title asc){ title, "slug": slug.current, releaseYear }`;
