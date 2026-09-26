@@ -1,5 +1,8 @@
+import type { InfiniteData } from "@tanstack/react-query";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+
+import type { GameSummary } from "@/lib/sanity/types";
 
 import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
@@ -18,8 +21,8 @@ import {
 
 export const Route = createFileRoute("/library")({
   staticData: { sitemap: true },
-  head: ({ loaderData }) => {
-    const games = loaderData?.pages.flat() ?? [];
+  head: ({ loaderData }: { loaderData?: InfiniteData<GameSummary[]> }) => {
+    const games: GameSummary[] = loaderData?.pages.flat() ?? [];
     return {
       meta: [
         { title: "Game library — QueerCade" },
