@@ -21,8 +21,8 @@ import {
 
 export const Route = createFileRoute("/library")({
   staticData: { sitemap: true },
-  head: ({ loaderData }) => {
-    const games = loaderData?.pages.flat() ?? [];
+  head: ({ loaderData }: { loaderData?: InfiniteData<GameSummary[]> }) => {
+    const games: GameSummary[] = loaderData?.pages.flat() ?? [];
     return {
       meta: [
         { title: "Game library — QueerCade" },
