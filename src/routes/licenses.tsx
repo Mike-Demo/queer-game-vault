@@ -211,6 +211,18 @@ function Licenses(): ReactElement {
           QueerCade is built on freely licensed software and typefaces. Every
           library and data source it relies on is credited below.
         </p>
+        <a
+          href="https://app.aikido.dev/audit-report/external/smlvhLoPnScdRnVeF7TjudEr/request"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Aikido Security Audit Report (opens in new tab)"
+        >
+          <img
+            src="https://app.aikido.dev/assets/badges/full-light-theme.svg"
+            alt="Aikido Security Audit Report"
+            height={40}
+          />
+        </a>
       </header>
       {GROUPS.map((group) => {
         const headingId = `license-${group.title.replaceAll(" ", "-").toLowerCase()}`;
