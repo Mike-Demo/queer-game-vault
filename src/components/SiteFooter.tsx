@@ -65,6 +65,9 @@ export function SiteFooter(): ReactElement {
           <NesIcon name="coin" size="small" />
           Open Source
         </a>
+        <a href="/developers" className="site-footer-link">
+          Developers
+        </a>
       </nav>
 
       <nav aria-label="Social links" className="site-footer-social">
