@@ -12,6 +12,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { NesProvider } from "@/design-system/nes-229931";
 import { supabase } from "@/integrations/supabase/client";
 import { readAppearance } from "@/lib/theme/mode";
+import { DEFAULT_SHARE_IMAGE } from "@/lib/seo/structuredData";
 
 import appCss from "../styles.css?url";
 
@@ -33,7 +34,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content: "A curated arcade of games: IGDB discovery with a Sanity editorial workflow.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "QueerCade" },
+      { property: "og:image", content: DEFAULT_SHARE_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
       { name: "google-site-verification", content: "RHlwBdxnagu8yjEC1UQ3cV-WcIJ17lGECi8uJYHO6P4" },
     ],
     links: [
