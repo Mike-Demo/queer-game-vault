@@ -13,10 +13,15 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as LicensesRouteImport } from './routes/licenses'
+import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as OpenapiDotjsonRouteImport } from './routes/openapi[.]json'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as DotwellKnownAgentDotjsonRouteImport } from './routes/[.]well-known.agent[.]json'
 import { Route as AuthenticatedImportSearchRouteImport } from './routes/_authenticated/import-search'
 import { Route as AuthenticatedImportsRouteImport } from './routes/_authenticated/imports'
 import { Route as AuthenticatedMyLibraryRouteImport } from './routes/_authenticated/my-library'
@@ -28,6 +33,10 @@ import { Route as GamesSlugRouteImport } from './routes/games.$slug'
 import { Route as ProfileUsernameRouteImport } from './routes/profile.$username'
 import { Route as Char91__componentChar93PreviewSplatRouteImport } from './routes/[__component].preview.$'
 import { Route as Char91__mockupChar93PreviewSplatRouteImport } from './routes/[__mockup].preview.$'
+import { Route as ApiPublicV1CollectionsIndexRouteImport } from './routes/api/public/v1/collections/index'
+import { Route as ApiPublicV1CollectionsSlugRouteImport } from './routes/api/public/v1/collections/$slug'
+import { Route as ApiPublicV1GamesIndexRouteImport } from './routes/api/public/v1/games/index'
+import { Route as ApiPublicV1GamesSlugRouteImport } from './routes/api/public/v1/games/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -48,6 +57,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevelopersRoute = DevelopersRouteImport.update({
+  id: '/developers',
+  path: '/developers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DiscoverRoute = DiscoverRouteImport.update({
   id: '/discover',
   path: '/discover',
@@ -63,11 +77,32 @@ const LicensesRoute = LicensesRouteImport.update({
   path: '/licenses',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
+  id: '/llms-full.txt',
+  path: '/llms-full.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpenapiDotjsonRoute = OpenapiDotjsonRouteImport.update({
+  id: '/openapi.json',
+  path: '/openapi.json',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DotwellKnownAgentDotjsonRoute =
+  DotwellKnownAgentDotjsonRouteImport.update({
+    id: '/.well-known/agent.json',
+    path: '/.well-known/agent.json',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedImportSearchRoute =
   AuthenticatedImportSearchRouteImport.update({
     id: '/import-search',
@@ -126,15 +161,42 @@ const Char91__mockupChar93PreviewSplatRoute =
     path: '/__mockup/preview/$',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicV1CollectionsIndexRoute =
+  ApiPublicV1CollectionsIndexRouteImport.update({
+    id: '/api/public/v1/collections/',
+    path: '/api/public/v1/collections/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicV1CollectionsSlugRoute =
+  ApiPublicV1CollectionsSlugRouteImport.update({
+    id: '/api/public/v1/collections/$slug',
+    path: '/api/public/v1/collections/$slug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicV1GamesIndexRoute = ApiPublicV1GamesIndexRouteImport.update({
+  id: '/api/public/v1/games/',
+  path: '/api/public/v1/games/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicV1GamesSlugRoute = ApiPublicV1GamesSlugRouteImport.update({
+  id: '/api/public/v1/games/$slug',
+  path: '/api/public/v1/games/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
   '/library': typeof LibraryRoute
   '/licenses': typeof LicensesRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/openapi.json': typeof OpenapiDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/.well-known/agent.json': typeof DotwellKnownAgentDotjsonRoute
   '/import-search': typeof AuthenticatedImportSearchRoute
   '/imports': typeof AuthenticatedImportsRoute
   '/my-library': typeof AuthenticatedMyLibraryRoute
@@ -146,15 +208,24 @@ export interface FileRoutesByFullPath {
   '/collections/': typeof CollectionsIndexRoute
   '/__component/preview/$': typeof Char91__componentChar93PreviewSplatRoute
   '/__mockup/preview/$': typeof Char91__mockupChar93PreviewSplatRoute
+  '/api/public/v1/collections/$slug': typeof ApiPublicV1CollectionsSlugRoute
+  '/api/public/v1/games/$slug': typeof ApiPublicV1GamesSlugRoute
+  '/api/public/v1/collections/': typeof ApiPublicV1CollectionsIndexRoute
+  '/api/public/v1/games/': typeof ApiPublicV1GamesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
   '/library': typeof LibraryRoute
   '/licenses': typeof LicensesRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/openapi.json': typeof OpenapiDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/.well-known/agent.json': typeof DotwellKnownAgentDotjsonRoute
   '/import-search': typeof AuthenticatedImportSearchRoute
   '/imports': typeof AuthenticatedImportsRoute
   '/my-library': typeof AuthenticatedMyLibraryRoute
@@ -166,6 +237,10 @@ export interface FileRoutesByTo {
   '/collections': typeof CollectionsIndexRoute
   '/__component/preview/$': typeof Char91__componentChar93PreviewSplatRoute
   '/__mockup/preview/$': typeof Char91__mockupChar93PreviewSplatRoute
+  '/api/public/v1/collections/$slug': typeof ApiPublicV1CollectionsSlugRoute
+  '/api/public/v1/games/$slug': typeof ApiPublicV1GamesSlugRoute
+  '/api/public/v1/collections': typeof ApiPublicV1CollectionsIndexRoute
+  '/api/public/v1/games': typeof ApiPublicV1GamesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -173,10 +248,15 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
   '/library': typeof LibraryRoute
   '/licenses': typeof LicensesRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/openapi.json': typeof OpenapiDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/.well-known/agent.json': typeof DotwellKnownAgentDotjsonRoute
   '/_authenticated/import-search': typeof AuthenticatedImportSearchRoute
   '/_authenticated/imports': typeof AuthenticatedImportsRoute
   '/_authenticated/my-library': typeof AuthenticatedMyLibraryRoute
@@ -188,6 +268,10 @@ export interface FileRoutesById {
   '/collections/': typeof CollectionsIndexRoute
   '/__component/preview/$': typeof Char91__componentChar93PreviewSplatRoute
   '/__mockup/preview/$': typeof Char91__mockupChar93PreviewSplatRoute
+  '/api/public/v1/collections/$slug': typeof ApiPublicV1CollectionsSlugRoute
+  '/api/public/v1/games/$slug': typeof ApiPublicV1GamesSlugRoute
+  '/api/public/v1/collections/': typeof ApiPublicV1CollectionsIndexRoute
+  '/api/public/v1/games/': typeof ApiPublicV1GamesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -195,10 +279,15 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/developers'
     | '/discover'
     | '/library'
     | '/licenses'
+    | '/llms-full.txt'
+    | '/llms.txt'
+    | '/openapi.json'
     | '/sitemap.xml'
+    | '/.well-known/agent.json'
     | '/import-search'
     | '/imports'
     | '/my-library'
@@ -210,15 +299,24 @@ export interface FileRouteTypes {
     | '/collections/'
     | '/__component/preview/$'
     | '/__mockup/preview/$'
+    | '/api/public/v1/collections/$slug'
+    | '/api/public/v1/games/$slug'
+    | '/api/public/v1/collections/'
+    | '/api/public/v1/games/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/auth'
+    | '/developers'
     | '/discover'
     | '/library'
     | '/licenses'
+    | '/llms-full.txt'
+    | '/llms.txt'
+    | '/openapi.json'
     | '/sitemap.xml'
+    | '/.well-known/agent.json'
     | '/import-search'
     | '/imports'
     | '/my-library'
@@ -230,16 +328,25 @@ export interface FileRouteTypes {
     | '/collections'
     | '/__component/preview/$'
     | '/__mockup/preview/$'
+    | '/api/public/v1/collections/$slug'
+    | '/api/public/v1/games/$slug'
+    | '/api/public/v1/collections'
+    | '/api/public/v1/games'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/about'
     | '/auth'
+    | '/developers'
     | '/discover'
     | '/library'
     | '/licenses'
+    | '/llms-full.txt'
+    | '/llms.txt'
+    | '/openapi.json'
     | '/sitemap.xml'
+    | '/.well-known/agent.json'
     | '/_authenticated/import-search'
     | '/_authenticated/imports'
     | '/_authenticated/my-library'
@@ -251,6 +358,10 @@ export interface FileRouteTypes {
     | '/collections/'
     | '/__component/preview/$'
     | '/__mockup/preview/$'
+    | '/api/public/v1/collections/$slug'
+    | '/api/public/v1/games/$slug'
+    | '/api/public/v1/collections/'
+    | '/api/public/v1/games/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -258,16 +369,25 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
+  DevelopersRoute: typeof DevelopersRoute
   DiscoverRoute: typeof DiscoverRoute
   LibraryRoute: typeof LibraryRoute
   LicensesRoute: typeof LicensesRoute
+  LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
+  OpenapiDotjsonRoute: typeof OpenapiDotjsonRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  DotwellKnownAgentDotjsonRoute: typeof DotwellKnownAgentDotjsonRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   GamesSlugRoute: typeof GamesSlugRoute
   ProfileUsernameRoute: typeof ProfileUsernameRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   Char91__componentChar93PreviewSplatRoute: typeof Char91__componentChar93PreviewSplatRoute
   Char91__mockupChar93PreviewSplatRoute: typeof Char91__mockupChar93PreviewSplatRoute
+  ApiPublicV1CollectionsSlugRoute: typeof ApiPublicV1CollectionsSlugRoute
+  ApiPublicV1GamesSlugRoute: typeof ApiPublicV1GamesSlugRoute
+  ApiPublicV1CollectionsIndexRoute: typeof ApiPublicV1CollectionsIndexRoute
+  ApiPublicV1GamesIndexRoute: typeof ApiPublicV1GamesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -300,6 +420,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/developers': {
+      id: '/developers'
+      path: '/developers'
+      fullPath: '/developers'
+      preLoaderRoute: typeof DevelopersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/discover': {
       id: '/discover'
       path: '/discover'
@@ -321,11 +448,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LicensesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/llms-full.txt': {
+      id: '/llms-full.txt'
+      path: '/llms-full.txt'
+      fullPath: '/llms-full.txt'
+      preLoaderRoute: typeof LlmsFullDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/openapi.json': {
+      id: '/openapi.json'
+      path: '/openapi.json'
+      fullPath: '/openapi.json'
+      preLoaderRoute: typeof OpenapiDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/agent.json': {
+      id: '/.well-known/agent.json'
+      path: '/.well-known/agent.json'
+      fullPath: '/.well-known/agent.json'
+      preLoaderRoute: typeof DotwellKnownAgentDotjsonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/import-search': {
@@ -405,6 +560,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91__mockupChar93PreviewSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/v1/collections/': {
+      id: '/api/public/v1/collections/'
+      path: '/api/public/v1/collections'
+      fullPath: '/api/public/v1/collections/'
+      preLoaderRoute: typeof ApiPublicV1CollectionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/v1/collections/$slug': {
+      id: '/api/public/v1/collections/$slug'
+      path: '/api/public/v1/collections/$slug'
+      fullPath: '/api/public/v1/collections/$slug'
+      preLoaderRoute: typeof ApiPublicV1CollectionsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/v1/games/': {
+      id: '/api/public/v1/games/'
+      path: '/api/public/v1/games'
+      fullPath: '/api/public/v1/games/'
+      preLoaderRoute: typeof ApiPublicV1GamesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/v1/games/$slug': {
+      id: '/api/public/v1/games/$slug'
+      path: '/api/public/v1/games/$slug'
+      fullPath: '/api/public/v1/games/$slug'
+      preLoaderRoute: typeof ApiPublicV1GamesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -432,10 +615,15 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
+  DevelopersRoute: DevelopersRoute,
   DiscoverRoute: DiscoverRoute,
   LibraryRoute: LibraryRoute,
   LicensesRoute: LicensesRoute,
+  LlmsFullDottxtRoute: LlmsFullDottxtRoute,
+  LlmsDottxtRoute: LlmsDottxtRoute,
+  OpenapiDotjsonRoute: OpenapiDotjsonRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  DotwellKnownAgentDotjsonRoute: DotwellKnownAgentDotjsonRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   GamesSlugRoute: GamesSlugRoute,
   ProfileUsernameRoute: ProfileUsernameRoute,
@@ -443,6 +631,10 @@ const rootRouteChildren: RootRouteChildren = {
   Char91__componentChar93PreviewSplatRoute:
     Char91__componentChar93PreviewSplatRoute,
   Char91__mockupChar93PreviewSplatRoute: Char91__mockupChar93PreviewSplatRoute,
+  ApiPublicV1CollectionsSlugRoute: ApiPublicV1CollectionsSlugRoute,
+  ApiPublicV1GamesSlugRoute: ApiPublicV1GamesSlugRoute,
+  ApiPublicV1CollectionsIndexRoute: ApiPublicV1CollectionsIndexRoute,
+  ApiPublicV1GamesIndexRoute: ApiPublicV1GamesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
