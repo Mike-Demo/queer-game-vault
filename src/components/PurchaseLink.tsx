@@ -29,6 +29,9 @@ export function PurchaseLink({ children, destinationLabel, gameTitle, href }: Pu
   const humbleSearchUrl = `https://www.humblebundle.com/store/search?search=${encodeURIComponent(gameTitle)}`;
 
   const openReminder = (event: MouseEvent<HTMLAnchorElement>) => {
+    // The Humble link already lands on Humble — let it navigate untouched.
+    if (href.includes("humblebundle.com")) return;
+
     const dialog = dialogRef.current;
     if (!dialog) return;
 
@@ -37,6 +40,7 @@ export function PurchaseLink({ children, destinationLabel, gameTitle, href }: Pu
   };
 
   const openExternal = (url: string) => {
+    dialogRef.current?.close();
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
