@@ -1,7 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { errorResponse, jsonResponse, optionsResponse, toPublicGameDetail } from "@/lib/publicApi";
+import {
+  checkRateLimit,
+  errorResponse,
+  jsonResponse,
+  optionsResponse,
+  toPublicGameDetail,
+} from "@/lib/publicApi";
 import { sanityPublicClient } from "@/lib/sanity/client";
 import { gameBySlugQuery } from "@/lib/sanity/queries";
 import type { GameDetail } from "@/lib/sanity/types";
@@ -13,15 +19,20 @@ export const Route = createFileRoute("/api/public/v1/games/$slug")({
   server: {
     handlers: {
       OPTIONS: () => optionsResponse(),
-      GET: async ({ params }) => {
+      GET: async ({ params, request }) => {
+        const rate = checkRateLimit(request);
+        if (rate.limited) return rate.limited;
+
         const slug = SlugSchema.safeParse(params.slug);
-        if (!slug.success) return errorResponse(404, "Game not found.");
+        if (!slug.success) return errorResponse(404, "not_found", "Game not found.", rate.headers);
         try {
           const game = await sanityPublicClient.fetch<GameDetail | null>(gameBySlugQuery, { slug: slug.data });
           const body = game ? toPublicGameDetail(game) : null;
-          return body ? jsonResponse(body) : errorResponse(404, "Game not found.");
+          return body
+            ? jsonResponse(body, 200, rate.headers)
+            : errorResponse(404, "not_found", "Game not found.", rate.headers);
         } catch {
-          return errorResponse(503, "Catalog temporarily unavailable.");
+          return errorResponse(503, "service_unavailable", "Catalog temporarily unavailable.", rate.headers);
         }
       },
     },
