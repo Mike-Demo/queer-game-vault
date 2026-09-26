@@ -9,12 +9,18 @@ interface SocialLink {
   /** Absolute URL, opened in a new tab. */
   readonly href: string;
   /** NES pixel social icon name. */
-  readonly icon: "linkedin" | "twitter" | "instagram";
+  readonly icon: "linkedin" | "twitter" | "instagram" | "github";
   /** Visible text next to the icon. */
   readonly text: string;
 }
 
 const SOCIAL_LINKS: readonly SocialLink[] = [
+  {
+    label: "MikeDemo on GitHub",
+    href: "https://github.com/Mike-Demo",
+    icon: "github",
+    text: "GitHub",
+  },
   {
     label: "MikeDemo on LinkedIn",
     href: "https://www.linkedin.com/in/mikedemopoulos",
