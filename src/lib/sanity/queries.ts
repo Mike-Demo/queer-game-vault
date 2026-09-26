@@ -140,10 +140,19 @@ export const discoverFacetsQuery = `{
   "themes": array::unique(*[${PUBLIC_GAME_FILTER}].themes[])
 }`;
 
-/** Public API: title/character search with offset paging. */
-export const publicApiGamesQuery = `*[${PUBLIC_GAME_FILTER}
-  && ($term == "" || title match $term || lgbtqCharacters[].name match $term)]
-  | order(title asc)[$offset...$end] ${GAME_SUMMARY_PROJECTION}`;
+/** Public API: title/character search with optional facet filters and offset paging. */
+const PUBLIC_API_GAME_FILTER = `${PUBLIC_GAME_FILTER}
+  && ($term == "" || title match $term || lgbtqCharacters[].name match $term)
+  && ($genre == "" || $genre in genres[]->slug.current)
+  && ($platform == "" || $platform in platforms[]->slug.current)
+  && ($theme == "" || $theme in themes)
+  && ($year == 0 || releaseYear == $year)`;
+
+export const publicApiGamesQuery = `{
+  "total": count(*[${PUBLIC_API_GAME_FILTER}]),
+  "games": *[${PUBLIC_API_GAME_FILTER}] | order(title asc)[$offset...$end] ${GAME_SUMMARY_PROJECTION}
+}`;
+
 
 /** llms-full.txt: every public game title and slug. */
 export const llmsGamesQuery = `*[${PUBLIC_GAME_FILTER} && defined(slug.current)]
