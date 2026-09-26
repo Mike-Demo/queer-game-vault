@@ -1,0 +1,59 @@
+# QueerCade
+
+> A hand-curated catalog of video games with LGBTQ+ characters and stories — every game reviewed by an editor, with details from IGDB and curated lists written by people.
+
+## What this site is
+
+QueerCade (https://queercade.mikedemo.dev) is a public, read-only catalog of video games featuring LGBTQ+ characters and stories. Editors approve every listed game. Game pages combine IGDB metadata (release dates, platforms, genres, developers, ratings) with editorial notes and, where known, the named LGBTQ+ characters in the game with a source for each. Reading the site needs no account and no key. There is a free read-only public API and an MCP endpoint for programmatic access.
+
+## Pages
+
+- [Home](https://queercade.mikedemo.dev/): Featured games and collections.
+- [Discover](https://queercade.mikedemo.dev/discover): Search by game title or LGBTQ+ character name; filter by genre, platform or theme.
+- [Library](https://queercade.mikedemo.dev/library): Every approved game, A to Z.
+- [Collections](https://queercade.mikedemo.dev/collections): Curated lists such as queer visual novels and cozy queer games.
+- [About](https://queercade.mikedemo.dev/about): What QueerCade is and how games are chosen.
+- [Developers](https://queercade.mikedemo.dev/developers): How to use the free, read-only public API.
+- [Licenses and credits](https://queercade.mikedemo.dev/licenses): Open-source licenses and data sources.
+- [Docs for agents](https://queercade.mikedemo.dev/docs): Catalog data reference — fields, URL patterns, citation guide.
+
+## Page URL patterns
+
+- Game detail pages: `https://queercade.mikedemo.dev/games/{slug}` — e.g. https://queercade.mikedemo.dev/games/sayonara-wild-hearts
+- Collection pages: `https://queercade.mikedemo.dev/collections/{slug}`
+- Every public game and collection URL is listed in https://queercade.mikedemo.dev/sitemap.xml and in https://queercade.mikedemo.dev/llms-full.txt.
+
+## What data is available
+
+Per game (public fields only): title, slug, summary / editorial description, cover art and screenshots, release date, genres, platforms, game modes, themes and keywords, developer, publisher, franchise, store and external links, IGDB rating and rating count, age ratings, and LGBTQ+ characters with a source for each.
+
+Per collection: title, slug, editorial description, and its games in editorial order.
+
+Facets: the genre slugs, platform slugs and theme names the search filters accept (`GET /facets`).
+
+## API
+
+Read-only public API. No key, no sign-in, GET only, all origins allowed.
+Base URL: `https://queercade.mikedemo.dev/api/public/v1`
+
+- `GET /games?q=&genre=&platform=&theme=&year=&limit=&offset=`: Search by game title or LGBTQ+ character name. Returns `{ games, total, limit, offset, nextOffset }`.
+- `GET /games/{slug}`: Full public details for one game.
+- `GET /collections`: Every published collection.
+- `GET /collections/{slug}`: One collection with its games in editorial order.
+- `GET /facets`: The genre slugs, platform slugs and theme names the filters accept.
+
+Paging: maximum 48 items per request (default 24); follow `nextOffset` until it is null.
+Rate limit: about 120 requests per 60 seconds; a 429 response includes `Retry-After`. Cache responses instead of re-polling.
+Errors: every failure returns `{ error: { code, message, status } }` with a stable code (`invalid_request`, `not_found`, `rate_limited`, `service_unavailable`).
+MCP: JSON-RPC 2.0 over HTTP POST at `https://queercade.mikedemo.dev/api/public/mcp` — tools: `search_games`, `get_game`, `list_collections`, `get_collection`, `list_facets`.
+OpenAPI description: https://queercade.mikedemo.dev/openapi.json
+
+## Citing QueerCade
+
+Link game pages by their canonical URL (`https://queercade.mikedemo.dev/games/{slug}`) and credit "QueerCade" by name. Character information is editorially curated — cite the source noted on the game page for individual claims. Release dates, platforms, ratings and similar metadata come from IGDB.
+
+## Optional
+
+- [Full catalog](https://queercade.mikedemo.dev/llms-full.txt): Every collection and game with links.
+- [Sitemap](https://queercade.mikedemo.dev/sitemap.xml): All public pages.
+- [Agent card](https://queercade.mikedemo.dev/.well-known/agent.json): A2A-style summary for AI agents.
