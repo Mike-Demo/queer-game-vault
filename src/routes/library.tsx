@@ -1,5 +1,8 @@
+import type { InfiniteData } from "@tanstack/react-query";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+
+import type { GameSummary } from "@/lib/sanity/types";
 
 import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
