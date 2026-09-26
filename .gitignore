@@ -36,3 +36,8 @@ src/.generated/
 
 # Lovable sandbox workspace directory
 .workspace/
+
+# Environment files (never commit real values; see .env.example)
+.env
+.env.*
+!.env.example
