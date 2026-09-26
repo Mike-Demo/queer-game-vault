@@ -11,3 +11,9 @@
 
 /robots.txt
   Cache-Control: public, max-age=3600
+
+/llms.txt
+  Cache-Control: public, max-age=3600
+
+/.well-known/*
+  Cache-Control: public, max-age=3600
