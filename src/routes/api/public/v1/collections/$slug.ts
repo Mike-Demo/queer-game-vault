@@ -9,6 +9,7 @@ import type { CollectionDetail } from "@/lib/sanity/types";
 const SlugSchema = z.string().regex(/^[a-z0-9-]{1,120}$/);
 
 export const Route = createFileRoute("/api/public/v1/collections/$slug")({
+  staticData: { sitemap: false },
   server: {
     handlers: {
       OPTIONS: () => optionsResponse(),

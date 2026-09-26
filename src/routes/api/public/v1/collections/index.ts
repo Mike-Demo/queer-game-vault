@@ -6,6 +6,7 @@ import { publishedCollectionsQuery } from "@/lib/sanity/queries";
 import type { CollectionSummary } from "@/lib/sanity/types";
 
 export const Route = createFileRoute("/api/public/v1/collections/")({
+  staticData: { sitemap: false },
   server: {
     handlers: {
       OPTIONS: () => optionsResponse(),

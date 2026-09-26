@@ -13,6 +13,7 @@ const QuerySchema = z.object({
 });
 
 export const Route = createFileRoute("/api/public/v1/games/")({
+  staticData: { sitemap: false },
   server: {
     handlers: {
       OPTIONS: () => optionsResponse(),
