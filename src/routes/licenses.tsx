@@ -111,6 +111,12 @@ const GROUPS: readonly LicenseGroup[] = [
         url: "https://github.com/cloudflare/workers-sdk/blob/main/LICENSE-MIT",
         note: "Builds the site for its production runtime.",
       },
+      {
+        name: "Recharts",
+        author: "recharts contributors",
+        license: "MIT",
+        url: "https://github.com/recharts/recharts",
+      },
     ],
   },
   {
