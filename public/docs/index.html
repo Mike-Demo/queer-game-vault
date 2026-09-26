@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docs for agents — QueerCade</title>
+  <meta name="description" content="Catalog data reference for QueerCade: available fields, page URL patterns, machine endpoints, and how to cite games.">
+  <link rel="canonical" href="https://queercade.mikedemo.dev/docs">
+  <meta property="og:title" content="Docs for agents — QueerCade">
+  <meta property="og:description" content="Catalog data reference: available fields, page URL patterns, machine endpoints, and citation guide.">
+  <meta property="og:url" content="https://queercade.mikedemo.dev/docs">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="QueerCade">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <style>
+    :root { color-scheme: dark; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; background: #0f0f1a; color: #e8e8f0; line-height: 1.6; }
+    a { color: #7dd3fc; }
+    code { background: #1e1e30; padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    pre { background: #1e1e30; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.85em; }
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.2rem; margin-top: 2.5rem; border-bottom: 1px solid #2a2a40; padding-bottom: 0.4rem; }
+    .lede { color: #b9b9d0; }
+    ul { padding-left: 1.4rem; }
+    li { margin: 0.3rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Docs for agents — QueerCade</h1>
+  <p class="lede">QueerCade is a hand-curated, read-only catalog of video games with LGBTQ+ characters and stories. Every listed game is reviewed by an editor. This page describes what data is available, where to find it, and how to cite it.</p>
+
+  <h2>What data is available</h2>
+  <p>Per game (public fields only):</p>
+  <ul>
+    <li>Title, slug, summary and editorial description</li>
+    <li>Cover art and screenshots</li>
+    <li>Release date, genres, platforms, game modes, themes and keywords</li>
+    <li>Developer, publisher, franchise</li>
+    <li>Store and external links</li>
+    <li>IGDB rating and rating count, age ratings</li>
+    <li>LGBTQ+ characters in the game, with a source for each</li>
+  </ul>
+  <p>Per collection: title, slug, editorial description, and its games in editorial order.</p>
+  <p>Facets: the genre slugs, platform slugs and theme names the search filters accept.</p>
+
+  <h2>Page URL patterns</h2>
+  <ul>
+    <li>Game detail pages: <code>https://queercade.mikedemo.dev/games/{slug}</code> — e.g. <a href="https://queercade.mikedemo.dev/games/sayonara-wild-hearts">/games/sayonara-wild-hearts</a></li>
+    <li>Collection pages: <code>https://queercade.mikedemo.dev/collections/{slug}</code></li>
+    <li>All public pages: <a href="https://queercade.mikedemo.dev/sitemap.xml">sitemap.xml</a> (~300 game pages)</li>
+    <li>Every game and collection with links: <a href="https://queercade.mikedemo.dev/llms-full.txt">llms-full.txt</a></li>
+  </ul>
+
+  <h2>Machine endpoints (read-only, no key, no sign-in)</h2>
+  <ul>
+    <li><a href="https://queercade.mikedemo.dev/llms.txt">llms.txt</a> — plain-text summary of the site</li>
+    <li><a href="https://queercade.mikedemo.dev/.well-known/agent.json">agent.json</a> — A2A-style agent card</li>
+    <li><a href="https://queercade.mikedemo.dev/openapi.json">openapi.json</a> — machine-readable API description</li>
+    <li><code>GET https://queercade.mikedemo.dev/api/public/v1/games?q=&amp;genre=&amp;platform=&amp;theme=&amp;year=&amp;limit=&amp;offset=</code> — search games</li>
+    <li><code>GET https://queercade.mikedemo.dev/api/public/v1/games/{slug}</code> — one game</li>
+    <li><code>GET https://queercade.mikedemo.dev/api/public/v1/collections</code> — all collections</li>
+    <li><code>GET https://queercade.mikedemo.dev/api/public/v1/collections/{slug}</code> — one collection</li>
+    <li><code>GET https://queercade.mikedemo.dev/api/public/v1/facets</code> — filter facets</li>
+    <li>MCP (JSON-RPC 2.0 over HTTP POST): <code>https://queercade.mikedemo.dev/api/public/mcp</code> — tools: <code>search_games</code>, <code>get_game</code>, <code>list_collections</code>, <code>get_collection</code>, <code>list_facets</code></li>
+  </ul>
+  <p>Paging: max 48 items per request (default 24); follow <code>nextOffset</code> until null. Rate limit: about 120 requests per 60 seconds. Cache responses instead of re-polling. Errors use <code>{ error: { code, message, status } }</code> with stable codes: <code>invalid_request</code>, <code>not_found</code>, <code>rate_limited</code>, <code>service_unavailable</code>.</p>
+
+  <h2>How to cite games</h2>
+  <ul>
+    <li>Link game pages by their canonical URL: <code>https://queercade.mikedemo.dev/games/{slug}</code>.</li>
+    <li>Credit "QueerCade" by name when quoting editorial content.</li>
+    <li>Character information is editorially curated — cite the source noted on the game page for individual claims.</li>
+    <li>Release dates, platforms, ratings and similar metadata come from <a href="https://www.igdb.com">IGDB</a>.</li>
+  </ul>
+
+  <p><a href="https://queercade.mikedemo.dev/">← Back to QueerCade</a></p>
+</body>
+</html>
