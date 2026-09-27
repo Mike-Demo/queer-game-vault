@@ -15,6 +15,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DiscoverRouteImport } from './routes/discover'
+import { Route as EmojiRouteImport } from './routes/emoji'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as LicensesRouteImport } from './routes/licenses'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
@@ -67,6 +68,11 @@ const DevelopersRoute = DevelopersRouteImport.update({
 const DiscoverRoute = DiscoverRouteImport.update({
   id: '/discover',
   path: '/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmojiRoute = EmojiRouteImport.update({
+  id: '/emoji',
+  path: '/emoji',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LibraryRoute = LibraryRouteImport.update({
@@ -202,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
+  '/emoji': typeof EmojiRoute
   '/library': typeof LibraryRoute
   '/licenses': typeof LicensesRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
@@ -233,6 +240,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
+  '/emoji': typeof EmojiRoute
   '/library': typeof LibraryRoute
   '/licenses': typeof LicensesRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
@@ -266,6 +274,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
+  '/emoji': typeof EmojiRoute
   '/library': typeof LibraryRoute
   '/licenses': typeof LicensesRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
@@ -299,6 +308,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/developers'
     | '/discover'
+    | '/emoji'
     | '/library'
     | '/licenses'
     | '/llms-full.txt'
@@ -330,6 +340,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/developers'
     | '/discover'
+    | '/emoji'
     | '/library'
     | '/licenses'
     | '/llms-full.txt'
@@ -362,6 +373,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/developers'
     | '/discover'
+    | '/emoji'
     | '/library'
     | '/licenses'
     | '/llms-full.txt'
@@ -395,6 +407,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DevelopersRoute: typeof DevelopersRoute
   DiscoverRoute: typeof DiscoverRoute
+  EmojiRoute: typeof EmojiRoute
   LibraryRoute: typeof LibraryRoute
   LicensesRoute: typeof LicensesRoute
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
@@ -458,6 +471,13 @@ declare module '@tanstack/react-router' {
       path: '/discover'
       fullPath: '/discover'
       preLoaderRoute: typeof DiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/emoji': {
+      id: '/emoji'
+      path: '/emoji'
+      fullPath: '/emoji'
+      preLoaderRoute: typeof EmojiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/library': {
@@ -657,6 +677,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DevelopersRoute: DevelopersRoute,
   DiscoverRoute: DiscoverRoute,
+  EmojiRoute: EmojiRoute,
   LibraryRoute: LibraryRoute,
   LicensesRoute: LicensesRoute,
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,

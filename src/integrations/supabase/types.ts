@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      emoji_picks: {
+        Row: {
+          cover_url: string | null
+          created_at: string
+          emojis: string[]
+          game_slug: string
+          id: string
+          reason: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          cover_url?: string | null
+          created_at?: string
+          emojis: string[]
+          game_slug: string
+          id?: string
+          reason: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          cover_url?: string | null
+          created_at?: string
+          emojis?: string[]
+          game_slug?: string
+          id?: string
+          reason?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       game_entries: {
         Row: {
           cover_url: string | null

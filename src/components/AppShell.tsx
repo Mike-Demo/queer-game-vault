@@ -21,7 +21,10 @@ const FALLBACK_NAV = [
 ];
 
 /** Always offered, whatever site settings say. */
-const PUBLIC_EXTRA_NAV = [{ label: "Discover", path: "/discover" }];
+const PUBLIC_EXTRA_NAV = [
+  { label: "Discover", path: "/discover" },
+  { label: "Emoji Oracle", path: "/emoji" },
+];
 
 const SIGNED_IN_NAV = [
   { label: "My library", path: "/my-library" },
