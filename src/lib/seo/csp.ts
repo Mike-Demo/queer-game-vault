@@ -4,15 +4,16 @@
  * Rationale per directive:
  * - default-src 'self': deny everything not explicitly allowed.
  * - script-src 'self' 'unsafe-inline': same-origin app bundles plus TanStack
- *   Start streaming/inline hydration scripts. No third-party scripts load in
- *   production (analytics is the same-origin /~flock.js snippet).
+ *   Start streaming/inline hydration scripts, plus the private umami-lite
+ *   analytics tracker script (tracker.js loads from umami-lite.view.fast).
  * - style-src 'self' 'unsafe-inline': same-origin stylesheet; components use
  *   inline styles sparingly.
  * - img-src: same-origin, data: URIs, the IGDB cover CDN, the Sanity image CDN,
  *   and the Aikido security-audit badge on /licenses.
  * - font-src 'self': the pixel font is self-hosted under /fonts.
  * - connect-src: same-origin server functions, Supabase (REST + realtime websocket),
- *   and the Sanity API/CDN for direct browser reads.
+ *   the Sanity API/CDN for direct browser reads, and the private umami-lite
+ *   analytics beacon endpoint.
  * - object-src 'none': no plugins or embeds anywhere in the app.
  * - base-uri 'self': block <base> hijacking.
  * - form-action 'self': auth/settings forms submit through app code only.
@@ -22,10 +23,11 @@
  */
 const SUPABASE_HTTPS = "https://mfwitqkhpuqnuwjwvtiy.supabase.co";
 const SUPABASE_WSS = "wss://mfwitqkhpuqnuwjwvtiy.supabase.co";
+const UMAMI_LITE = "https://umami-lite.view.fast";
 
 const DIRECTIVES: Array<[string, string]> = [
   ["default-src", "'self'"],
-  ["script-src", "'self' 'unsafe-inline'"],
+  ["script-src", ["'self'", "'unsafe-inline'", UMAMI_LITE].join(" ")],
   ["style-src", "'self' 'unsafe-inline'"],
   [
     "img-src",
@@ -40,6 +42,7 @@ const DIRECTIVES: Array<[string, string]> = [
       SUPABASE_WSS,
       "https://tzh8tziu.api.sanity.io",
       "https://tzh8tziu.apicdn.sanity.io",
+      UMAMI_LITE,
     ].join(" "),
   ],
   ["object-src", "'none'"],

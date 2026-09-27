@@ -71,6 +71,12 @@ function RootShell({ children }: { children: ReactNode }) {
           scripts (HeadContent resource hoisting would otherwise push them first).
         */}
         <meta httpEquiv="Content-Security-Policy" content={CONTENT_SECURITY_POLICY} />
+        {/* Private analytics tracker (loads on every page via the root shell). */}
+        <script
+          defer
+          src="https://umami-lite.view.fast/tracker.js"
+          data-website-id="d6f0c101-7e14-4719-8a37-510d659b3ff9"
+        ></script>
         <HeadContent />
       </head>
       <body>
