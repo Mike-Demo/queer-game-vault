@@ -230,6 +230,22 @@ function Licenses(): ReactElement {
           />
         </a>
       </header>
+      <section className="stack" aria-labelledby="license-open-source">
+        <h2 id="license-open-source" className="title-md">
+          Open source
+        </h2>
+        <p>
+          This site&apos;s source code is{" "}
+          <a
+            href="https://github.com/Mike-Demo/queer-game-vault"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            on GitHub
+          </a>
+          .
+        </p>
+      </section>
       {GROUPS.map((group) => {
         const headingId = `license-${group.title.replaceAll(" ", "-").toLowerCase()}`;
         return (
