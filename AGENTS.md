@@ -1,0 +1,1 @@
+- Emoji Oracle agent reads the catalog through the Sanity MCP (query_documents only, published perspective, editorialStatus filter enforced) and re-verifies the chosen slug against the public catalog — keeps editor-only data off the page.
