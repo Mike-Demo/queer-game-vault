@@ -48,9 +48,9 @@ const SOCIAL_LINKS: readonly SocialLink[] = [
 ];
 
 /**
- * Pixel site footer: attribution, copyright, open-source credits link, and
- * social icons. The year resolves after hydration so prerendered pages never
- * mismatch.
+ * Pixel site footer: attribution, copyright, open-source credits link, legal
+ * policy links, and social icons. The year resolves after hydration so
+ * prerendered pages never mismatch.
  */
 export function SiteFooter(): ReactElement {
   const [year, setYear] = useState<number | undefined>(undefined);
@@ -76,6 +76,24 @@ export function SiteFooter(): ReactElement {
         </a>
         <a href="/emoji" className="site-footer-link">
           Emoji Oracle
+        </a>
+        <a
+          href="https://embed.termageddon.com/api/policy/TWpjeVZrZEhNRmR2V1UxbU4wRTlQUT09"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Privacy Policy (opens in new tab)"
+          className="site-footer-link"
+        >
+          Privacy Policy
+        </a>
+        <a
+          href="https://embed.termageddon.com/api/policy/Y1ZKdFNtTTJSMVpUTW1sNmJsRTlQUT09"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Terms of Service (opens in new tab)"
+          className="site-footer-link"
+        >
+          Terms of Service
         </a>
       </nav>
 
