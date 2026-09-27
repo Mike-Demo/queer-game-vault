@@ -10,7 +10,6 @@ import {
 } from "@/design-system/nes-229931";
 import { Surface } from "@/components/Surface";
 import {
-  coverSrcSet,
   coverUrl,
   featuredCollectionsQueryOptions,
   featuredGamesQueryOptions,
@@ -34,13 +33,7 @@ export const Route = createFileRoute("/")({
       context.queryClient.ensureQueryData(featuredGamesQueryOptions),
       context.queryClient.ensureQueryData(featuredCollectionsQueryOptions),
     ]),
-  head: ({ loaderData }) => {
-    // The first featured cover is the largest above-fold paint. Preload it so
-    // it doesn't queue behind the JS bundle for bandwidth on slow networks.
-    const firstGame = (loaderData?.[1] ?? [])[0];
-    const lcpCover = firstGame ? coverUrl(firstGame) : null;
-    const lcpSrcSet = firstGame ? coverSrcSet(firstGame) : undefined;
-    return {
+  head: ({ loaderData }) => ({
     meta: [
       { title: "QueerCade — a curated arcade of games" },
       {
@@ -60,25 +53,7 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: DEFAULT_SHARE_IMAGE },
       { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
     ],
-    links: [
-      { rel: "canonical", href: "https://queercade.mikedemo.dev/" },
-      ...(lcpCover
-        ? [
-            {
-              rel: "preload",
-              as: "image",
-              href: lcpCover,
-              ...(lcpSrcSet
-                ? {
-                    imageSrcSet: lcpSrcSet,
-                    imageSizes: "(min-width: 64rem) 20rem, (min-width: 48rem) 33vw, 100vw",
-                  }
-                : {}),
-              fetchPriority: "high",
-            },
-          ]
-        : []),
-    ],
+    links: [{ rel: "canonical", href: "https://queercade.mikedemo.dev/" }],
     scripts: [
       jsonLdScript(
         organization(),
@@ -100,8 +75,7 @@ export const Route = createFileRoute("/")({
         ),
       ),
     ],
-    };
-  },
+  }),
 
   errorComponent: () => (
     <AppShell>
