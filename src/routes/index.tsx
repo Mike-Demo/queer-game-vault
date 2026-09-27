@@ -33,13 +33,6 @@ export const Route = createFileRoute("/")({
       context.queryClient.ensureQueryData(featuredGamesQueryOptions),
       context.queryClient.ensureQueryData(featuredCollectionsQueryOptions),
     ]),
-  // The homepage is prerendered static HTML; a short edge cache cuts the
-  // ~1.5s TTFB that dominates LCP. Vary on Cookie because the root loader
-  // personalizes the dehydrated theme from the qc-theme cookie.
-  headers: () => ({
-    "Cache-Control": "public, max-age=60, s-maxage=300",
-    "Vary": "Cookie",
-  }),
   head: ({ loaderData }) => ({
     meta: [
       { title: "QueerCade — a curated arcade of games" },
