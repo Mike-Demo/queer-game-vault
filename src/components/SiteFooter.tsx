@@ -74,6 +74,9 @@ export function SiteFooter(): ReactElement {
         <a href="/developers" className="site-footer-link">
           Developers
         </a>
+        <a href="/emoji" className="site-footer-link">
+          Emoji Oracle
+        </a>
       </nav>
 
       <nav aria-label="Social links" className="site-footer-social">
