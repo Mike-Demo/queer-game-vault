@@ -12,6 +12,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { NesProvider } from "@/design-system/nes-229931";
 import { supabase } from "@/integrations/supabase/client";
 import { readAppearance } from "@/lib/theme/mode";
+import { CONTENT_SECURITY_POLICY } from "@/lib/seo/csp";
 import { DEFAULT_SHARE_IMAGE } from "@/lib/seo/structuredData";
 
 import appCss from "../styles.css?url";
@@ -64,6 +65,12 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        {/*
+          CSP as the first head element: a meta-delivered policy only governs
+          resources parsed after it, so it must precede styles, preloads, and
+          scripts (HeadContent resource hoisting would otherwise push them first).
+        */}
+        <meta httpEquiv="Content-Security-Policy" content={CONTENT_SECURITY_POLICY} />
         <HeadContent />
       </head>
       <body>
