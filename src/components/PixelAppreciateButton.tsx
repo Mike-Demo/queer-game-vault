@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 
 /**
  * PixelAppreciateButton — a rainbow pixel-heart kudos button for game pages.
@@ -216,7 +217,7 @@ export function PixelAppreciateButton({ slug, title }: { slug: string; title: st
                 background: p.color,
                 width: p.size,
                 height: p.size,
-              } as React.CSSProperties
+              } as CSSProperties
             }
           />
         ))}
