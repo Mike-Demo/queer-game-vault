@@ -5,6 +5,7 @@ import { AppShell } from "@/components/AppShell";
 import { GameCard } from "@/components/GameCard";
 import { PurchaseLink } from "@/components/PurchaseLink";
 import { EmptyState, ErrorState, LoadingState } from "@/components/StateViews";
+import { PixelAppreciateButton } from "@/components/PixelAppreciateButton";
 import { TrackControl } from "@/components/TrackControl";
 import {
   NesBadge,
@@ -247,6 +248,9 @@ function GamePage() {
                 <NesBadge key={platform._id}>{platform.abbreviation ?? platform.name}</NesBadge>
               ))}
             </div>
+            {data.slug ? (
+              <PixelAppreciateButton slug={data.slug} title={data.title} />
+            ) : null}
             {data.slug ? (
               <Surface title="Track this game" rounded>
                 <TrackControl
