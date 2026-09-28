@@ -47,24 +47,6 @@ export type Database = {
         }
         Relationships: []
       }
-      game_appreciations: {
-        Row: {
-          game_slug: string
-          total: number
-          updated_at: string
-        }
-        Insert: {
-          game_slug: string
-          total?: number
-          updated_at?: string
-        }
-        Update: {
-          game_slug?: string
-          total?: number
-          updated_at?: string
-        }
-        Relationships: []
-      }
       game_entries: {
         Row: {
           cover_url: string | null
@@ -198,10 +180,6 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
-      }
-      increment_game_appreciation: {
-        Args: { p_slug: string }
-        Returns: number
       }
       username_available: { Args: { _username: string }; Returns: boolean }
     }

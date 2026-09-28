@@ -36,6 +36,7 @@ import { Route as Char91__componentChar93PreviewSplatRouteImport } from './route
 import { Route as Char91__mockupChar93PreviewSplatRouteImport } from './routes/[__mockup].preview.$'
 import { Route as ApiPublicMcpRouteImport } from './routes/api/public/mcp'
 import { Route as ApiPublicV1FacetsRouteImport } from './routes/api/public/v1/facets'
+import { Route as ApiPublicV1AppreciationsSlugRouteImport } from './routes/api/public/v1/appreciations/$slug'
 import { Route as ApiPublicV1CollectionsIndexRouteImport } from './routes/api/public/v1/collections/index'
 import { Route as ApiPublicV1CollectionsSlugRouteImport } from './routes/api/public/v1/collections/$slug'
 import { Route as ApiPublicV1GamesIndexRouteImport } from './routes/api/public/v1/games/index'
@@ -179,6 +180,12 @@ const ApiPublicV1FacetsRoute = ApiPublicV1FacetsRouteImport.update({
   path: '/api/public/v1/facets',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicV1AppreciationsSlugRoute =
+  ApiPublicV1AppreciationsSlugRouteImport.update({
+    id: '/api/public/v1/appreciations/$slug',
+    path: '/api/public/v1/appreciations/$slug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicV1CollectionsIndexRoute =
   ApiPublicV1CollectionsIndexRouteImport.update({
     id: '/api/public/v1/collections/',
@@ -229,6 +236,7 @@ export interface FileRoutesByFullPath {
   '/__mockup/preview/$': typeof Char91__mockupChar93PreviewSplatRoute
   '/api/public/mcp': typeof ApiPublicMcpRoute
   '/api/public/v1/facets': typeof ApiPublicV1FacetsRoute
+  '/api/public/v1/appreciations/$slug': typeof ApiPublicV1AppreciationsSlugRoute
   '/api/public/v1/collections/$slug': typeof ApiPublicV1CollectionsSlugRoute
   '/api/public/v1/games/$slug': typeof ApiPublicV1GamesSlugRoute
   '/api/public/v1/collections/': typeof ApiPublicV1CollectionsIndexRoute
@@ -261,6 +269,7 @@ export interface FileRoutesByTo {
   '/__mockup/preview/$': typeof Char91__mockupChar93PreviewSplatRoute
   '/api/public/mcp': typeof ApiPublicMcpRoute
   '/api/public/v1/facets': typeof ApiPublicV1FacetsRoute
+  '/api/public/v1/appreciations/$slug': typeof ApiPublicV1AppreciationsSlugRoute
   '/api/public/v1/collections/$slug': typeof ApiPublicV1CollectionsSlugRoute
   '/api/public/v1/games/$slug': typeof ApiPublicV1GamesSlugRoute
   '/api/public/v1/collections': typeof ApiPublicV1CollectionsIndexRoute
@@ -295,6 +304,7 @@ export interface FileRoutesById {
   '/__mockup/preview/$': typeof Char91__mockupChar93PreviewSplatRoute
   '/api/public/mcp': typeof ApiPublicMcpRoute
   '/api/public/v1/facets': typeof ApiPublicV1FacetsRoute
+  '/api/public/v1/appreciations/$slug': typeof ApiPublicV1AppreciationsSlugRoute
   '/api/public/v1/collections/$slug': typeof ApiPublicV1CollectionsSlugRoute
   '/api/public/v1/games/$slug': typeof ApiPublicV1GamesSlugRoute
   '/api/public/v1/collections/': typeof ApiPublicV1CollectionsIndexRoute
@@ -329,6 +339,7 @@ export interface FileRouteTypes {
     | '/__mockup/preview/$'
     | '/api/public/mcp'
     | '/api/public/v1/facets'
+    | '/api/public/v1/appreciations/$slug'
     | '/api/public/v1/collections/$slug'
     | '/api/public/v1/games/$slug'
     | '/api/public/v1/collections/'
@@ -361,6 +372,7 @@ export interface FileRouteTypes {
     | '/__mockup/preview/$'
     | '/api/public/mcp'
     | '/api/public/v1/facets'
+    | '/api/public/v1/appreciations/$slug'
     | '/api/public/v1/collections/$slug'
     | '/api/public/v1/games/$slug'
     | '/api/public/v1/collections'
@@ -394,6 +406,7 @@ export interface FileRouteTypes {
     | '/__mockup/preview/$'
     | '/api/public/mcp'
     | '/api/public/v1/facets'
+    | '/api/public/v1/appreciations/$slug'
     | '/api/public/v1/collections/$slug'
     | '/api/public/v1/games/$slug'
     | '/api/public/v1/collections/'
@@ -423,6 +436,7 @@ export interface RootRouteChildren {
   Char91__mockupChar93PreviewSplatRoute: typeof Char91__mockupChar93PreviewSplatRoute
   ApiPublicMcpRoute: typeof ApiPublicMcpRoute
   ApiPublicV1FacetsRoute: typeof ApiPublicV1FacetsRoute
+  ApiPublicV1AppreciationsSlugRoute: typeof ApiPublicV1AppreciationsSlugRoute
   ApiPublicV1CollectionsSlugRoute: typeof ApiPublicV1CollectionsSlugRoute
   ApiPublicV1GamesSlugRoute: typeof ApiPublicV1GamesSlugRoute
   ApiPublicV1CollectionsIndexRoute: typeof ApiPublicV1CollectionsIndexRoute
@@ -620,6 +634,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicV1FacetsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/v1/appreciations/$slug': {
+      id: '/api/public/v1/appreciations/$slug'
+      path: '/api/public/v1/appreciations/$slug'
+      fullPath: '/api/public/v1/appreciations/$slug'
+      preLoaderRoute: typeof ApiPublicV1AppreciationsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/v1/collections/': {
       id: '/api/public/v1/collections/'
       path: '/api/public/v1/collections'
@@ -694,6 +715,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91__mockupChar93PreviewSplatRoute: Char91__mockupChar93PreviewSplatRoute,
   ApiPublicMcpRoute: ApiPublicMcpRoute,
   ApiPublicV1FacetsRoute: ApiPublicV1FacetsRoute,
+  ApiPublicV1AppreciationsSlugRoute: ApiPublicV1AppreciationsSlugRoute,
   ApiPublicV1CollectionsSlugRoute: ApiPublicV1CollectionsSlugRoute,
   ApiPublicV1GamesSlugRoute: ApiPublicV1GamesSlugRoute,
   ApiPublicV1CollectionsIndexRoute: ApiPublicV1CollectionsIndexRoute,
