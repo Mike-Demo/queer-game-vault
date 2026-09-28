@@ -22,8 +22,8 @@ export const Route = createFileRoute("/api/public/v1/appreciations/$slug")({
         const slug = SlugSchema.safeParse(params.slug);
         if (!slug.success) return errorResponse(404, "not_found", "Game not found.", rate.headers);
         try {
-          const admin = createSupabaseAdminClient();
-          const { data, error } = await admin
+          const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+          const { data, error } = await supabaseAdmin
             .from("game_appreciations")
             .select("total")
             .eq("game_slug", slug.data)
@@ -41,8 +41,8 @@ export const Route = createFileRoute("/api/public/v1/appreciations/$slug")({
         const slug = SlugSchema.safeParse(params.slug);
         if (!slug.success) return errorResponse(404, "not_found", "Game not found.", rate.headers);
         try {
-          const admin = createSupabaseAdminClient();
-          const { data, error } = await admin.rpc("increment_game_appreciation", {
+          const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+          const { data, error } = await supabaseAdmin.rpc("increment_game_appreciation", {
             p_slug: slug.data,
           });
           if (error) throw error;
