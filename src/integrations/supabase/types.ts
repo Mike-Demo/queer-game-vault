@@ -199,10 +199,7 @@ export type Database = {
         }
         Returns: boolean
       }
-      increment_game_appreciation: {
-        Args: { p_slug: string }
-        Returns: number
-      }
+      increment_game_appreciation: { Args: { p_slug: string }; Returns: number }
       username_available: { Args: { _username: string }; Returns: boolean }
     }
     Enums: {
