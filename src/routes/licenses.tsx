@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import type { ReactElement } from "react";
 
-import { NesContainer } from "@/design-system/nes-229931";
+import { Surface } from "@/components/Surface";
 import {
   DEFAULT_SHARE_IMAGE,
   SITE_URL,
@@ -60,7 +60,7 @@ const GROUPS: readonly LicenseGroup[] = [
         author: "Medhat Dawoud and contributors",
         license: "MIT",
         url: "https://github.com/Mike-Demo/appreciate-button-pixel",
-        note: "The rainbow pixel heart on every game page is a pixel-art fork of the open-source Appreciate Button. Upstream: https://github.com/medhatdawoud/appreciate-button.",
+        note: "The rainbow pixel heart on every game page is a pixel-art fork of the open-source Appreciate Button.",
       },
     ],
   },
@@ -267,7 +267,7 @@ function Licenses(): ReactElement {
             </h2>
             <div className="license-grid">
               {group.entries.map((entry) => (
-                <NesContainer key={`${group.title}-${entry.name}`} title={entry.name}>
+                <Surface key={`${group.title}-${entry.name}`} title={entry.name}>
                   <div className="stack">
                     <p>
                       {entry.author} · {entry.license}
@@ -277,7 +277,7 @@ function Licenses(): ReactElement {
                       License source
                     </a>
                   </div>
-                </NesContainer>
+                </Surface>
               ))}
             </div>
           </section>
