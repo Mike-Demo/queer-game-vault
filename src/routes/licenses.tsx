@@ -53,6 +53,18 @@ const GROUPS: readonly LicenseGroup[] = [
     ],
   },
   {
+    title: "Interactive components",
+    entries: [
+      {
+        name: "Appreciate Button (rainbow pixel fork)",
+        author: "Medhat Dawoud and contributors",
+        license: "MIT",
+        url: "https://github.com/Mike-Demo/appreciate-button-pixel",
+        note: "The rainbow pixel heart on every game page is a pixel-art fork of the open-source Appreciate Button. Upstream: https://github.com/medhatdawoud/appreciate-button.",
+      },
+    ],
+  },
+  {
     title: "Framework & build tooling",
     entries: [
       {
