@@ -1,5 +1,5 @@
-import { describe, expect, test } from "bun:test";
-import { buildConstellationEdges, buildConstellationNodes, normalizeIdentityTags, type ConstellationCharacterRecord } from "/dev-server/src/lib/constellation/model";
+import { describe, expect, test } from "vitest";
+import { buildConstellationEdges, buildConstellationNodes, normalizeIdentityTags, type ConstellationCharacterRecord } from "../constellation-model";
 
 const base: ConstellationCharacterRecord = { gameId: "game-1", gameTitle: "Game", gameSlug: "game", coverUrl: null, releaseYear: 2023, name: "Alex", identity: "Bisexual or pansexual", identityTags: [], narrativeTropes: [], sourceUrl: null, portraitUrl: null };
 

@@ -140,6 +140,25 @@ export const discoverFacetsQuery = `{
   "themes": array::unique(*[${PUBLIC_GAME_FILTER}].themes[])
 }`;
 
+/** Public constellation: curated characters from public games only. */
+export const constellationGamesQuery = `*[
+  ${PUBLIC_GAME_FILTER} && defined(slug.current) && count(lgbtqCharacters) > 0
+] | order(_id asc){
+  "gameId": _id,
+  "gameTitle": title,
+  "gameSlug": slug.current,
+  "coverUrl": coalesce(cover.asset->url, sourceCoverUrl),
+  releaseYear,
+  "characters": lgbtqCharacters[]{
+    name,
+    identity,
+    "identityTags": coalesce(identityTags, []),
+    "narrativeTropes": coalesce(narrativeTropes, []),
+    sourceUrl
+  },
+  "cast": coalesce(igdbCharacters[]{ name, mugshotUrl }, [])
+}`;
+
 /** Public API: title/character search with optional facet filters and offset paging. */
 const PUBLIC_API_GAME_FILTER = `${PUBLIC_GAME_FILTER}
   && ($term == "" || title match $term || lgbtqCharacters[].name match $term)

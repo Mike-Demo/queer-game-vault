@@ -3,6 +3,7 @@ import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 import {
   fetchCollection,
   fetchCollections,
+  fetchConstellationCharacters,
   fetchContentPage,
   fetchDiscoverFacets,
   fetchFeaturedCollections,
@@ -130,6 +131,12 @@ export interface DiscoverFacets {
 export const discoverFacetsQueryOptions = queryOptions({
   queryKey: ["discoverFacets"],
   queryFn: () => fetchDiscoverFacets(),
+  staleTime: 10 * 60 * 1000,
+});
+
+export const constellationQueryOptions = queryOptions({
+  queryKey: ["constellation", "characters"],
+  queryFn: () => fetchConstellationCharacters(),
   staleTime: 10 * 60 * 1000,
 });
 

@@ -5,6 +5,7 @@ import { sanityPublicClient } from "./sanity/client";
 import {
   approvedGamesQuery,
   collectionBySlugQuery,
+  constellationGamesQuery,
   contentPageBySlugQuery,
   discoverFacetsQuery,
   featuredCollectionsQuery,
@@ -16,6 +17,7 @@ import {
   searchGamesQuery,
   siteSettingsQuery,
 } from "./sanity/queries";
+import type { ConstellationCharacterRecord } from "./constellation-model";
 import type {
   CollectionDetail,
   CollectionRef,
@@ -36,6 +38,22 @@ export interface PublicDiscoverFacets {
   genres: TaxonomyRef[];
   platforms: TaxonomyRef[];
   themes: (string | null)[] | null;
+}
+
+interface ConstellationGameResult {
+  gameId: string;
+  gameTitle: string;
+  gameSlug: string;
+  coverUrl: string | null;
+  releaseYear: number | null;
+  characters: Array<{
+    name: string | null;
+    identity: string | null;
+    identityTags: string[] | null;
+    narrativeTropes: string[] | null;
+    sourceUrl: string | null;
+  }>;
+  cast: Array<{ name: string | null; mugshotUrl: string | null }>;
 }
 
 const slugInput = z.object({ slug: z.string().min(1).max(200) });
@@ -110,6 +128,37 @@ export const fetchRelatedGames = createServerFn({ method: "GET" })
 
 export const fetchDiscoverFacets = createServerFn({ method: "GET" }).handler(
   async (): Promise<PublicDiscoverFacets> => sanityPublicClient.fetch<PublicDiscoverFacets>(discoverFacetsQuery),
+);
+
+export const fetchConstellationCharacters = createServerFn({ method: "GET" }).handler(
+  async (): Promise<ConstellationCharacterRecord[]> => {
+    const games = await sanityPublicClient.fetch<ConstellationGameResult[]>(constellationGamesQuery);
+    return games.flatMap((game) => {
+      const portraits = new Map(
+        game.cast
+          .filter((character): character is { name: string; mugshotUrl: string | null } => Boolean(character.name))
+          .map((character) => [character.name.trim().toLocaleLowerCase(), character.mugshotUrl]),
+      );
+      return game.characters.flatMap((character) => {
+        const name = character.name?.trim();
+        const identity = character.identity?.trim();
+        if (!name || !identity) return [];
+        return [{
+          gameId: game.gameId,
+          gameTitle: game.gameTitle,
+          gameSlug: game.gameSlug,
+          coverUrl: game.coverUrl,
+          releaseYear: game.releaseYear,
+          name,
+          identity,
+          identityTags: character.identityTags ?? [],
+          narrativeTropes: character.narrativeTropes ?? [],
+          sourceUrl: character.sourceUrl,
+          portraitUrl: portraits.get(name.toLocaleLowerCase()) ?? null,
+        }];
+      });
+    });
+  },
 );
 
 export const searchPublicGames = createServerFn({ method: "GET" })
