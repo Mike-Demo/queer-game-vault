@@ -270,7 +270,7 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
           </div>
         </div>
 
-        <details className="constellation-directory">
+        <details className="constellation-directory" open={query.trim().length > 0 || undefined}>
           <summary>Browse stars as a list</summary>
           <ul className="constellation-results">
             {searchResults.map((node) => (
