@@ -57,12 +57,18 @@ interface CanvasColors {
   primary: string;
   success: string;
   warning: string;
+  disabled: string;
+  primaryShadow: string;
+  successShadow: string;
+  warningShadow: string;
   starSize: number;
   fontSize: number;
+  fontFamily: string;
 }
 
 function readColors(): CanvasColors {
   const styles = getComputedStyle(document.documentElement);
+  const bodyStyles = getComputedStyle(document.body);
   const token = (name: string) => styles.getPropertyValue(name).trim();
   const rootFontSize = Number.parseFloat(styles.fontSize);
   const lengthToken = (name: string) => Number.parseFloat(token(name)) * rootFontSize;
@@ -73,8 +79,13 @@ function readColors(): CanvasColors {
     primary: token("--nes-primary"),
     success: token("--nes-success"),
     warning: token("--nes-warning"),
+    disabled: token("--nes-disabled"),
+    primaryShadow: token("--nes-primary-shadow"),
+    successShadow: token("--nes-success-shadow"),
+    warningShadow: token("--nes-warning-shadow"),
     starSize: lengthToken("--app-space-1"),
     fontSize: lengthToken("--app-font-xs"),
+    fontFamily: bodyStyles.fontFamily,
   };
 }
 
@@ -158,14 +169,19 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
     const visibleEdges = selectedId
       ? selectedEdges
       : edges.filter((edge) => layers[edge.kind]).slice(0, 500);
-    context.lineWidth = 1 / view.scale;
+    context.lineWidth = colors.starSize * 0.125 / view.scale;
     for (const edge of visibleEdges) {
       if (!layers[edge.kind]) continue;
       const source = nodeById.get(edge.source);
       const target = nodeById.get(edge.target);
       if (!source || !target) continue;
-      context.strokeStyle = relationshipColor(edge.kind, colors);
-      context.globalAlpha = selectedId ? 0.85 : 0.14;
+      context.strokeStyle = selectedId
+        ? relationshipColor(edge.kind, colors)
+        : edge.kind === "identity"
+          ? colors.primaryShadow
+          : edge.kind === "era"
+            ? colors.successShadow
+            : colors.warningShadow;
       context.beginPath();
       context.moveTo(Math.round(source.x), Math.round(source.y));
       const middleX = Math.round((source.x + target.x) / 2);
@@ -180,18 +196,21 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
       const isSelected = node.id === selectedId;
       const isConnected = connected.has(node.id);
       const size = isSelected ? colors.starSize : isConnected ? colors.starSize * 0.75 : colors.starSize * 0.5;
-      context.globalAlpha = selectedId && !isSelected && !isConnected ? 0.35 : 1;
-      context.fillStyle = isSelected ? colors.warning : isConnected ? colors.primary : colors.surface;
+      context.fillStyle = isSelected
+        ? colors.warning
+        : isConnected
+          ? colors.primary
+          : selectedId
+            ? colors.disabled
+            : colors.surface;
       context.fillRect(Math.round(node.x - size / 2), Math.round(node.y - size / 2), size, size);
       if (isSelected || (view.scale > 1.35 && isConnected)) {
-        context.globalAlpha = 1;
         context.fillStyle = colors.foreground;
-        context.font = `${colors.fontSize / view.scale}px "Press Start 2P"`;
+        context.font = `${colors.fontSize / view.scale}px ${colors.fontFamily}`;
         context.fillText(node.name, node.x + colors.starSize / view.scale, node.y + colors.starSize * 0.5 / view.scale);
       }
     }
     context.restore();
-    context.globalAlpha = 1;
   }, [canvasSize, edges, layers, nodeById, positioned, selectedEdges, selectedId, view]);
 
   function nodeAt(clientX: number, clientY: number): PositionedNode | null {
