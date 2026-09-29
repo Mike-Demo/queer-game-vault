@@ -127,6 +127,18 @@ a {
   flex-shrink: 0;
 }
 
+.site-footer-badge {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-footer-badge img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+
 .license-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--app-sidebar-width), 1fr));
