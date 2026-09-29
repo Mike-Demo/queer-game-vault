@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ReactElement } from "react";
+import { Link } from "@tanstack/react-router";
 
 import { NesIcon } from "@/design-system/nes-229931";
 
@@ -67,16 +68,19 @@ export function SiteFooter(): ReactElement {
       </div>
 
       <nav aria-label="Legal links" className="site-footer-legal">
-        <a href="/licenses" className="site-footer-link">
+        <Link to="/licenses" className="site-footer-link">
           <NesIcon name="coin" size="small" />
           Open Source
-        </a>
-        <a href="/developers" className="site-footer-link">
+        </Link>
+        <Link to="/developers" className="site-footer-link">
           Developers
-        </a>
-        <a href="/emoji" className="site-footer-link">
+        </Link>
+        <Link to="/constellation" className="site-footer-link">
+          Constellation
+        </Link>
+        <Link to="/emoji" className="site-footer-link">
           Emoji Oracle
-        </a>
+        </Link>
         <a
           href="https://embed.termageddon.com/api/policy/TWpjeVZrZEhNRmR2V1UxbU4wRTlQUT09"
           target="_blank"

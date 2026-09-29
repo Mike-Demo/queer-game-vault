@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ConstellationRouteImport } from './routes/constellation'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as EmojiRouteImport } from './routes/emoji'
@@ -59,6 +60,11 @@ const AboutRoute = AboutRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConstellationRoute = ConstellationRouteImport.update({
+  id: '/constellation',
+  path: '/constellation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DevelopersRoute = DevelopersRouteImport.update({
@@ -213,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/constellation': typeof ConstellationRoute
   '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
   '/emoji': typeof EmojiRoute
@@ -246,6 +253,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/constellation': typeof ConstellationRoute
   '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
   '/emoji': typeof EmojiRoute
@@ -281,6 +289,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/constellation': typeof ConstellationRoute
   '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
   '/emoji': typeof EmojiRoute
@@ -316,6 +325,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/constellation'
     | '/developers'
     | '/discover'
     | '/emoji'
@@ -349,6 +359,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/constellation'
     | '/developers'
     | '/discover'
     | '/emoji'
@@ -383,6 +394,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/auth'
+    | '/constellation'
     | '/developers'
     | '/discover'
     | '/emoji'
@@ -418,6 +430,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
+  ConstellationRoute: typeof ConstellationRoute
   DevelopersRoute: typeof DevelopersRoute
   DiscoverRoute: typeof DiscoverRoute
   EmojiRoute: typeof EmojiRoute
@@ -471,6 +484,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/constellation': {
+      id: '/constellation'
+      path: '/constellation'
+      fullPath: '/constellation'
+      preLoaderRoute: typeof ConstellationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/developers': {
@@ -696,6 +716,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
+  ConstellationRoute: ConstellationRoute,
   DevelopersRoute: DevelopersRoute,
   DiscoverRoute: DiscoverRoute,
   EmojiRoute: EmojiRoute,
