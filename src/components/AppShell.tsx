@@ -23,6 +23,7 @@ const FALLBACK_NAV = [
 /** Always offered, whatever site settings say. */
 const PUBLIC_EXTRA_NAV = [
   { label: "Discover", path: "/discover" },
+  { label: "Constellation", path: "/constellation" },
   { label: "Emoji Oracle", path: "/emoji" },
 ];
 

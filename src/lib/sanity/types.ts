@@ -69,6 +69,8 @@ export interface GameSourceReference {
 export interface GameCharacter {
   name: string | null;
   identity: string | null;
+  identityTags: string[];
+  narrativeTropes: string[];
   sourceUrl: string | null;
 }
 

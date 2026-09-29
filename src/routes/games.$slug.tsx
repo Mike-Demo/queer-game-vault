@@ -383,10 +383,18 @@ function GamePage() {
 
         {data.lgbtqCharacters.length > 0 ? (
           <Surface title="LGBTQ+ characters">
-            <ul className="source-list">
+            <div className="stack">
+              <Link to="/constellation" search={{ game: data.slug ?? undefined }}>
+                Find these characters in the constellation
+              </Link>
+              <ul className="source-list">
               {data.lgbtqCharacters.map((character, index) => (
                 <li key={`${character.name ?? "character"}-${index}`}>
-                  <NesText className="text-xs" variant="primary">{character.name ?? "Unnamed"}</NesText>
+                  {character.name && data.slug ? (
+                    <Link to="/constellation" search={{ character: character.name, game: data.slug }}>
+                      <NesText className="text-xs" variant="primary">{character.name}</NesText>
+                    </Link>
+                  ) : <NesText className="text-xs" variant="primary">Unnamed</NesText>}
                   {character.identity ? <NesText className="text-xs">{` — ${character.identity}`}</NesText> : null}
                   {character.sourceUrl ? (
                     <>
@@ -398,7 +406,8 @@ function GamePage() {
                   ) : null}
                 </li>
               ))}
-            </ul>
+              </ul>
+            </div>
           </Surface>
         ) : null}
 

@@ -31,7 +31,12 @@ export const GAME_DETAIL_PROJECTION = `{
   "genres": coalesce(genres[]->${TAXONOMY}, []),
   "platforms": coalesce(platforms[]->${TAXONOMY}, []),
   "sources": coalesce(sources[]{ publication, title, url, capturedAt }, []),
-  "lgbtqCharacters": coalesce(lgbtqCharacters[]{ name, identity, sourceUrl }, []),
+  "lgbtqCharacters": coalesce(lgbtqCharacters[]{
+    name, identity,
+    "identityTags": coalesce(identityTags, []),
+    "narrativeTropes": coalesce(narrativeTropes, []),
+    sourceUrl
+  }, []),
   "igdbCharacters": coalesce(igdbCharacters[]{ igdbId, name, description, gender, species, mugshotUrl, igdbUrl }, []),
   popularity, "popularityScores": coalesce(popularityScores[]{ type, value }, []), sourceUpdatedAt,
   importStatus, importedAt, lastSyncedAt
@@ -138,6 +143,25 @@ export const discoverFacetsQuery = `{
   "platforms": *[_type == "platform" && count(*[${PUBLIC_GAME_FILTER} && references(^._id)]) > 0]
     | order(name asc){ _id, name, "slug": slug.current },
   "themes": array::unique(*[${PUBLIC_GAME_FILTER}].themes[])
+}`;
+
+/** Public constellation: curated characters from public games only. */
+export const constellationGamesQuery = `*[
+  ${PUBLIC_GAME_FILTER} && defined(slug.current) && count(lgbtqCharacters) > 0
+] | order(_id asc){
+  "gameId": _id,
+  "gameTitle": title,
+  "gameSlug": slug.current,
+  "coverUrl": coalesce(cover.asset->url, sourceCoverUrl),
+  releaseYear,
+  "characters": lgbtqCharacters[]{
+    name,
+    identity,
+    "identityTags": coalesce(identityTags, []),
+    "narrativeTropes": coalesce(narrativeTropes, []),
+    sourceUrl
+  },
+  "cast": coalesce(igdbCharacters[]{ name, mugshotUrl }, [])
 }`;
 
 /** Public API: title/character search with optional facet filters and offset paging. */

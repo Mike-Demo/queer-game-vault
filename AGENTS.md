@@ -1,1 +1,2 @@
 - Emoji Oracle agent reads the catalog through the Sanity MCP (query_documents only, published perspective, editorialStatus filter enforced) and re-verifies the chosen slug against the public catalog — keeps editor-only data off the page.
+- Character constellation uses deterministic identity normalization and sparse Canvas edges over approved Sanity records; curated identity/trope fields remain editorial and are never overwritten by IGDB refreshes — keeps relationships reproducible and sourced.
