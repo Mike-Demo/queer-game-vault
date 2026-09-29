@@ -31,8 +31,9 @@ const DIRECTIVES: Array<[string, string]> = [
   ["style-src", "'self' 'unsafe-inline'"],
   [
     "img-src",
-    "'self' data: https://images.igdb.com https://cdn.sanity.io https://app.aikido.dev",
+    "'self' data: https://images.igdb.com https://cdn.sanity.io https://app.aikido.dev https://api.producthunt.com",
   ],
+
   ["font-src", "'self'"],
   [
     "connect-src",
