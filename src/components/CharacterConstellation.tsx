@@ -57,20 +57,24 @@ interface CanvasColors {
   primary: string;
   success: string;
   warning: string;
-  muted: string;
+  starSize: number;
+  fontSize: number;
 }
 
 function readColors(canvas: HTMLCanvasElement): CanvasColors {
   const styles = getComputedStyle(document.documentElement);
-  const token = (name: string, fallback: string) => styles.getPropertyValue(name).trim() || fallback;
+  const token = (name: string) => styles.getPropertyValue(name).trim();
+  const rootFontSize = Number.parseFloat(styles.fontSize);
+  const lengthToken = (name: string) => Number.parseFloat(token(name)) * rootFontSize;
   return {
-    background: token("--nes-dark", "black"),
-    surface: token("--nes-bg", "white"),
-    foreground: token("--nes-bg", "white"),
-    primary: token("--nes-primary", "cyan"),
-    success: token("--nes-success", "lime"),
-    warning: token("--nes-warning", "yellow"),
-    muted: token("--nes-disabled", "gray"),
+    background: token("--nes-dark"),
+    surface: token("--nes-bg"),
+    foreground: token("--nes-bg"),
+    primary: token("--nes-primary"),
+    success: token("--nes-success"),
+    warning: token("--nes-warning"),
+    starSize: lengthToken("--app-space-1"),
+    fontSize: lengthToken("--app-font-xs"),
   };
 }
 
@@ -175,15 +179,15 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
     for (const node of positioned) {
       const isSelected = node.id === selectedId;
       const isConnected = connected.has(node.id);
-      const size = isSelected ? 7 : isConnected ? 5 : 3;
+      const size = isSelected ? colors.starSize : isConnected ? colors.starSize * 0.75 : colors.starSize * 0.5;
       context.globalAlpha = selectedId && !isSelected && !isConnected ? 0.35 : 1;
       context.fillStyle = isSelected ? colors.warning : isConnected ? colors.primary : colors.surface;
       context.fillRect(Math.round(node.x - size / 2), Math.round(node.y - size / 2), size, size);
       if (isSelected || (view.scale > 1.35 && isConnected)) {
         context.globalAlpha = 1;
         context.fillStyle = colors.foreground;
-        context.font = `${10 / view.scale}px "Press Start 2P"`;
-        context.fillText(node.name, node.x + 9 / view.scale, node.y + 4 / view.scale);
+        context.font = `${colors.fontSize / view.scale}px "Press Start 2P"`;
+        context.fillText(node.name, node.x + colors.starSize / view.scale, node.y + colors.starSize * 0.5 / view.scale);
       }
     }
     context.restore();

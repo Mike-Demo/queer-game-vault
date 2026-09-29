@@ -43,10 +43,6 @@
   --app-cover-height-sm: 9rem;
   --app-sidebar-width: 22rem;
   --app-form-measure: 34rem;
-  --app-constellation-height: 42rem;
-  --app-constellation-height-sm: 30rem;
-  --app-constellation-panel: 20rem;
-  --app-star-dot: 0.5rem;
 }
 
 * {
@@ -394,7 +390,7 @@ html[data-theme="dark"] .title-md {
 .constellation-sky {
   position: relative;
   width: 100%;
-  height: var(--app-constellation-height-sm);
+  height: 100vh;
   overflow: hidden;
   background-color: var(--nes-dark);
   border-color: var(--nes-shadow);
@@ -430,8 +426,8 @@ html[data-theme="dark"] .title-md {
 }
 
 .constellation-legend span::before {
-  width: var(--app-star-dot);
-  height: var(--app-star-dot);
+  width: var(--app-space-1);
+  height: var(--app-space-1);
   content: "";
   background-color: var(--nes-primary);
 }
@@ -476,13 +472,9 @@ html[data-theme="dark"] .title-md {
   font-size: var(--app-font-xs);
 }
 
-@media (min-width: 64rem) {
+@media (min-width: 72rem) {
   .constellation-layout {
-    grid-template-columns: minmax(0, 1fr) var(--app-constellation-panel);
-  }
-
-  .constellation-sky {
-    height: var(--app-constellation-height);
+    grid-template-columns: minmax(0, 1fr) var(--app-sidebar-width);
   }
 
   .constellation-panel {
