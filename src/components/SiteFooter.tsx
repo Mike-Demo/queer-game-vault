@@ -116,6 +116,23 @@ export function SiteFooter(): ReactElement {
           </a>
         ))}
       </nav>
+
+      <a
+        href="https://www.producthunt.com/products/queercade?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-queercade"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="QueerCade on Product Hunt (opens in new tab)"
+        className="site-footer-badge"
+      >
+        <img
+          alt="QueerCade - Gayming Archive | Product Hunt"
+          width={250}
+          height={54}
+          loading="lazy"
+          src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1264105&theme=dark&t=1790655222149"
+        />
+      </a>
     </div>
+
   );
 }
