@@ -275,7 +275,7 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
           <ul className="constellation-results">
             {searchResults.map((node) => (
               <li key={node.id}>
-                <button type="button" onClick={() => focusNode(node)}>{node.name} — {node.gameTitle}</button>
+                <NesButton type="button" onClick={() => focusNode(node)}>{node.name} — {node.gameTitle}</NesButton>
               </li>
             ))}
           </ul>
@@ -303,7 +303,7 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
                   <ul className="constellation-connections">
                     {connections.slice(0, 24).map(({ edge, node }) => node ? (
                       <li key={edge.id}>
-                        <button type="button" onClick={() => focusNode(node)}>{node.name}<span>{RELATIONSHIP_LABELS[edge.kind]}: {edge.label}</span></button>
+                        <NesButton type="button" onClick={() => focusNode(node)}>{node.name}<span>{RELATIONSHIP_LABELS[edge.kind]}: {edge.label}</span></NesButton>
                       </li>
                     ) : null)}
                   </ul>
