@@ -270,8 +270,8 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
           </div>
         </div>
 
-        <details className="constellation-directory" open={query.trim().length > 0 || undefined}>
-          <summary>Browse stars as a list</summary>
+        <section className="constellation-directory" aria-label="Browse constellation stars">
+          <NesText variant="primary" className="text-xs">Browse stars</NesText>
           <ul className="constellation-results">
             {searchResults.map((node) => (
               <li key={node.id}>
@@ -279,7 +279,7 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
               </li>
             ))}
           </ul>
-        </details>
+        </section>
       </div>
 
       <aside className="constellation-panel" aria-live="polite">

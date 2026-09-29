@@ -456,11 +456,6 @@ html[data-theme="dark"] .title-md {
   image-rendering: pixelated;
 }
 
-.constellation-directory summary {
-  color: var(--nes-primary-text);
-  cursor: pointer;
-}
-
 .constellation-results,
 .constellation-connections {
   display: grid;
