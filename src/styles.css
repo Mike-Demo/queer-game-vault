@@ -365,6 +365,15 @@ html[data-theme="dark"] .title-md {
   .library-columns {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+
+  .constellation-layout {
+    grid-template-columns: minmax(0, 1fr) var(--app-sidebar-width);
+  }
+
+  .constellation-panel {
+    position: sticky;
+    top: var(--app-space-2);
+  }
 }
 
 .constellation-page {
@@ -470,17 +479,6 @@ html[data-theme="dark"] .title-md {
   display: block;
   margin-block-start: var(--app-space-1);
   font-size: var(--app-font-xs);
-}
-
-@media (min-width: 72rem) {
-  .constellation-layout {
-    grid-template-columns: minmax(0, 1fr) var(--app-sidebar-width);
-  }
-
-  .constellation-panel {
-    position: sticky;
-    top: var(--app-space-2);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

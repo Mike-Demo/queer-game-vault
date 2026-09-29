@@ -61,7 +61,7 @@ interface CanvasColors {
   fontSize: number;
 }
 
-function readColors(canvas: HTMLCanvasElement): CanvasColors {
+function readColors(): CanvasColors {
   const styles = getComputedStyle(document.documentElement);
   const token = (name: string) => styles.getPropertyValue(name).trim();
   const rootFontSize = Number.parseFloat(styles.fontSize);
@@ -147,7 +147,7 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
     const context = canvas.getContext("2d");
     if (!context) return;
     const ratio = canvas.width / canvasSize.width;
-    const colors = readColors(canvas);
+    const colors = readColors();
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     context.fillStyle = colors.background;
     context.fillRect(0, 0, canvasSize.width, canvasSize.height);
