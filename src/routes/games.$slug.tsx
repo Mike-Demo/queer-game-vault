@@ -390,7 +390,11 @@ function GamePage() {
               <ul className="source-list">
               {data.lgbtqCharacters.map((character, index) => (
                 <li key={`${character.name ?? "character"}-${index}`}>
-                  <NesText className="text-xs" variant="primary">{character.name ?? "Unnamed"}</NesText>
+                  {character.name && data.slug ? (
+                    <Link to="/constellation" search={{ character: character.name, game: data.slug }}>
+                      <NesText className="text-xs" variant="primary">{character.name}</NesText>
+                    </Link>
+                  ) : <NesText className="text-xs" variant="primary">Unnamed</NesText>}
                   {character.identity ? <NesText className="text-xs">{` — ${character.identity}`}</NesText> : null}
                   {character.sourceUrl ? (
                     <>

@@ -31,7 +31,12 @@ export const GAME_DETAIL_PROJECTION = `{
   "genres": coalesce(genres[]->${TAXONOMY}, []),
   "platforms": coalesce(platforms[]->${TAXONOMY}, []),
   "sources": coalesce(sources[]{ publication, title, url, capturedAt }, []),
-  "lgbtqCharacters": coalesce(lgbtqCharacters[]{ name, identity, sourceUrl }, []),
+  "lgbtqCharacters": coalesce(lgbtqCharacters[]{
+    name, identity,
+    "identityTags": coalesce(identityTags, []),
+    "narrativeTropes": coalesce(narrativeTropes, []),
+    sourceUrl
+  }, []),
   "igdbCharacters": coalesce(igdbCharacters[]{ igdbId, name, description, gender, species, mugshotUrl, igdbUrl }, []),
   popularity, "popularityScores": coalesce(popularityScores[]{ type, value }, []), sourceUpdatedAt,
   importStatus, importedAt, lastSyncedAt
