@@ -481,11 +481,6 @@ html[data-theme="dark"] .title-md {
     grid-template-columns: minmax(0, 1fr) var(--app-constellation-panel);
   }
 
-  .constellation-controls {
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    align-items: end;
-  }
-
   .constellation-sky {
     height: var(--app-constellation-height);
   }
