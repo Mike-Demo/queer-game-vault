@@ -58,12 +58,28 @@ interface ConstellationGameResult {
 
 const slugInput = z.object({ slug: z.string().min(1).max(200) });
 
+/**
+ * Public pages must never 500 because the content service hiccuped. Log the
+ * failure server-side and return a fallback so the page renders its empty or
+ * "content unavailable" state instead of an error page.
+ */
+async function safeFetch<T>(label: string, fallback: T, run: () => Promise<T>): Promise<T> {
+  try {
+    return await run();
+  } catch (error) {
+    console.error(`[publicContent] ${label} failed:`, error);
+    return fallback;
+  }
+}
+
 export const fetchSiteSettings = createServerFn({ method: "GET" }).handler(
-  async (): Promise<SiteSettings | null> => sanityPublicClient.fetch<SiteSettings | null>(siteSettingsQuery),
+  async (): Promise<SiteSettings | null> =>
+    safeFetch("siteSettings", null, () => sanityPublicClient.fetch<SiteSettings | null>(siteSettingsQuery)),
 );
 
 export const fetchFeaturedGames = createServerFn({ method: "GET" }).handler(
-  async (): Promise<GameSummary[]> => sanityPublicClient.fetch<GameSummary[]>(featuredGamesQuery, { limit: 6 }),
+  async (): Promise<GameSummary[]> =>
+    safeFetch("featuredGames", [], () => sanityPublicClient.fetch<GameSummary[]>(featuredGamesQuery, { limit: 6 })),
 );
 
 export const fetchLibraryGames = createServerFn({ method: "GET" })
@@ -73,44 +89,56 @@ export const fetchLibraryGames = createServerFn({ method: "GET" })
       .parse(data ?? { offset: 0, limit: 60 }),
   )
   .handler(async ({ data }): Promise<GameSummary[]> =>
-    sanityPublicClient.fetch<GameSummary[]>(approvedGamesQuery, {
-      offset: data.offset,
-      end: data.offset + data.limit,
-    }),
+    safeFetch("libraryGames", [], () =>
+      sanityPublicClient.fetch<GameSummary[]>(approvedGamesQuery, {
+        offset: data.offset,
+        end: data.offset + data.limit,
+      }),
+    ),
   );
 
 export const fetchFeaturedCollections = createServerFn({ method: "GET" }).handler(
   async (): Promise<CollectionSummary[]> =>
-    sanityPublicClient.fetch<CollectionSummary[]>(featuredCollectionsQuery, { limit: 4 }),
+    safeFetch("featuredCollections", [], () =>
+      sanityPublicClient.fetch<CollectionSummary[]>(featuredCollectionsQuery, { limit: 4 }),
+    ),
 );
 
 export const fetchCollections = createServerFn({ method: "GET" }).handler(
   async (): Promise<CollectionSummary[]> =>
-    sanityPublicClient.fetch<CollectionSummary[]>(publishedCollectionsQuery),
+    safeFetch("collections", [], () => sanityPublicClient.fetch<CollectionSummary[]>(publishedCollectionsQuery)),
 );
 
 export const fetchCollection = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) => slugInput.parse(data))
   .handler(async ({ data }): Promise<CollectionDetail | null> =>
-    sanityPublicClient.fetch<CollectionDetail | null>(collectionBySlugQuery, { slug: data.slug }),
+    safeFetch("collection", null, () =>
+      sanityPublicClient.fetch<CollectionDetail | null>(collectionBySlugQuery, { slug: data.slug }),
+    ),
   );
 
 export const fetchGame = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) => slugInput.parse(data))
   .handler(async ({ data }): Promise<GameDetail | null> =>
-    sanityPublicClient.fetch<GameDetail | null>(gameBySlugQuery, { slug: data.slug }),
+    safeFetch("game", null, () =>
+      sanityPublicClient.fetch<GameDetail | null>(gameBySlugQuery, { slug: data.slug }),
+    ),
   );
 
 export const fetchGameCollections = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) => slugInput.parse(data))
   .handler(async ({ data }): Promise<CollectionRef[]> =>
-    sanityPublicClient.fetch<CollectionRef[]>(gameCollectionsBySlugQuery, { slug: data.slug }),
+    safeFetch("gameCollections", [], () =>
+      sanityPublicClient.fetch<CollectionRef[]>(gameCollectionsBySlugQuery, { slug: data.slug }),
+    ),
   );
 
 export const fetchContentPage = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) => slugInput.parse(data))
   .handler(async ({ data }): Promise<ContentPage | null> =>
-    sanityPublicClient.fetch<ContentPage | null>(contentPageBySlugQuery, { slug: data.slug }),
+    safeFetch("contentPage", null, () =>
+      sanityPublicClient.fetch<ContentPage | null>(contentPageBySlugQuery, { slug: data.slug }),
+    ),
   );
 
 export const fetchRelatedGames = createServerFn({ method: "GET" })
@@ -119,20 +147,27 @@ export const fetchRelatedGames = createServerFn({ method: "GET" })
   )
   .handler(async ({ data }): Promise<GameSummary[]> => {
     if (data.genreIds.length === 0) return [];
-    return sanityPublicClient.fetch<GameSummary[]>(relatedGamesQuery, {
-      id: data.id,
-      genreIds: data.genreIds,
-      limit: 3,
-    });
+    return safeFetch("relatedGames", [], () =>
+      sanityPublicClient.fetch<GameSummary[]>(relatedGamesQuery, {
+        id: data.id,
+        genreIds: data.genreIds,
+        limit: 3,
+      }),
+    );
   });
 
 export const fetchDiscoverFacets = createServerFn({ method: "GET" }).handler(
-  async (): Promise<PublicDiscoverFacets> => sanityPublicClient.fetch<PublicDiscoverFacets>(discoverFacetsQuery),
+  async (): Promise<PublicDiscoverFacets> =>
+    safeFetch("discoverFacets", { genres: [], platforms: [], themes: [] }, () =>
+      sanityPublicClient.fetch<PublicDiscoverFacets>(discoverFacetsQuery),
+    ),
 );
 
 export const fetchConstellationCharacters = createServerFn({ method: "GET" }).handler(
   async (): Promise<ConstellationCharacterRecord[]> => {
-    const games = await sanityPublicClient.fetch<ConstellationGameResult[]>(constellationGamesQuery);
+    const games = await safeFetch("constellationGames", [] as ConstellationGameResult[], () =>
+      sanityPublicClient.fetch<ConstellationGameResult[]>(constellationGamesQuery),
+    );
     return games.flatMap((game) => {
       const portraits = new Map(
         game.cast
@@ -174,11 +209,13 @@ export const searchPublicGames = createServerFn({ method: "GET" })
   )
   .handler(async ({ data }): Promise<GameSummary[]> => {
     const term = data.term.trim();
-    return sanityPublicClient.fetch<GameSummary[]>(searchGamesQuery, {
-      term: term.length > 0 ? `${term}*` : "",
-      genre: data.genre,
-      platform: data.platform,
-      theme: data.theme,
-      limit: 48,
-    });
+    return safeFetch("searchGames", [], () =>
+      sanityPublicClient.fetch<GameSummary[]>(searchGamesQuery, {
+        term: term.length > 0 ? `${term}*` : "",
+        genre: data.genre,
+        platform: data.platform,
+        theme: data.theme,
+        limit: 48,
+      }),
+    );
   });

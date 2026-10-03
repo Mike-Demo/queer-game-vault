@@ -10,6 +10,8 @@ export const sanityPublicClient = createClient({
   apiVersion: SANITY_API_VERSION,
   useCdn: true,
   perspective: "published",
+  timeout: 15000,
+  maxRetries: 2,
 });
 
 /** Uncached public client for screens that must not show stale status. */
