@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { forceCenter, forceCollide, forceManyBody, forceSimulation, forceX, forceY, type SimulationNodeDatum } from "d3-force";
-import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent, type WheelEvent as ReactWheelEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 
 import { Surface } from "@/components/Surface";
 import { NesButton, NesCheckbox, NesField, NesInput, NesText } from "@/design-system/nes-229931";
@@ -254,11 +254,20 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
     }
   }
 
-  function onWheel(event: ReactWheelEvent<HTMLCanvasElement>) {
-    event.preventDefault();
-    const factor = event.deltaY > 0 ? 0.88 : 1.14;
-    setView((current) => ({ ...current, scale: Math.min(2.5, Math.max(0.28, current.scale * factor)) }));
-  }
+  // React attaches wheel listeners as passive, so preventDefault there is
+  // ignored and the page scrolls while zooming. A native non-passive listener
+  // on the canvas lets us suppress page scroll and zoom only the map.
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      const factor = event.deltaY > 0 ? 0.88 : 1.14;
+      setView((current) => ({ ...current, scale: Math.min(2.5, Math.max(0.28, current.scale * factor)) }));
+    };
+    canvas.addEventListener("wheel", handleWheel, { passive: false });
+    return () => canvas.removeEventListener("wheel", handleWheel);
+  }, []);
 
   const connections = selected
     ? selectedEdges.map((edge) => ({ edge, node: nodeById.get(edge.source === selected.id ? edge.target : edge.source) })).filter((item) => item.node)
@@ -287,7 +296,7 @@ export function CharacterConstellation({ records, initialCharacter, initialGame 
         </Surface>
 
         <div className="constellation-sky">
-          <canvas ref={canvasRef} aria-label={`Interactive constellation of ${nodes.length} LGBTQ+ characters`} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={() => { dragRef.current = null; }} onWheel={onWheel} />
+          <canvas ref={canvasRef} aria-label={`Interactive constellation of ${nodes.length} LGBTQ+ characters`} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={() => { dragRef.current = null; }} />
           <div className="constellation-legend" aria-hidden="true">
             {(Object.keys(RELATIONSHIP_LABELS) as RelationshipKind[]).map((kind) => <span key={kind} data-kind={kind}>{RELATIONSHIP_LABELS[kind]}</span>)}
           </div>
