@@ -76,7 +76,10 @@ export const Route = createFileRoute("/developers")({
       { property: "og:image", content: DEFAULT_SHARE_IMAGE },
       { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
     ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/developers` }],
+    links: [
+      { rel: "canonical", href: `${SITE_URL}/developers` },
+      { rel: "alternate", type: "text/markdown", href: "/developers.md" },
+    ],
     scripts: [
       jsonLdScript(
         organization(),
@@ -135,8 +138,8 @@ function Developers(): ReactElement {
           </li>
           <li>
             <strong>Rate limit.</strong> About {RATE_LIMIT_MAX} requests every {RATE_LIMIT_WINDOW_SECONDS} seconds per
-            client. Responses carry <code>X-RateLimit-Remaining</code>; going over returns <code>429</code> with a{" "}
-            <code>Retry-After</code> header in seconds.
+            client. Responses carry <code>X-RateLimit-*</code> and RFC-style <code>RateLimit-*</code> headers; going over
+            returns <code>429</code> with a{" "} <code>Retry-After</code> header in seconds.
           </li>
           <li>
             <strong>Caching.</strong> Successful responses may be cached for 5 minutes. Please cache rather than
@@ -190,6 +193,17 @@ function Developers(): ReactElement {
           </li>
         </ul>
         <p>Please be gentle — no bulk scraping.</p>
+      </section>
+
+      <section className="stack" aria-labelledby="api-versioning">
+        <h2 id="api-versioning" className="title-md">
+          Versioning and deprecation policy
+        </h2>
+        <p>
+          The current API version is <strong>v1</strong>. Breaking changes ship as a new versioned
+          path; v1 keeps working. If an endpoint is ever deprecated, the deprecation is announced
+          here with the replacement documented before the old one stops working.
+        </p>
       </section>
     </div>
   );

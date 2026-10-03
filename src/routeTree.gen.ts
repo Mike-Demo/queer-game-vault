@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ConstellationRouteImport } from './routes/constellation'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as EmojiRouteImport } from './routes/emoji'
@@ -22,13 +23,17 @@ import { Route as LicensesRouteImport } from './routes/licenses'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as OpenapiDotjsonRouteImport } from './routes/openapi[.]json'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as DotwellKnownAgentDotjsonRouteImport } from './routes/[.]well-known.agent[.]json'
+import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known.api-catalog'
 import { Route as AuthenticatedImportSearchRouteImport } from './routes/_authenticated/import-search'
 import { Route as AuthenticatedImportsRouteImport } from './routes/_authenticated/imports'
 import { Route as AuthenticatedMyLibraryRouteImport } from './routes/_authenticated/my-library'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as ApiSplatRouteImport } from './routes/api/$'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as GamesSlugRouteImport } from './routes/games.$slug'
@@ -65,6 +70,11 @@ const AuthRoute = AuthRouteImport.update({
 const ConstellationRoute = ConstellationRouteImport.update({
   id: '/constellation',
   path: '/constellation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DevelopersRoute = DevelopersRouteImport.update({
@@ -107,6 +117,16 @@ const OpenapiDotjsonRoute = OpenapiDotjsonRouteImport.update({
   path: '/openapi.json',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -118,6 +138,11 @@ const DotwellKnownAgentDotjsonRoute =
     path: '/.well-known/agent.json',
     getParentRoute: () => rootRouteImport,
   } as any)
+const DotwellKnownApiCatalogRoute = DotwellKnownApiCatalogRouteImport.update({
+  id: '/.well-known/api-catalog',
+  path: '/.well-known/api-catalog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedImportSearchRoute =
   AuthenticatedImportSearchRouteImport.update({
     id: '/import-search',
@@ -143,6 +168,11 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiSplatRoute = ApiSplatRouteImport.update({
+  id: '/api/$',
+  path: '/api/$',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
   id: '/collections/',
@@ -220,6 +250,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/constellation': typeof ConstellationRoute
+  '/contact': typeof ContactRoute
   '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
   '/emoji': typeof EmojiRoute
@@ -228,13 +259,17 @@ export interface FileRoutesByFullPath {
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/openapi.json': typeof OpenapiDotjsonRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.well-known/agent.json': typeof DotwellKnownAgentDotjsonRoute
+  '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
   '/import-search': typeof AuthenticatedImportSearchRoute
   '/imports': typeof AuthenticatedImportsRoute
   '/my-library': typeof AuthenticatedMyLibraryRoute
   '/review': typeof AuthenticatedReviewRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/api/$': typeof ApiSplatRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
   '/profile/$username': typeof ProfileUsernameRoute
@@ -254,6 +289,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/constellation': typeof ConstellationRoute
+  '/contact': typeof ContactRoute
   '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
   '/emoji': typeof EmojiRoute
@@ -262,13 +298,17 @@ export interface FileRoutesByTo {
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/openapi.json': typeof OpenapiDotjsonRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.well-known/agent.json': typeof DotwellKnownAgentDotjsonRoute
+  '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
   '/import-search': typeof AuthenticatedImportSearchRoute
   '/imports': typeof AuthenticatedImportsRoute
   '/my-library': typeof AuthenticatedMyLibraryRoute
   '/review': typeof AuthenticatedReviewRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/api/$': typeof ApiSplatRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
   '/profile/$username': typeof ProfileUsernameRoute
@@ -290,6 +330,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/constellation': typeof ConstellationRoute
+  '/contact': typeof ContactRoute
   '/developers': typeof DevelopersRoute
   '/discover': typeof DiscoverRoute
   '/emoji': typeof EmojiRoute
@@ -298,13 +339,17 @@ export interface FileRoutesById {
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/openapi.json': typeof OpenapiDotjsonRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.well-known/agent.json': typeof DotwellKnownAgentDotjsonRoute
+  '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
   '/_authenticated/import-search': typeof AuthenticatedImportSearchRoute
   '/_authenticated/imports': typeof AuthenticatedImportsRoute
   '/_authenticated/my-library': typeof AuthenticatedMyLibraryRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/api/$': typeof ApiSplatRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/games/$slug': typeof GamesSlugRoute
   '/profile/$username': typeof ProfileUsernameRoute
@@ -326,6 +371,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/constellation'
+    | '/contact'
     | '/developers'
     | '/discover'
     | '/emoji'
@@ -334,13 +380,17 @@ export interface FileRouteTypes {
     | '/llms-full.txt'
     | '/llms.txt'
     | '/openapi.json'
+    | '/pricing'
+    | '/privacy'
     | '/sitemap.xml'
     | '/.well-known/agent.json'
+    | '/.well-known/api-catalog'
     | '/import-search'
     | '/imports'
     | '/my-library'
     | '/review'
     | '/settings'
+    | '/api/$'
     | '/collections/$slug'
     | '/games/$slug'
     | '/profile/$username'
@@ -360,6 +410,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/constellation'
+    | '/contact'
     | '/developers'
     | '/discover'
     | '/emoji'
@@ -368,13 +419,17 @@ export interface FileRouteTypes {
     | '/llms-full.txt'
     | '/llms.txt'
     | '/openapi.json'
+    | '/pricing'
+    | '/privacy'
     | '/sitemap.xml'
     | '/.well-known/agent.json'
+    | '/.well-known/api-catalog'
     | '/import-search'
     | '/imports'
     | '/my-library'
     | '/review'
     | '/settings'
+    | '/api/$'
     | '/collections/$slug'
     | '/games/$slug'
     | '/profile/$username'
@@ -395,6 +450,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/constellation'
+    | '/contact'
     | '/developers'
     | '/discover'
     | '/emoji'
@@ -403,13 +459,17 @@ export interface FileRouteTypes {
     | '/llms-full.txt'
     | '/llms.txt'
     | '/openapi.json'
+    | '/pricing'
+    | '/privacy'
     | '/sitemap.xml'
     | '/.well-known/agent.json'
+    | '/.well-known/api-catalog'
     | '/_authenticated/import-search'
     | '/_authenticated/imports'
     | '/_authenticated/my-library'
     | '/_authenticated/review'
     | '/_authenticated/settings'
+    | '/api/$'
     | '/collections/$slug'
     | '/games/$slug'
     | '/profile/$username'
@@ -431,6 +491,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ConstellationRoute: typeof ConstellationRoute
+  ContactRoute: typeof ContactRoute
   DevelopersRoute: typeof DevelopersRoute
   DiscoverRoute: typeof DiscoverRoute
   EmojiRoute: typeof EmojiRoute
@@ -439,8 +500,12 @@ export interface RootRouteChildren {
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   OpenapiDotjsonRoute: typeof OpenapiDotjsonRoute
+  PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   DotwellKnownAgentDotjsonRoute: typeof DotwellKnownAgentDotjsonRoute
+  DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
+  ApiSplatRoute: typeof ApiSplatRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   GamesSlugRoute: typeof GamesSlugRoute
   ProfileUsernameRoute: typeof ProfileUsernameRoute
@@ -491,6 +556,13 @@ declare module '@tanstack/react-router' {
       path: '/constellation'
       fullPath: '/constellation'
       preLoaderRoute: typeof ConstellationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/developers': {
@@ -549,6 +621,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpenapiDotjsonRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -561,6 +647,13 @@ declare module '@tanstack/react-router' {
       path: '/.well-known/agent.json'
       fullPath: '/.well-known/agent.json'
       preLoaderRoute: typeof DotwellKnownAgentDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/api-catalog': {
+      id: '/.well-known/api-catalog'
+      path: '/.well-known/api-catalog'
+      fullPath: '/.well-known/api-catalog'
+      preLoaderRoute: typeof DotwellKnownApiCatalogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/import-search': {
@@ -597,6 +690,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/$': {
+      id: '/api/$'
+      path: '/api/$'
+      fullPath: '/api/$'
+      preLoaderRoute: typeof ApiSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/collections/': {
       id: '/collections/'
@@ -717,6 +817,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ConstellationRoute: ConstellationRoute,
+  ContactRoute: ContactRoute,
   DevelopersRoute: DevelopersRoute,
   DiscoverRoute: DiscoverRoute,
   EmojiRoute: EmojiRoute,
@@ -725,8 +826,12 @@ const rootRouteChildren: RootRouteChildren = {
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   OpenapiDotjsonRoute: OpenapiDotjsonRoute,
+  PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   DotwellKnownAgentDotjsonRoute: DotwellKnownAgentDotjsonRoute,
+  DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,
+  ApiSplatRoute: ApiSplatRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   GamesSlugRoute: GamesSlugRoute,
   ProfileUsernameRoute: ProfileUsernameRoute,

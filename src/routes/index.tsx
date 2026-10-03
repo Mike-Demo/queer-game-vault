@@ -18,6 +18,7 @@ import {
 import {
   breadcrumbs,
   DEFAULT_SHARE_IMAGE,
+  faqPage,
   itemList,
   jsonLdScript,
   organization,
@@ -53,11 +54,15 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: DEFAULT_SHARE_IMAGE },
       { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
     ],
-    links: [{ rel: "canonical", href: "https://queercade.mikedemo.dev/" }],
+    links: [
+      { rel: "canonical", href: "https://queercade.mikedemo.dev/" },
+      { rel: "alternate", type: "text/markdown", href: "/index.md" },
+    ],
     scripts: [
       jsonLdScript(
         organization(),
         website(),
+        faqPage(),
         webPage({
           path: "/",
           name: "QueerCade — a curated arcade of games",

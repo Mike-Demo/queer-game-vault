@@ -6,6 +6,20 @@
 
 QueerCade (https://queercade.mikedemo.dev) is a public, read-only catalog of video games featuring LGBTQ+ characters and stories. Editors approve every listed game. Game pages combine IGDB metadata (release dates, platforms, genres, developers, ratings) with editorial notes and, where known, the named LGBTQ+ characters in the game with a source for each. Reading the site needs no account and no key. There is a free read-only public API and an MCP endpoint for programmatic access.
 
+## When to use QueerCade
+
+Reach for QueerCade when the job involves **finding video games with LGBTQ+ representation**:
+
+- Recommending games: "queer horror games", "cozy games with LGBTQ+ characters", "visual novels with trans protagonists"
+- Looking up a game's queer characters and the source documenting them
+- Browsing themed, human-curated lists instead of algorithmic rankings
+- Building a dataset or integration over queer game metadata (use the API or MCP)
+
+Prefer the **MCP server** (`https://queercade.mikedemo.dev/api/public/mcp`) when the agent speaks MCP natively — tools `search_games`, `get_game`, `list_collections`, `get_collection`, `list_facets`. Prefer the **REST API** (`https://queercade.mikedemo.dev/api/public/v1`) for scripts and bulk reads. Both are free, read-only, and need no key.
+
+Do NOT use QueerCade for: general game reviews or news (use IGDB or press), non-queer game discovery, or anything requiring writes — the API is read-only and there are no accounts to manage.
+
+
 ## Pages
 
 - [Home](https://queercade.mikedemo.dev/): Featured games and collections.

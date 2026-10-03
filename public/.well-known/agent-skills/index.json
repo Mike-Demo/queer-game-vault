@@ -1,1 +1,29 @@
-{"$schema":"https://schemas.agentskills.io/discovery/0.2.0/schema.json","skills":[{"description":"Search the QueerCade catalog for games with LGBTQ+ characters and stories","digest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","name":"Search Queer Games","type":"skill-md","url":"https://queercade.mikedemo.dev/discover"},{"description":"Browse curated collections of queer games by theme","digest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","name":"Browse Collections","type":"skill-md","url":"https://queercade.mikedemo.dev/collections"},{"description":"Read the API documentation for programmatic access","digest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","name":"API Documentation","type":"skill-md","url":"https://queercade.mikedemo.dev/developers"}]}
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "publisher": "QueerCade",
+  "site": "https://queercade.mikedemo.dev/",
+  "version": "0.2.0",
+  "skills": [
+    {
+      "name": "Search Queer Games",
+      "description": "Search the QueerCade catalog for games with LGBTQ+ characters and stories",
+      "type": "skill-md",
+      "url": "https://queercade.mikedemo.dev/skills/search-queer-games/SKILL.md",
+      "digest": "sha256:680850799819c471c158dd5775682e90556fa3c42bd7620ef4694117a1fe426f"
+    },
+    {
+      "name": "Browse Collections",
+      "description": "Browse curated collections of queer games by theme",
+      "type": "skill-md",
+      "url": "https://queercade.mikedemo.dev/skills/browse-collections/SKILL.md",
+      "digest": "sha256:51ed6f7a5b6332d263aa0dfc392269bcf472ff7f24c5880a721832f5714254ed"
+    },
+    {
+      "name": "QueerCade API",
+      "description": "Use the free read-only public API for programmatic access",
+      "type": "skill-md",
+      "url": "https://queercade.mikedemo.dev/skills/queercade-api/SKILL.md",
+      "digest": "sha256:e0eea41fd8893d06aaeb2733ec997591150721d9f8fff4508ed1975be76b0905"
+    }
+  ]
+}

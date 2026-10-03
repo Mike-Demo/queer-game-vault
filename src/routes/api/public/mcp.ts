@@ -84,7 +84,8 @@ const TOOLS = [
     title: "Search QueerCade games",
     description:
       "Search the curated catalog by game title or LGBTQ+ character name, optionally filtered by genre slug, platform slug, theme or release year. Returns paged summaries with a total and nextOffset.",
-    inputSchema: {
+        annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+inputSchema: {
       type: "object",
       properties: {
         query: { type: "string", description: "Title or character name prefix." },
@@ -103,7 +104,8 @@ const TOOLS = [
     title: "Get one game",
     description:
       "Full public details for one game by slug: description, release info, platforms, genres, companies, ratings, store links, screenshots and documented LGBTQ+ characters.",
-    inputSchema: {
+        annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+inputSchema: {
       type: "object",
       properties: { slug: { type: "string", description: "Game slug, e.g. sayonara-wild-hearts." } },
       required: ["slug"],
@@ -114,13 +116,15 @@ const TOOLS = [
     name: "list_collections",
     title: "List curated collections",
     description: "Every published editorial collection with its description and game count.",
-    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+        annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
     name: "get_collection",
     title: "Get one collection",
     description: "One published collection by slug, with its games in editorial order.",
-    inputSchema: {
+        annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+inputSchema: {
       type: "object",
       properties: { slug: { type: "string", description: "Collection slug, e.g. best-queer-horror-games." } },
       required: ["slug"],
@@ -131,7 +135,8 @@ const TOOLS = [
     name: "list_facets",
     title: "List filter values",
     description: "The genre slugs, platform slugs and theme names that search_games filters accept.",
-    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+        annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
 ] as const;
 

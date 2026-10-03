@@ -1,0 +1,32 @@
+{
+  "$schema": "https://agent-plugins.org/schema/plugin.json",
+  "name": "queercade",
+  "version": "1.0.0",
+  "description": "Search QueerCade's hand-curated catalog of video games with LGBTQ+ characters and stories.",
+  "homepage": "https://queercade.mikedemo.dev/",
+  "author": { "name": "Mike Demopoulos", "url": "https://mikedemo.dev" },
+  "skills": [
+    {
+      "name": "Search Queer Games",
+      "description": "Search the QueerCade catalog for games with LGBTQ+ characters and stories",
+      "url": "https://queercade.mikedemo.dev/skills/search-queer-games/SKILL.md"
+    },
+    {
+      "name": "Browse Collections",
+      "description": "Browse curated collections of queer games by theme",
+      "url": "https://queercade.mikedemo.dev/skills/browse-collections/SKILL.md"
+    },
+    {
+      "name": "QueerCade API",
+      "description": "Use the free read-only public API for programmatic access",
+      "url": "https://queercade.mikedemo.dev/skills/queercade-api/SKILL.md"
+    }
+  ],
+  "mcpServers": [
+    {
+      "name": "QueerCade MCP",
+      "url": "https://queercade.mikedemo.dev/api/public/mcp",
+      "serverCard": "https://queercade.mikedemo.dev/.well-known/mcp/server-card.json"
+    }
+  ]
+}

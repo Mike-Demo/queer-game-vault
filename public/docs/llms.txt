@@ -1,0 +1,21 @@
+# llms.txt — QueerCade docs section
+
+This file orients an LLM agent to the documentation resources for QueerCade's catalog platform.
+
+## What this section covers
+
+- REST API endpoint reference with request/response shapes and the envelope format
+- Error codes and rate-limit behavior
+- MCP tool reference (search_games, get_game, list_collections, get_collection, list_facets)
+- Citation guide for queer character information
+
+## Key links
+
+- [Docs for agents](https://queercade.mikedemo.dev/docs)
+- [OpenAPI spec](https://queercade.mikedemo.dev/openapi.json)
+- [MCP server card](https://queercade.mikedemo.dev/.well-known/mcp/server-card.json)
+- [Authentication walkthrough](https://queercade.mikedemo.dev/auth.md) (no auth required)
+
+## When to use this section
+
+Use it when the agent needs endpoint-level detail beyond the overview in /llms.txt — parameter shapes, error codes, or the MCP tool schemas.

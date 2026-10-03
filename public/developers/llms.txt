@@ -1,0 +1,21 @@
+# llms.txt — QueerCade developers section
+
+This file orients an LLM agent to the developer resources at https://queercade.mikedemo.dev/developers.
+
+## What this section covers
+
+- REST API reference (free, read-only, no key): games, collections, facets
+- MCP server (Streamable HTTP) with tools: search_games, get_game, list_collections, get_collection, list_facets
+- Discovery documents: /.well-known/ard.json, /.well-known/agent-card.json, /.well-known/agent-skills/, /.well-known/mcp/server-card.json
+- API versioning and deprecation policy
+
+## Key links
+
+- [Developers page](https://queercade.mikedemo.dev/developers)
+- [OpenAPI spec](https://queercade.mikedemo.dev/openapi.json)
+- [MCP server card](https://queercade.mikedemo.dev/.well-known/mcp/server-card.json)
+- [Authentication walkthrough](https://queercade.mikedemo.dev/auth.md) (no auth required)
+
+## When to use this section
+
+Use it when the agent needs to call the QueerCade API or MCP server, needs the machine-readable spec, or needs to understand rate limits, versioning, or the error envelope.

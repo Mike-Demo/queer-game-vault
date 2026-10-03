@@ -104,10 +104,17 @@ export function checkRateLimit(request: Request): RateLimitResult {
   rateBuckets.set(key, bucket);
 
   const retryAfter = Math.max(1, Math.ceil((bucket.resetAt - now) / 1000));
+  const resetSeconds = Math.ceil(bucket.resetAt / 1000);
+  const remaining = Math.max(0, RATE_LIMIT_MAX - bucket.count);
   const headers: Record<string, string> = {
     "X-RateLimit-Limit": String(RATE_LIMIT_MAX),
-    "X-RateLimit-Remaining": String(Math.max(0, RATE_LIMIT_MAX - bucket.count)),
-    "X-RateLimit-Reset": String(Math.ceil(bucket.resetAt / 1000)),
+    "X-RateLimit-Remaining": String(remaining),
+    "X-RateLimit-Reset": String(resetSeconds),
+    // RFC 9652 / draft-ietf-httpapi-ratelimit-headers aliases for the same
+    // real limits, so agents reading either convention can self-throttle.
+    "RateLimit-Limit": String(RATE_LIMIT_MAX),
+    "RateLimit-Remaining": String(remaining),
+    "RateLimit-Reset": String(retryAfter),
   };
 
   if (bucket.count > RATE_LIMIT_MAX) {
@@ -223,6 +230,9 @@ const errorResponses = {
       "X-RateLimit-Limit": { schema: { type: "integer" } },
       "X-RateLimit-Remaining": { schema: { type: "integer" } },
       "X-RateLimit-Reset": { schema: { type: "integer" }, description: "Unix seconds when the window resets." },
+      "RateLimit-Limit": { schema: { type: "integer" }, description: "RFC 9652 alias of X-RateLimit-Limit." },
+      "RateLimit-Remaining": { schema: { type: "integer" }, description: "RFC 9652 alias of X-RateLimit-Remaining." },
+      "RateLimit-Reset": { schema: { type: "integer" }, description: "Seconds until the window resets." },
     },
     content: { "application/json": { schema: errorRef } },
   },

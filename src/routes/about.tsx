@@ -35,7 +35,10 @@ export const Route = createFileRoute("/about")({
       { property: "og:image", content: DEFAULT_SHARE_IMAGE },
       { name: "twitter:image", content: DEFAULT_SHARE_IMAGE },
     ],
-    links: [{ rel: "canonical", href: "https://queercade.mikedemo.dev/about" }],
+    links: [
+      { rel: "canonical", href: "https://queercade.mikedemo.dev/about" },
+      { rel: "alternate", type: "text/markdown", href: "/about.md" },
+    ],
     scripts: [
       jsonLdScript(
         organization(),

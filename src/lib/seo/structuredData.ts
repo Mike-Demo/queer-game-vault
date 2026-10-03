@@ -71,6 +71,55 @@ export function organization(): JsonLd {
     },
     sameAs: [
       "https://github.com/Mike-Demo/queer-game-vault",
+      "https://github.com/Mike-Demo",
+      "https://www.linkedin.com/in/mikedemopoulos",
+      "https://x.com/mike_demo",
+      "https://www.threads.com/@mdemop",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "hey.demo@mikedemo.email",
+      contactType: "customer support",
+    },
+  };
+}
+
+export function faqPage(): JsonLd {
+  return {
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is QueerCade?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "QueerCade is a hand-curated catalog of video games with LGBTQ+ characters and stories. Every game is reviewed by an editor, with IGDB metadata plus named queer characters and a source for each.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do I need an account or API key to use QueerCade?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. Browsing the catalog, the public API, and the MCP server are all free and require no account, key, or sign-in.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How can an AI agent query QueerCade?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Via the MCP server at https://queercade.mikedemo.dev/api/public/mcp (tools: search_games, get_game, list_collections, get_collection, list_facets) or the read-only REST API at https://queercade.mikedemo.dev/api/public/v1. Both are keyless.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Where does the game data come from?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Release dates, platforms, genres, and ratings come from IGDB. LGBTQ+ character information is curated by editors, with a source noted for each character.",
+        },
+      },
     ],
   };
 }
