@@ -209,11 +209,13 @@ export const searchPublicGames = createServerFn({ method: "GET" })
   )
   .handler(async ({ data }): Promise<GameSummary[]> => {
     const term = data.term.trim();
-    return sanityPublicClient.fetch<GameSummary[]>(searchGamesQuery, {
-      term: term.length > 0 ? `${term}*` : "",
-      genre: data.genre,
-      platform: data.platform,
-      theme: data.theme,
-      limit: 48,
-    });
+    return safeFetch("searchGames", [], () =>
+      sanityPublicClient.fetch<GameSummary[]>(searchGamesQuery, {
+        term: term.length > 0 ? `${term}*` : "",
+        genre: data.genre,
+        platform: data.platform,
+        theme: data.theme,
+        limit: 48,
+      }),
+    );
   });
