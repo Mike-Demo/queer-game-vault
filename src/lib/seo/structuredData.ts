@@ -61,6 +61,7 @@ export function organization(): JsonLd {
     "@type": "Organization",
     "@id": ORGANIZATION_ID,
     name: SITE_NAME,
+    description: "QueerCade is a hand-curated catalog of video games with LGBTQ+ characters and stories — every game reviewed by an editor, with details from IGDB and curated lists written by people.",
     url: `${SITE_URL}/`,
     logo: {
       "@type": "ImageObject",
@@ -68,6 +69,9 @@ export function organization(): JsonLd {
       width: 64,
       height: 64,
     },
+    sameAs: [
+      "https://github.com/Mike-Demo/queer-game-vault",
+    ],
   };
 }
 

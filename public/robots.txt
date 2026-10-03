@@ -9,3 +9,4 @@ Disallow: /review
 Disallow: /profile/
 
 Sitemap: https://queercade.mikedemo.dev/sitemap.xml
+schemamap: https://queercade.mikedemo.dev/schemamap.xml

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemaMap xmlns="https://nlweb.ai/schemamap">
+  <feed type="jsonld" url="https://queercade.mikedemo.dev/#jsonld"/>
+  <feed type="rss" url="https://queercade.mikedemo.dev/sitemap.xml"/>
+</schemaMap>
