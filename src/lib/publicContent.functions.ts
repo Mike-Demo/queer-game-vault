@@ -58,8 +58,23 @@ interface ConstellationGameResult {
 
 const slugInput = z.object({ slug: z.string().min(1).max(200) });
 
+/**
+ * Public pages must never 500 because the content service hiccuped. Log the
+ * failure server-side and return a fallback so the page renders its empty or
+ * "content unavailable" state instead of an error page.
+ */
+async function safeFetch<T>(label: string, fallback: T, run: () => Promise<T>): Promise<T> {
+  try {
+    return await run();
+  } catch (error) {
+    console.error(`[publicContent] ${label} failed:`, error);
+    return fallback;
+  }
+}
+
 export const fetchSiteSettings = createServerFn({ method: "GET" }).handler(
-  async (): Promise<SiteSettings | null> => sanityPublicClient.fetch<SiteSettings | null>(siteSettingsQuery),
+  async (): Promise<SiteSettings | null> =>
+    safeFetch("siteSettings", null, () => sanityPublicClient.fetch<SiteSettings | null>(siteSettingsQuery)),
 );
 
 export const fetchFeaturedGames = createServerFn({ method: "GET" }).handler(
