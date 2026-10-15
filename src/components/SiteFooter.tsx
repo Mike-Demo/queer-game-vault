@@ -55,9 +55,57 @@ const SOCIAL_LINKS: readonly SocialLink[] = [
  */
 export function SiteFooter(): ReactElement {
   const [year, setYear] = useState<number | undefined>(undefined);
+  const [carbonGrams, setCarbonGrams] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     setYear(new Date().getFullYear());
+  }, []);
+
+  // Per-visit carbon estimate: sum the transfer sizes of the navigation entry
+  // and every resource entry, then feed the total to CO2.js's SWD v4 model.
+  // Client-side only; on any failure the line simply stays unrendered.
+  useEffect(() => {
+    let cancelled = false;
+    let timer: number | undefined;
+
+    const estimate = async () => {
+      try {
+        const entries = [
+          ...(performance.getEntriesByType("navigation") as PerformanceResourceTiming[]),
+          ...(performance.getEntriesByType("resource") as PerformanceResourceTiming[]),
+        ];
+        const totalBytes = entries.reduce((sum, entry) => sum + (entry.transferSize ?? 0), 0);
+        if (!totalBytes) return;
+
+        const { co2: CO2 } = await import("@tgwf/co2");
+        const estimator = new CO2({ model: "swd", version: 4 });
+        const grams = estimator.perByte(totalBytes, false);
+        if (cancelled || !Number.isFinite(grams) || grams <= 0) return;
+        setCarbonGrams(grams);
+      } catch {
+        // No fallback value: leave the estimate unrendered.
+      }
+    };
+
+    // Resource entries may still be arriving when the effect runs, so start
+    // the estimate shortly after the page has fully loaded.
+    const schedule = () => {
+      timer = window.setTimeout(() => {
+        void estimate();
+      }, 1500);
+    };
+
+    if (document.readyState === "complete") {
+      schedule();
+    } else {
+      window.addEventListener("load", schedule, { once: true });
+    }
+
+    return () => {
+      cancelled = true;
+      if (timer !== undefined) window.clearTimeout(timer);
+      window.removeEventListener("load", schedule);
+    };
   }, []);
 
   return (
@@ -132,6 +180,13 @@ export function SiteFooter(): ReactElement {
           src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1264105&theme=dark&t=1790655222149"
         />
       </a>
+
+      {carbonGrams === undefined ? null : (
+        <p className="site-footer-carbon">
+          This visit ≈ {carbonGrams.toFixed(2)} g CO₂e · estimated with CO2.js (The Green Web
+          Foundation)
+        </p>
+      )}
     </div>
 
   );
