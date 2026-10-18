@@ -1,0 +1,245 @@
+{
+  "boltSlidesVersion": 1,
+  "boltSlidesId": "11011050-f9d6-4d43-8a9e-3e43af51bbaf",
+  "deck": {
+    "title": "QueerCade — find your next queer game",
+    "transition": "fade",
+    "font": "space",
+    "accent": "#FF2E88"
+  },
+  "slides": [
+    {
+      "id": "s1",
+      "position": 0,
+      "layout": "cover",
+      "props": {
+        "kicker": "♥ Discovery platform for LGBTQ+ games",
+        "title": "QueerCade\nFind your next ==queer game==.",
+        "subtitle": "A curated vault where LGBTQ+ games are easy to find, easy to love, and impossible to miss.",
+        "image": "/pixel-heart-hero.webp",
+        "dim": 0.5,
+        "foot": "github.com/Mike-Demo/queer-game-vault · 2026"
+      },
+      "background": { "type": "image", "url": "/pixel-heart-hero.webp", "dim": 0.55 },
+      "animation": "cascade",
+      "transition": null,
+      "nav": null,
+      "notes": "Welcome! QueerCade is a discovery platform for LGBTQ+ games. Open with the core promise: players who want queer games shouldn't have to dig through storefront tags to find them. All materials live in the open on GitHub.",
+      "status": "none"
+    },
+    {
+      "id": "s2",
+      "position": 1,
+      "layout": "contrast",
+      "props": {
+        "kicker": "The problem",
+        "title": "Great games. ==Invisible shelves.==",
+        "left": {
+          "label": "Today",
+          "title": "Scattered and easy to miss",
+          "points": [
+            "LGBTQ+ titles spread across many storefronts and inconsistent tags",
+            "Discovery depends on luck — a search, a streamer, a retweet",
+            "Small releases with no marketing vanish in days",
+            "The players who would love them never hear about them"
+          ]
+        },
+        "right": {
+          "label": "With QueerCade",
+          "title": "One curated home",
+          "points": [
+            "A single, searchable vault dedicated to queer games",
+            "Browsed deliberately, not stumbled into",
+            "Hidden gems surface through public appreciations",
+            "Players find their next favorite, and show it some love"
+          ]
+        }
+      },
+      "background": { "type": "color", "color": "var(--bg)" },
+      "animation": "cascade",
+      "transition": null,
+      "nav": null,
+      "notes": "The problem isn't that queer games don't exist — they're everywhere. The problem is they're scattered across storefronts and inconsistent tags, so the players who would love them most miss them entirely. This is a discovery failure, not a supply failure.",
+      "status": "none"
+    },
+    {
+      "id": "s3",
+      "position": 2,
+      "layout": "bento",
+      "props": {
+        "kicker": "What it does",
+        "title": "A curated vault, ==one tap of love.==",
+        "tiles": [
+          {
+            "k": "♥",
+            "title": "Curated collection",
+            "body": "A hand-picked vault of LGBTQ+ games, browsable in one place",
+            "c": 2
+          },
+          {
+            "k": "▶",
+            "title": "Game pages",
+            "body": "Every game gets a page with cover art, description, and links out to the storefronts",
+            "c": 2
+          },
+          {
+            "k": "♥",
+            "title": "Pixel-heart appreciation",
+            "body": "Show a game some love with a one-tap appreciation — counted publicly",
+            "c": 2,
+            "variant": "accent"
+          }
+        ]
+      },
+      "background": { "type": "color", "color": "var(--bg)" },
+      "animation": "cascade",
+      "transition": null,
+      "nav": null,
+      "notes": "Three simple verbs: browse, open, love. The pixel heart is the signature interaction — one tap to appreciate a game, done in public so the love is visible to everyone.",
+      "status": "none"
+    },
+    {
+      "id": "s4",
+      "position": 3,
+      "layout": "steps",
+      "props": {
+        "kicker": "How it works",
+        "title": "Browse, open, ==appreciate.==",
+        "items": [
+          {
+            "title": "Browse the vault",
+            "body": "Curated entries with covers and short descriptions — the whole collection at a glance"
+          },
+          {
+            "title": "Open a game page",
+            "body": "Read about the game, see who's loved it, follow links out to the storefronts"
+          },
+          {
+            "title": "Tap the pixel heart",
+            "body": "One tap of appreciation, counted publicly so hidden gems visibly rise"
+          }
+        ]
+      },
+      "background": { "type": "color", "color": "var(--bg)" },
+      "animation": "cascade",
+      "transition": null,
+      "nav": null,
+      "notes": "The loop is deliberately simple: browse curated entries, open a game page, tap the pixel heart. Appreciations are counted publicly — that's the mechanism that makes hidden gems rise.",
+      "status": "none"
+    },
+    {
+      "id": "s5",
+      "position": 4,
+      "layout": "bigNumber",
+      "props": {
+        "kicker": "Why public appreciation matters",
+        "value": "1 tap",
+        "caption": "is all it takes to push a hidden gem up the vault, in full view of the whole community",
+        "foot": "Appreciations are public by design"
+      },
+      "background": { "type": "color", "color": "var(--bg)" },
+      "animation": "cascade",
+      "transition": null,
+      "nav": null,
+      "notes": "The magic is the public count. One tap feels trivial, but the aggregate signal — visible to everyone — is what lifts small games out of obscurity.",
+      "status": "none"
+    },
+    {
+      "id": "s6",
+      "position": 5,
+      "layout": "poster",
+      "props": {
+        "label": "Community-first",
+        "title": "Built by and for the ==LGBTQ+ gaming community.==",
+        "body": "New games enter the vault through a recurring scan for fresh releases, so the collection stays alive and grows with the community.",
+        "image": "/pixel-heart-hero.webp",
+        "flip": true
+      },
+      "background": { "type": "color", "color": "var(--bg)" },
+      "animation": "cascade",
+      "transition": null,
+      "nav": null,
+      "notes": "QueerCade isn't a storefront with a pride banner once a year — it's built by and for the community, and a recurring scan keeps feeding fresh releases into the vault automatically.",
+      "status": "none"
+    },
+    {
+      "id": "s7",
+      "position": 6,
+      "layout": "statGrid",
+      "props": {
+        "kicker": "Key features",
+        "title": "Everything a ==queer game hunter== needs.",
+        "stats": [
+          { "value": "♥", "label": "Pixel-heart appreciation", "caption": "One-tap love, counted publicly" },
+          { "value": "32", "label": "Curated collection", "caption": "Hand-picked games in the vault" },
+          { "value": "∞", "label": "Recurring release scan", "caption": "Fresh games added automatically" },
+          { "value": "↗", "label": "Storefront links", "caption": "Straight to the game's page" },
+          { "value": "▦", "label": "Cover-art browsing", "caption": "Browse by look and vibe" },
+          { "value": "♀♂*", "label": "Community-first", "caption": "Built by and for LGBTQ+ players" }
+        ]
+      },
+      "background": { "type": "color", "color": "var(--bg)" },
+      "animation": "cascade",
+      "transition": null,
+      "nav": null,
+      "notes": "Walk the grid quickly: hearts, curation, the scan, storefront links, cover browsing, community. Offer a live demo after this slide.",
+      "status": "none"
+    },
+    {
+      "id": "s8",
+      "position": 7,
+      "layout": "timeline",
+      "props": {
+        "kicker": "Status",
+        "title": "Live and ==growing.==",
+        "items": [
+          {
+            "time": "Now",
+            "title": "The vault is live",
+            "body": "Curated entries with covers, descriptions, and storefront links are browsable today"
+          },
+          {
+            "time": "Now",
+            "title": "Pixel hearts are landing",
+            "body": "Players are already appreciating games, and hidden gems are rising"
+          },
+          {
+            "time": "Next",
+            "title": "Player sign-in via Razer ID",
+            "body": "In preparation — accounts and cross-device appreciation histories"
+          },
+          {
+            "time": "Later",
+            "title": "A vault that never sleeps",
+            "body": "More scans, more games, more gems surfacing"
+          }
+        ]
+      },
+      "background": { "type": "color", "color": "var(--bg)" },
+      "animation": "cascade",
+      "transition": null,
+      "nav": null,
+      "notes": "Be honest about status: the vault is live and people are already using it. Razer ID sign-in is in preparation — accounts will let players keep their appreciation history across devices.",
+      "status": "none"
+    },
+    {
+      "id": "s9",
+      "position": 8,
+      "layout": "cover",
+      "props": {
+        "kicker": "♥ QueerCade",
+        "title": "Find your next ==queer game==.",
+        "subtitle": "The vault is open — come browse, play, and show some love.",
+        "image": "/pixel-heart-hero.webp",
+        "dim": 0.45,
+        "foot": "github.com/Mike-Demo/queer-game-vault"
+      },
+      "background": { "type": "image", "url": "/pixel-heart-hero.webp", "dim": 0.5 },
+      "animation": "cascade",
+      "transition": "zoom",
+      "nav": null,
+      "notes": "Close with the invitation: the vault is open. The repo is public — contributions, game submissions, and feedback are all welcome.",
+      "status": "none"
+    }
+  ]
+}
