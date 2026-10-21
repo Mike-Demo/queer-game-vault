@@ -42,7 +42,7 @@ export const Route = createFileRoute("/api/public/v1/appreciations/$slug")({
         const rate = checkRateLimit(request);
         if (rate.limited) return rate.limited;
         if (isCrossSite(request)) {
-          return errorResponse(403, "forbidden", "Appreciations must come from QueerCade.", rate.headers);
+          return errorResponse(403, "invalid_request", "Appreciations must come from QueerCade.", rate.headers);
         }
 
         const slug = SlugSchema.safeParse(params.slug);
