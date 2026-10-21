@@ -5,6 +5,7 @@ import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { EMOJI_MEANINGS, MAX_EMOJIS, MIN_EMOJIS, type EmojiMatch, type EmojiPick } from "@/lib/emojiOracle/emojis";
 import type { GameSummary } from "@/lib/sanity/types";
+import { clientIp, createQuota, isCrossSite } from "@/lib/security/quota";
 
 const emojiInput = z.object({
   emojis: z
@@ -14,20 +15,10 @@ const emojiInput = z.object({
     .refine((list) => new Set(list).size === list.length),
 });
 
-const WINDOW_MS = 60_000;
-const MAX_PER_WINDOW = 6;
-const buckets = new Map<string, { count: number; resetAt: number }>();
-
-function limited(key: string): boolean {
-  const now = Date.now();
-  const bucket = buckets.get(key);
-  if (!bucket || bucket.resetAt < now) {
-    buckets.set(key, { count: 1, resetAt: now + WINDOW_MS });
-    return false;
-  }
-  bucket.count += 1;
-  return bucket.count > MAX_PER_WINDOW;
-}
+const perMinute = createQuota(6, 60_000);
+const perDay = createQuota(40, 24 * 60 * 60 * 1000);
+/** Caps total AI spend per server instance regardless of visitor. */
+const globalHourly = createQuota(300, 60 * 60 * 1000);
 
 export type OracleResponse =
   | { ok: true; game: GameSummary; reason: string; matches: EmojiMatch[] }
@@ -38,8 +29,11 @@ export const askEmojiOracle = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => emojiInput.parse(data))
   .handler(async ({ data }): Promise<OracleResponse> => {
     const request = getRequest();
-    const ip = request.headers.get("cf-connecting-ip") ?? request.headers.get("x-forwarded-for") ?? "anon";
-    if (limited(ip)) return { ok: false, message: "Too many tries. Please wait a minute." };
+    if (isCrossSite(request)) return { ok: false, message: "The oracle only answers on QueerCade." };
+    const ip = clientIp(request);
+    if (perMinute.hit(ip)) return { ok: false, message: "Too many tries. Please wait a minute." };
+    if (perDay.hit(ip)) return { ok: false, message: "The oracle needs a rest. Come back tomorrow." };
+    if (globalHourly.hit("all")) return { ok: false, message: "The oracle is very busy. Please try again later." };
     const { suggestGameFromEmojis, OracleError } = await import("@/lib/emojiOracle/oracle.server");
     try {
       const result = await suggestGameFromEmojis(data.emojis);
